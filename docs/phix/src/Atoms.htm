@@ -1,0 +1,65 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">Atoms and Integers</h1>
+      <div id="mainSection">
+        Atoms can have any integer or floating point value.
+       <br>
+       <br>
+        On a 32-bit architecture atoms can hold approximately &plusmn;1e+308, with 
+        &plusmn;1e-324 being the closest you can get to 0 without actually being 0, 
+        to a maximum of about 15 decimal digits of accuracy.<br>
+        On a 64-bit architecture atoms can hold approximately &plusmn;1e+4932, with
+        &plusmn;1e-4951 being the closest you can get to 0 without actually being 0, 
+        to a maximum of about 19 decimal digits of accuracy.
+       <br>
+       <br>
+        Integers in phix are limited to the subset that begin with 0b00 or 0b11: on a 32-bit 
+        architecture they can contain a single value in the range -1,073,741,824 to +1,073,741,823 
+        (-#40000000 to #3FFFFFFF), with no fractional part, hence technically speaking phix 
+        integers are 31-bit, straddling the "middle half" of the actual hardware range (-2GB..+2GB-1).<br>
+        On a 64-bit architecture the range is -4,611,686,018,427,387,904 to +4,611,686,018,427,387,903 
+        (-#4000000000000000 to #3FFFFFFFFFFFFFFF), which technically speaking makes them 63-bit. <br>
+        Should you need to hold full 32 (or 64) bit "integers", simply use an atom (trust me, it works).
+        <br>
+        <br>
+        Phix does not entertain the idea of unsigned integers: zero less one is -1, not suddenly +4GB (which is what happens in C-based languages).<br>
+        Likewise storing (1GB-1)+1 in an integer is a clear no-nonsense type check error, in that file on that line, not quietly -1GB.
+        <br>
+        <br>
+        While you can store any integer value in a variable declared as an atom, the reverse is not true.
+        <br>
+        <br>
+        Here are some phix integers and atoms:
+<!--eucode>
+    0       -- (integer)
+    1000    -- (integer)
+    98.6    -- (atom)
+    -1e60   -- (atom)
+</eucode-->
+<pre>
+<font color="#000000">    0      </font><font color="#000080"><i> -- (integer)
+</i></font><font color="#000000">    1000   </font><font color="#000080"><i> -- (integer)
+</i></font><font color="#000000">    98.6   </font><font color="#000080"><i> -- (atom)
+</i></font><font color="#0000FF">    -</font><font color="#000000">1e60  </font><font color="#000080"><i> -- (atom)</i></font>
+</pre>
+        Phix stores integer-valued atoms as machine integers (4 or 8 bytes) to save space and 
+        improve execution speed. When fractional results occur or numbers get too big, 
+        conversion to floating-point happens automatically. As we shall soon see, should that 
+        conversion be the wrong thing to do, you are immediately notified in a clear and
+        no-nonsense, human-readable manner.
+       <br>
+       <br>
+       See also: <a href="numberbases.htm">Number Bases</a>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

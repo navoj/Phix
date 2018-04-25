@@ -1,0 +1,103 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupMap</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            IupMap(<a href="Ihandle.htm">Ihandle</a> ih)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates (maps) the native interface objects corresponding to the given IUP interface elements. 
+            <br>
+            <br>
+            It will also called recursively to create the native element of all the children in the element&rsquo;s tree.
+            <br>
+            <br>
+            The element must be already attached to a mapped container, except the dialog. A child can only be mapped if its parent is already mapped.
+            <br>
+            <br>
+            This function is automatically called before the dialog is shown in <a href="IupShow.htm">IupShow</a>, <a href="IupShowXY.htm">IupShowXY</a> 
+            or <a href="IupPopup.htm">IupPopup</a>.
+            <br>
+            <br>
+            ih: Identifier of an interface element.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            Many applications do not need to invoke IupMap explicitly; it will be performed automatically as needed.
+            <br>
+            <br>
+            It is useful for the application to call IupMap when the value of the <a href="common.htm#WID">WID</a> attribute must be known, 
+            i.e. the native element must exist, before a dialog is made visible.<br>
+            [PL: one case where this appears to be needed is before populating an <a href="IupTree.htm">IupTree</a>]
+            <br>
+            <br>
+            If you add new elements to an already mapped dialog you must call IupMap for those elements, 
+            and then call <a href="IupRefresh.htm">IupRefresh</a> to update the dialog layout.
+            <br>
+            <br>
+            If the <a href="common.htm#WID">WID</a> attribute of an element is NULL, it means the element was not already mapped. <br>
+            Some containers do not have a native element associated, like VBOX and HBOX, in this case their WID is the fake value (void*)(-1).
+            <br>
+            <br>
+            If the element is a dialog then the abstract layout will be updated even if the dialog is already mapped. <br>
+            If the dialog is visible the elements will be immediately repositioned. <br>
+            Calling IupMap for an already mapped dialog is the same as only calling <a href="IupRefresh.htm">IupRefresh</a> for the dialog.
+            <br>
+            <br>
+            Calling IupMap for an already mapped element that is not a dialog does nothing.
+            <br>
+            <br>
+            The <a href="callbacks.htm#MAP_CB">MAP_CB</a> callback is called at the end of the IupMap function, after all processing, 
+            so it can also be used to create other things that depend on the <a href="common.htm#WID">WID</a> attribute. 
+            But notice that for non dialog elements it will be called before the dialog layout has been updated, 
+            so the element current size will still be 0x0 (since 3.14).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupAppend.htm">IupAppend</a>,
+          <a href="IupDetach.htm">IupDetach</a>,
+          <a href="IupUnmap.htm">IupUnmap</a>,
+          <a href="IupCreate.htm">IupCreate</a>,
+          <a href="IupDestroy.htm">IupDestroy</a>,
+          <a href="IupShowXY.htm">IupShowXY</a>,
+          <a href="IupShow.htm">IupShow</a>,
+          <a href="IupPopup.htm">IupPopup</a>,
+          <a href="callbacks.htm#MAP_CB">MAP_CB</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

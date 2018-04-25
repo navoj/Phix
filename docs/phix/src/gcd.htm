@@ -1,0 +1,79 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">gcd</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="atom.htm">atom</a> a = gcd(<a href="object.htm">object</a> u, <a href="atom.htm">atom</a> v=0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Returns the greatest common divisor of two numbers or a <a href="sequence.htm">sequence</a> of numbers.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The result is always a positive integer (that might still need storing in an atom), except for gcd(0,0) which is 0.
+            <br>
+            <br>
+            atom parameters allow greater precision, but any fractional parts are immediately and deliberately discarded.
+            <br>
+            <br>
+            if the first parameter is a <a href="sequence.htm">sequence</a> then the second parameter is completely ignored.
+            <br>
+            if the sequence contains only one element, then (floored and unsigned) it is the result, ie gcd({N}) is floor(abs(N)).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+a = gcd(-9,6) -- a is 3
+a = gcd(70000000000000000000, 60000000000000000000000)  -- a is 10000000000000000000
+a = gcd({57,0,-45,-18,90,447})  -- a is 3
+a = gcd({-9.3}) -- a is 9
+</eucode-->
+<pre>
+<font color="#000000">a</font><font color="#0000FF"> =</font><font color="#5E005E"> gcd</font><font color="#0000FF">(-</font><font color="#000000">9</font><font color="#0000FF">,</font><font color="#000000">6</font><font color="#0000FF">)</font><font color="#000080"><i> -- a is 3
+</i></font><font color="#000000">a</font><font color="#0000FF"> =</font><font color="#5E005E"> gcd</font><font color="#0000FF">(</font><font color="#000000">70000000000000000000</font><font color="#0000FF">,</font><font color="#000000"> 60000000000000000000000</font><font color="#0000FF">) </font><font color="#000080"><i> -- a is 10000000000000000000
+</i></font><font color="#000000">a</font><font color="#0000FF"> =</font><font color="#5E005E"> gcd</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#000000">57</font><font color="#0000FF">,</font><font color="#000000">0</font><font color="#0000FF">,-</font><font color="#000000">45</font><font color="#0000FF">,-</font><font color="#000000">18</font><font color="#0000FF">,</font><font color="#000000">90</font><font color="#0000FF">,</font><font color="#000000">447</font><font color="#800000">}</font><font color="#0000FF">) </font><font color="#000080"><i> -- a is 3
+</i></font><font color="#000000">a</font><font color="#0000FF"> =</font><font color="#5E005E"> gcd</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#0000FF">-</font><font color="#000000">9.3</font><font color="#800000">}</font><font color="#0000FF">)</font><font color="#000080"><i> -- a is 9</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\gcd.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

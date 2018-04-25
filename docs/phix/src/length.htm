@@ -1,0 +1,101 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">length</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="integer.htm">integer</a> i = length(<a href="sequence.htm">sequence</a> s)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Return the length of s. s must be a <a href="sequence.htm">sequence</a> or <a href="string.htm">string</a>. An error will
+             occur if s is an <a href="atom.htm">atom</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>The length of each <a href="sequence.htm">sequence</a> is stored internally by the interpreter.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+length({{1,2}, {3,4}, {5,6}})   -- 3
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#7060A8">length</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#800080">{</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#000000">2</font><font color="#800080">}</font><font color="#0000FF">,</font><font color="#800080"> {</font><font color="#000000">3</font><font color="#0000FF">,</font><font color="#000000">4</font><font color="#800080">}</font><font color="#0000FF">,</font><font color="#800080"> {</font><font color="#000000">5</font><font color="#0000FF">,</font><font color="#000000">6</font><font color="#800080">}</font><font color="#800000">}</font><font color="#0000FF">)  </font><font color="#000080"><i> -- 3</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+length("") -- 0
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#7060A8">length</font><font color="#0000FF">(</font><font color="#008000">""</font><font color="#0000FF">)</font><font color="#000080"><i> -- 0</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 3:</b>
+         </td>
+         <td>
+<!--eucode>
+length({}) -- 0
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#7060A8">length</font><font color="#0000FF">(</font><font color="#800000">{}</font><font color="#0000FF">)</font><font color="#000080"><i> -- 0</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            There is a generic version of the length function implemented as :%opLen in builtins\VM\pLen.e that the compiler only invokes as a last resort, 
+            preferring instead to inline that functionality if the argument is known to be assigned to a sequence, or has a fixed length. In the latter 
+            case the compiler will use that known value as a literal constant without referencing the argument at all, and the compiler will also avoid 
+            calling the generic version, when it can, if the result variable is known to be an integer, ie does not require decref/dealloc.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="sequence.htm">sequence</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

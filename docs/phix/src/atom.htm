@@ -1,0 +1,117 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">atom</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          atom <i>identifier</i>
+          <br>
+          <i>-- or --</i>
+          <br>
+          <a href="integer.htm">integer</a> i = atom(<a href="object.htm">object</a> x)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            This serves to define the atom type. <br>
+            You can also call it like an ordinary function to determine if an object is an atom.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            An atom can hold a single numeric value, ie a floating point or an integer. It can also hold a raw pointer, such as allocated memory
+            or a <a href="call_back.htm">call_back</a> address, but that is typically only used when interfacing to external code in a .dll or .so file.
+            <br>
+            <br>
+            An atom can hold all integer values, but the reverse is not true.
+            <br>
+            <br>
+            When invoked as a function, returns 1 (true) if x is an atom otherwise returns 0 (false).
+            <br>
+            <br>
+            Note that <code>atom(x)</code> and <code>not sequence(x)</code> are effectively identical.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+atom a
+a = 5.99
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">atom</font><font color="#000000"> a
+a</font><font color="#0000FF"> =</font><font color="#000000"> 5.99</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+object line
+line = gets(0)
+if atom(line) then
+    puts(SCREEN, "end of file\n")
+end if
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">object</font><font color="#000000"> line
+line</font><font color="#0000FF"> =</font><font color="#7060A8"> gets</font><font color="#0000FF">(</font><font color="#000000">0</font><font color="#0000FF">)
+</font><font color="#008080">if</font><font color="#004080"> atom</font><font color="#0000FF">(</font><font color="#000000">line</font><font color="#0000FF">)</font><font color="#008080"> then
+</font><font color="#7060A8">    puts</font><font color="#0000FF">(</font><font color="#000000">SCREEN</font><font color="#0000FF">,</font><font color="#008000"> "end of file\n"</font><font color="#0000FF">)
+</font><font color="#008080">end if</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            There are generic versions of the atom function implemented as :%opAtom in builtins\VM\pType.e and :%opAtom0 in builtins\VM\pJcc.e that 
+            the compiler only invokes as a last resort, preferring instead to inline that functionality if the argument is known to be assigned or the
+            result variable, if any, is known to be an integer, ie does not require decref/dealloc. The compiler may also completely omit the test 
+            and/or any related code, if type inference/propagation determines that the result will always be true or always false.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="integer.htm">integer</a>,
+          <a href="sequence.htm">sequence</a>,
+          <a href="string.htm">string</a>,
+          <a href="object.htm">object</a>,
+          <a href="Atoms.htm">Atoms</a>,
+          <a href="language.htm">Core Language</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,119 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">set_timedate_formats</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          include builtins\timedate.e
+          <br>
+          <br>
+          set_timedate_formats(<a href="sequence.htm">sequence</a> parse_fmts,
+                               <a href="object.htm">object</a> out_fmt=1,
+                               <a href="integer.htm">integer</a> partial=0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Set the <a href="tdformats.htm">format strings</a> to use as defaults on subsequent parsing and display formatting calls.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The parse_fmts parameter is a list of format strings, each of which is attempted in turn by <a href="parse_date_string.htm">parse_date_string</a>().
+            <br>
+            <br>
+            The out_fmt parameter is a single string or index to parse_fmts for <a href="format_timedate.htm">format_timedate</a>().
+            <br>
+            <br>
+            The partial flag controls whether to ignore excess text when parsing, and if set, then parse_fmts should be ordered 
+            most detailed first - in the following example you would not want it to completely ignore the trailing "EST", but if
+            no timezone is present then (as shown) you might simply assume it is a local time.
+            <br>
+            <br>
+            The partial flag is currently treated as a boolean but may at some point in the future be extended to take additional settings, 
+            for example I can already imagine that one day I might want a value of 2 (or whatever) to mean return {timedate,remaining_text}.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+include builtins\timedate.e
+set_timedate_formats({"Mmmm d yyyy h:mmam tz"})
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> builtins\timedate.e
+</font><font color="#5E005E">set_timedate_formats</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#008000">"Mmmm d yyyy h:mmam tz"</font><font color="#800000">}</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+include builtins\timedate.e
+set_timedate_formats({"h:mmpm tz",
+                      "h:mmpm",
+                      "h:mm tz",
+                      "h:mm"})
+timedate td = parse_date_string("18:05 EST")
+td = set_timezone(td,"GMT")
+?format_timedate(td)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> builtins\timedate.e
+</font><font color="#5E005E">set_timedate_formats</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#008000">"h:mmpm tz"</font><font color="#0000FF">,
+</font><font color="#008000">                      "h:mmpm"</font><font color="#0000FF">,
+</font><font color="#008000">                      "h:mm tz"</font><font color="#0000FF">,
+</font><font color="#008000">                      "h:mm"</font><font color="#800000">}</font><font color="#0000FF">)
+</font><font color="#004080">timedate</font><font color="#000000"> td</font><font color="#0000FF"> =</font><font color="#5E005E"> parse_date_string</font><font color="#0000FF">(</font><font color="#008000">"18:05 EST"</font><font color="#0000FF">)
+</font><font color="#000000">td</font><font color="#0000FF"> =</font><font color="#5E005E"> set_timezone</font><font color="#0000FF">(</font><font color="#000000">td</font><font color="#0000FF">,</font><font color="#008000">"GMT"</font><font color="#0000FF">)
+?</font><font color="#5E005E">format_timedate</font><font color="#0000FF">(</font><font color="#000000">td</font><font color="#0000FF">)</font>
+</pre>
+            <br>
+            displays "6:05pm EST" (as the output format defaults to the first element of parse_fmts).
+            <br>
+            If the input to <a href="parse_date_string.htm">parse_date_string</a>() has a timezone then <a href="set_timezone.htm">set_timezone</a>("GMT") has no effect.
+            <br>
+            In this case four formats are required to allow 12 or 24 hour input, with or without an explicit timezone.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="timedate.htm">timedate</a>,
+          <a href="timedelta.htm">timedelta</a>,
+          <a href="parse_date_string.htm">parse_date_string</a>,
+          <a href="set_timezone.htm">set_timezone</a>,
+          <a href="format_timedate.htm">format_timedate</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

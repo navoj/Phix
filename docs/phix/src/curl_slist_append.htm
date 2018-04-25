@@ -1,0 +1,97 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">curl_slist_append</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include builtins\libcurl.e
+            <br>
+            <br>
+            <a href="atom.htm">atom</a> slist = curl_slist_append(<a href="atom.htm">atom</a> slist slist, <a href="string.htm">string</a> s)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Add a string to an slist.
+            <br>
+            <br>
+            curl_slist_append appends a string to a linked list of strings. <br>
+            The existing list should be passed as the first argument and the new list is returned from this function. <br>
+            Pass in NULL in the list argument to create a new list. <br>
+            The specified string has been appended when this function returns. <br>
+            curl_slist_append copies the string.
+            <br>
+            <br>
+            The list should be freed again (after usage) with <a href="curl_slist_free_all.htm">curl_slist_free_all</a>.
+            <br>
+            <br>
+<!--
+            Return value: A null pointer is returned if anything went wrong, otherwise the new list pointer is returned.
+-->
+            Return value: A fatal error occurs if anything went wrong, otherwise the new list pointer is returned.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+           <div id="code-snippet-1" class="codeSnippetContainer" xmlns="">
+            <div class="codeSnippetContainerCodeContainer">
+             <div class="codeSnippetToolBar">
+              <div class="codeSnippetToolBarText">
+               <a id="copytext" href="javascript:CopyToClipboard('CodeSnippetContainerCode_13a75j95-m3bj-8973-976j-3d5492d71468');">Copy</a>
+              </div>
+             </div>
+             <div id="CodeSnippetContainerCode_13a75j95-m3bj-8973-976j-3d5492d71468" class="codeSnippetContainerCode" dir="ltr">
+              <div style="color:Black;">
+<!--eucode>
+atom slist = curl_slist_append(NULL, "pragma:")
+--if slist==NULL then return -1 end if -- (now a fatal error)
+curl_easy_setopt(some_handle, CURLOPT_HTTPHEADER, slist)
+curl_easy_perform(some_handle)
+curl_slist_free_all(slist)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">atom</font><font color="#000000"> slist</font><font color="#0000FF"> =</font><font color="#5E005E"> curl_slist_append</font><font color="#0000FF">(</font><font color="#004600">NULL</font><font color="#0000FF">,</font><font color="#008000"> "pragma:"</font><font color="#0000FF">)
+</font><font color="#000080"><i>--if slist==NULL then return -1 end if -- (now a fatal error)
+</i></font><font color="#5E005E">curl_easy_setopt</font><font color="#0000FF">(</font><font color="#000000">some_handle</font><font color="#0000FF">,</font><font color="#004600"> CURLOPT_HTTPHEADER</font><font color="#0000FF">,</font><font color="#000000"> slist</font><font color="#0000FF">)
+</font><font color="#5E005E">curl_easy_perform</font><font color="#0000FF">(</font><font color="#000000">some_handle</font><font color="#0000FF">)
+</font><font color="#5E005E">curl_slist_free_all</font><font color="#0000FF">(</font><font color="#000000">slist</font><font color="#0000FF">)</font>
+</pre>
+              </div>
+             </div>
+            </div>
+           </div>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="curl_slist_free_all.htm">curl_slist_free_all</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

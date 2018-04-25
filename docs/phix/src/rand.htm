@@ -1,0 +1,110 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">rand</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="atom.htm">atom</a> x2 = rand(<a href="atom.htm">atom</a> x1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Return a random integer from 1 to x1, where x1 may be from 1 to
+            the largest <a href="machine_word.htm">machine_word</a>()-sized 
+            value, ie #FFFFFFFF on 32 bit and #FFFFFFFFFFFFFFFF on 64 bit.
+            <br>
+            <br>
+            Note that you can specify -1 to achieve that, whereas a value of 
+            0 in x1 triggers a fatal error, and as usual to store >31/63 bit
+            integers, you (may) need to use atom variables.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            This function may be applied to an <a href="atom.htm">atom</a> or sq_rand() to all elements
+            of a <a href="sequence.htm">sequence</a>. The rules for
+          <a href="seqops.htm">sequence operations</a> apply.
+            <br>
+            <br>
+            In order to get reproducible results from this function, you should
+            call <a href="set_rand.htm">set_rand</a>() with a reproducible value prior to calling this.
+            <br>
+            <br>
+            You should note that the implementation is trivial (see builtins\VM\pRand.e) 
+            and you should not assume that the results will be perfectly distributed or 
+            cryptographically secure. Many other random number generators can be found 
+            in the RDS Eu archive, let me know of any that you think should be included 
+            in the standard distribution.
+            <br>
+            <br>
+            In stark contrast to the usual way arguments are handled, all negative integers in x1 are treated as unsigned. 
+            This has turned out to be quite handy in a few cases (eg websockets), and only happens because of the low-level 
+            way it is implemented, specifically builtins\VM\pRand.e deliberately uses a jbe rather than a jle.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+s = rand(10)
+-- s might be any number between 1 and 10 inclusive.
+</eucode-->
+<pre>
+<font color="#000000">s</font><font color="#0000FF"> =</font><font color="#7060A8"> rand</font><font color="#0000FF">(</font><font color="#000000">10</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- s might be any number between 1 and 10 inclusive.</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See :%opRand in builtins\VM\pRand.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="set_rand.htm">set_rand</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,300 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupGLFrame</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandle</a> ih = IupGLFrame(<a href="Ihandle.htm">Ihandln</a> child=NULL,
+            <a href="string.htm">string</a> attributes="", <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates an embedded OpenGL container, which draws a frame with a title around its child. <br>
+            It inherits from <a href="IupGLSubCanvas.htm">IupGLSubCanvas</a>. It exists only inside an <a href="IupGLCanvasBox.htm">IupGLCanvasBox</a>.
+            <br>
+            <br>
+            child: Identifier of an interface element which will receive the frame around it. It can be NULL.<br>
+            For more information on the attributes and data parameters see <a href="IupSetAttributes.htm">IupSetAttributes</a>.
+            <br>
+            <br>
+            Returns: the identifier of the created element.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            The IupGLFrame element handles all attributes defined for a <a href="IupGLSubCanvas.htm">IupGLSubCanvas</a> control.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          ALIGNMENT
+         </td>
+         <td>
+            (non inheritable) Horizontal and vertical alignment. <br>
+            Possible values: "ALEFT", "ACENTER" and "ARIGHT",  combined to "ATOP", "ACENTER" and "ABOTTOM". Default: "ACENTER:ACENTER". <br>
+            Partial values are also accepted, like "ARIGHT" or ":ATOP", the other value will be used from the current alignment. 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          BACKCOLOR
+         </td>
+         <td>
+            (non inheritable) Color used as background when <a href="IupGLFrame.htm#TITLE">TITLE</a> and IMAGE are not defined. <br>
+            Can have an alpha component. Default: NULL. <br>
+            Used instead of BGCOLOR to avoid inheritance problems.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          BACKIMAGE
+         </td>
+         <td>
+            (non inheritable) Image name to be used as background when <a href="IupGLFrame.htm#TITLE">TITLE</a> and IMAGE are not defined.  <br>
+            It will be zoomed to fill the background (it does not includes the border). <br>
+            Use <a href="IupSetHandle.htm">IupSetHandle</a> or <a href="IupSetAttributeHandle.htm">IupSetAttributeHandle</a> to associate an image to a name. 
+            See also <a href="IupImage.htm">IupImage</a>. (Since 3.11.1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          BACKIMAGEINACTIVE
+         </td>
+         <td>
+            (non inheritable) Background image name of the element when inactive. <br>
+            If it is not defined then the BACKIMAGE is used and its colors will be replaced by a modified version creating the disabled effect. (since 3.11.2)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          EXPAND
+         </td>
+         <td>
+            (non inheritable) The default value is "YES".
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          FORECOLOR
+         </td>
+         <td>
+            (non inheritable) Text color. <br>
+            Can have an alpha component. Default: "0 0 0". <br>
+            Used instead of FGCOLOR to avoid inheritance problems. 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          FRAMECOLOR
+         </td>
+         <td>
+            (non inheritable) Color used to draw the frame border. <br>
+            Can have an alpha component. Default: "50 150 255". <br>
+            Used instead of BORDERCOLOR to avoid inheritance problems.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          FRAMEWIDTH
+         </td>
+         <td>
+            (non inheritable) Line width of the frame border. Default: 1.  <br>
+            Used instead of BORDERWIDTH to avoid inheritance problems.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGE
+         </td>
+         <td>
+            (non inheritable) Image name. <br>
+            Use <a href="IupSetHandle.htm">IupSetHandle</a> or <a href="IupSetAttributeHandle.htm">IupSetAttributeHandle</a> to associate an image to a name. 
+            See also <a href="IupImage.htm">IupImage</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGEHIGHLIGHT
+         </td>
+         <td>
+            (non inheritable) Image name of the element in highlight state. <br>
+            If it is not defined then the IMAGE is used.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGEINACTIVE
+         </td>
+         <td>
+            (non inheritable) Image name of the element when inactive. <br>
+            If it is not defined then the IMAGE is used and its colors will be replaced by a modified version creating the disabled effect. 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGEPRESS
+         </td>
+         <td>
+            (non inheritable) Image name of the element in pressed state. <br>
+            If it is not defined then the IMAGE is used.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGEPOSITION
+         </td>
+         <td>
+            (non inheritable) Position of the image relative to the text when both are defined. <br>
+            Can be: LEFT, RIGHT, TOP, BOTTOM. Default: LEFT.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MOVEABLE
+         </td>
+         <td>
+            (non inheritable) Enable the frame to be interactively moved when it is a direct child of the <a href="IupGLCanvasBox.htm">IupGLCanvasBox</a>. Default: NO.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MOVETOTOP
+         </td>
+         <td>
+            (non inheritable) When MOVEABLE=Yes and the frame is moved then its ZORDER is also set to TOP. (Since 3.11.1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          PADDING
+         </td>
+         <td>
+            (non inheritable) Internal margin for the title area. Default value: "2x0".
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SPACING
+         </td>
+         <td>
+            (non inheritable) Defines the spacing between the image and the title. Default: "2".
+              <a name=TITLE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#TITLE">TITLE</a>
+         </td>
+         <td>
+            (non inheritable) Text the user will see at the top of the frame. 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TITLEBACKIMAGE
+         </td>
+         <td>
+            (non inheritable) Image name to be used as background on the title area. <br>
+            Works only when TITLEBOX=Yes. <br>
+            Use <a href="IupSetHandle.htm">IupSetHandle</a> or <a href="IupSetAttributeHandle.htm">IupSetAttributeHandle</a> to associate an image to a name. 
+            See also <a href="IupImage.htm">IupImage</a>. (Since 3.11.1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TITLEBACKIMAGEINACTIVE
+         </td>
+         <td>
+            (non inheritable) Background image name of the element when inactive. <br>
+            If it is not defined then the TITLEBACKIMAGE is used and its colors will be replaced by a modified version creating the disabled effect.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TITLEBOX
+         </td>
+         <td>
+            (non inheritable) Enable a different visual style for the frame. <br>
+            Instead of the traditional round frame that starts and ends at the title area, it will draw a filled box for the title area and a regular rectangle around the child. Default: NO.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TITLEOFFSET
+         </td>
+         <td>
+            (non inheritable) Horizontal offset from the left border to start the title area. Default: 5.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="common.htm#CLIENTSIZE">CLIENTSIZE</a>,
+            <a href="common.htm#CLIENTOFFSET">CLIENTOFFSET</a>: also accepted.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Callbacks</b>
+         </td>
+         <td>
+            The IupGLFrame element handles all callbacks defined for the <a href="IupGLSubCanvas.htm">IupGLSubCanvas</a> control.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MOVE_CB
+         </td>
+         <td>
+            Called after the frame was moved on the <a href="IupGLCanvasBox.htm">IupGLCanvasBox</a>, when MOVEABLE=Yes. The coordinates are the same as the POSITION attribute.
+            <br>
+            <br>
+            function move_cb(<a href="Ihandle.htm">Ihandle</a> ih, <a href="integer.htm">integer</a> x, y)
+            <br>
+            ih: identifier of the element that activated the event.
+            x, y: coordinates of the new position. 
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupCanvas.htm">IupCanvas</a>,
+          <a href="IupGLCanvas.htm">IupGLCanvas</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,96 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">trim</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            <a href="object.htm">object</a> res = trim(<a href="object.htm">object</a> source, <a href="object.htm">object</a> what=" \t\r\n", <a href="integer.htm">integer</a> ret_index=0)
+            <br>
+            <i>or ...</i>
+            <br>
+            <a href="object.htm">object</a> res = trim_head(<a href="object.htm">object</a> source, <a href="object.htm">object</a> what=" \t\r\n", <a href="integer.htm">integer</a> ret_index=0)
+            <br>
+            <i>-- or --</i>
+            <br>
+            <a href="object.htm">object</a> res = trim_tail(<a href="object.htm">object</a> source, <a href="object.htm">object</a> what=" \t\r\n", <a href="integer.htm">integer</a> ret_index=0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Trim whitespace from strings.
+            <br>
+            <br>
+            source: object (string) to be trimmed.<br>
+            what: elements (characters) to be removed.<br>
+            ret_index: if non-zero, return {startpos,endpos}, startpos, or endpos respectively.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Can theoretically be used for other purposes besides trimming whitespace, perhaps to trim unused entries from a table.
+            <br>
+            <br>
+            When ret_index is non-zero, the result is {startpos,endpos} (trim), startpos (trim_head), or endpos (trim_tail).
+            <br>
+            <br>
+            To simplify processing, if source is not a <a href="sequence.htm">sequence</a>/<a href="string.htm">string</a>, but instead 
+            something like EOF (ie -1), it is returned unaltered.<br>
+            Note however that feature is certainly <i>not</i> intended for use when working with indexes (ret_index!=0), since treating
+            a -1 (or whatever) result as an index would probably be quite wrong! Instead it is usually easier to test whether the source 
+            is a sequence and avoid the call, rather than struggle to interpret the result correctly (that is, when ret_index is non-zero).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+?trim(" abc ")          -- prints "abc"
+?trim("\"abc\"")        -- prints ""abc""
+?trim("\"abc\"",'\"')   -- prints "abc" (not ""abc"")
+?trim(table,{{}})       -- removes s[i]={} entries from start and end (note the extra {})
+?trim(table,{{},0})     -- removes s[i]={} or 0 ""
+?trim(gets(fn))         -- trim returns eof (-1) unaltered.
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#0000FF">?</font><font color="#5E005E">trim</font><font color="#0000FF">(</font><font color="#008000">" abc "</font><font color="#0000FF">)         </font><font color="#000080"><i> -- prints "abc"
+</i></font><font color="#0000FF">?</font><font color="#5E005E">trim</font><font color="#0000FF">(</font><font color="#008000">"\"abc\""</font><font color="#0000FF">)       </font><font color="#000080"><i> -- prints ""abc""
+</i></font><font color="#0000FF">?</font><font color="#5E005E">trim</font><font color="#0000FF">(</font><font color="#008000">"\"abc\""</font><font color="#0000FF">,</font><font color="#008000">'\"'</font><font color="#0000FF">)  </font><font color="#000080"><i> -- prints "abc" (not ""abc"")
+</i></font><font color="#0000FF">?</font><font color="#5E005E">trim</font><font color="#0000FF">(</font><font color="#000000">table</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#800080">{}</font><font color="#800000">}</font><font color="#0000FF">)      </font><font color="#000080"><i> -- removes s[i]={} entries from start and end (note the extra {})
+</i></font><font color="#0000FF">?</font><font color="#5E005E">trim</font><font color="#0000FF">(</font><font color="#000000">table</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#800080">{}</font><font color="#0000FF">,</font><font color="#000000">0</font><font color="#800000">}</font><font color="#0000FF">)    </font><font color="#000080"><i> -- removes s[i]={} or 0 ""
+</i></font><font color="#0000FF">?</font><font color="#5E005E">trim</font><font color="#0000FF">(</font><font color="#7060A8">gets</font><font color="#800000">(</font><font color="#000000">fn</font><font color="#800000">)</font><font color="#0000FF">)        </font><font color="#000080"><i> -- trim returns eof (-1) unaltered.</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\ptrim.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

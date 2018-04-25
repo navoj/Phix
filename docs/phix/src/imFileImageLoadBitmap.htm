@@ -1,0 +1,144 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">imFileImageLoadBitmap</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="cdCanvas.htm#imImage">imImage</a> im = imFileImageLoadBitmap(<a href="string.htm">string</a> filename, <a href="integer.htm">integer</a> index, <a href="atom.htm">atom</a> pError)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Loads an image from file, but forces the image to be a bitmap. Opens, loads and closes the file. 
+            <br>
+            <br>
+            filename: Name of the file to be loaded.<br>
+            index: specifies the image number between 0 and image_count-1. <br>
+            pError: pointer to allocated memory which recieves an error code.
+            <br>
+            <br>
+DEV         Returns NULL on failure. Attributes from the file will be stored with the image. See also imErrorCodes.
+         </td>
+        </tr>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            This wraps the C function imFileImageLoadBitmap, which IupLoadImage invokes internally (when appropriate).
+            Use IupLoadImage to obtain an <a href="Ihandle.htm">Ihandle</a> which can be used on a control; imFileImageLoadBitmap returns an 
+            <a href="cdCanvas.htm#imImage">imImage</a>, which is more suitable for image manipulation. See simple_paint.exw for an example of use.
+            <br>
+              <a name=aux></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Auxillary Functions</b>
+         </td>
+         <td>
+            The following routines can be used with <a href="cdCanvas.htm#imImage">imImage</a> handles (see simple_paint.exw for examples of use):
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> width = <b>im_width</b>(<a href="cdCanvas.htm#imImage">imImage</a> image) &nbsp;          -- (ie <code>im_width(image)</code> is equilvalent to <code>image-&gt;width</code> in C)
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> height = <b>im_height</b>(<a href="cdCanvas.htm#imImage">imImage</a> image)   &nbsp;          -- (ie <code>im_height(image)</code> is equilvalent to <code>image-&gt;height</code> in C)
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> depth = <b>im_depth</b>(<a href="cdCanvas.htm#imImage">imImage</a> image) &nbsp;          -- (ie <code>im_depth(image)</code> is equilvalent to <code>image-&gt;depth</code> in C)
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> color_space = <b>im_color_space</b>(<a href="cdCanvas.htm#imImage">imImage</a> image) &nbsp; -- (ie <code>im_color_space(image)</code> is equilvalent to <code>image-&gt;color_space</code> in C)
+            <br>
+            <br>
+            <a href="atom.htm">atom</a> dataptr = <b>im_data</b>(<a href="cdCanvas.htm#imImage">imImage</a> image) &nbsp;               -- (ie <code>im_data(image)</code> is equilvalent to <code>image-&gt;data</code> in C)
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> {r,g,b} = <b>im_pixel</b>(<a href="cdCanvas.htm#imImage">imImage</a> image, <a href="integer.htm">integer</a> x, y)
+            <br>
+            <br>
+            <b>imImageSetAttribString</b>(<a href="cdCanvas.htm#imImage">imImage</a> image, <a href="string.htm">string</a> attrib, <a href="nullable_string.htm">nullable_string</a> v)
+            <br>
+            <br>
+            <a href="string.htm">string</a> res = <b>imImageGetAttribString</b>(<a href="cdCanvas.htm#imImage">imImage</a> image, <a href="string.htm">string</a> attrib)   Returns "" if not found.
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> error = <b>imFileImageSave</b>(<a href="string.htm">string</a> filename, <a href="string.htm">string</a> fmt, <a href="cdCanvas.htm#imImage">imImage</a> image)
+            <br>
+            <br>
+            <b>imProcessRenderFloodFill</b>(<a href="cdCanvas.htm#imImage">imImage</a> image, <a href="integer.htm">integer</a> start_x, start_y, <a href="sequence.htm">sequence</a> replace_color, <a href="atom.htm">atom</a> tolerance)
+            <br>
+            <br>
+            <b>imProcessRenderConstant</b>(<a href="cdCanvas.htm#imImage">imImage</a> image, <a href="sequence.htm">sequence</a> v)
+            <br>
+            <br>
+            <b>imImageDestroy</b>(<a href="cdCanvas.htm#imImage">imImage</a> image)
+            <br>
+            <br>
+            <b>imImageRemoveAlpha</b>(<a href="cdCanvas.htm#imImage">imImage</a> image)
+            <br>
+            <br>
+            <a href="cdCanvas.htm#imImage">imImage</a> res = <b>imImageCreateBased</b>(<a href="cdCanvas.htm#imImage">imImage</a> image, <a href="integer.htm">integer</a> width=-1, height=-1, color_space=-1, data_type=-1)
+            <br>
+            <br>
+            <b>imConvertColorSpace</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image)
+            <br>
+            <br>
+            <a href="cdCanvas.htm#imImage">imImage</a> image = <b>imImageCreate</b>(<a href="integer.htm">integer</a> width, height, color_space, data_type)
+            <br>
+            <br>
+            <b>imProcessResize</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image, <a href="integer.htm">integer</a> order)
+            <br>
+            <br>
+            <a href="cdCanvas.htm#imImage">imImage</a> clone = <b>imImageClone</b>(<a href="cdCanvas.htm#imImage">imImage</a> image)
+            <br>
+            <br>
+            <b>imProcessMirror</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image)
+            <br>
+            <br>
+            <b>imProcessFlip</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image)
+            <br>
+            <br>
+            <b>imProcessRotate180</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image)
+            <br>
+            <br>
+            <b>imProcessRotate90</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image, <a href="integer.htm">integer</a> dir_clockwise)
+            <br>
+            <br>
+            <b>imProcessNegative</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image)
+            <br>
+            <br>
+            <b>imProcessToneGamut</b>(<a href="cdCanvas.htm#imImage">imImage</a> src_image, <a href="cdCanvas.htm#imImage">imImage</a> dst_image, <a href="integer.htm">integer</a> op, <a href="sequence.htm">sequence</a> params)
+            <br>
+<!--
+ imFileImageLoadBitmap.htm#aux
+-->
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

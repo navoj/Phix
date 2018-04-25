@@ -1,0 +1,553 @@
+﻿--
+-- HelloUTF8.exw
+--
+--  Demonstrates Phix compiling a UTF8 source (for this be such a beast) and 
+--  invoking WideString Windows API routines instead of the AnsiString ones.
+--
+--  At the moment, libraries such as arwen and win32lib are ansi-only, but this
+--  shows it ought not necessarily be particularly difficult to craft a fully
+--  Unicode (UTF8) compliant version of them (which would work seamlessly even
+--  if all your project sources were still ansi text files). Which is not the
+--  same as claiming it would be a quick, short, interesting, or trivial task.
+--
+--  Edita (0.3.6+) now lets you edit and create UTF8 files, look on the open
+--  and save file dialog for the "Encoding" dropdown. Mind you, I say arwen 
+--  is ansi-only, but Edita manages fairly well, at least where it matters,
+--  though not necessarily on the menus, config files, etc.
+--
+
+integer xMessageBoxW, 
+        xGetActiveWindow,
+        xMultiByteToWideChar
+
+integer initX = 0
+
+constant CP_UTF8 = 65001
+
+--printf(1,"x x x £\n")
+procedure Xinit()
+atom user32, kernel32
+    user32 = open_dll("user32.dll")
+    kernel32 = open_dll("kernel32.dll")
+--#without reformat
+    xMessageBoxW = define_c_func(user32, "MessageBoxW",
+        {C_POINTER, --  HWND     hWnd,      // handle of owner window
+         C_POINTER, --  LPCTSTR  lpText,    // address of text in message box
+         C_POINTER, --  LPCTSTR  lpCaption, // address of title of message box
+         C_INT},    --  UINT     uType      // style of message box
+        C_INT)      -- int 
+    if xMessageBoxW=-1 then ?9/0 end if
+    xGetActiveWindow = define_c_func(user32, "GetActiveWindow",
+        {},
+        C_LONG)     -- HWND
+    if xGetActiveWindow=-1 then ?9/0 end if
+    xMultiByteToWideChar = define_c_func(kernel32,"MultiByteToWideChar",
+        {C_INT,     --  UINT    CodePage,       // code page 
+         C_INT,     --  DWORD   dwFlags,        // character-type options 
+         C_POINTER, --  LPCSTR  lpMultiByteStr, // address of string to map 
+         C_INT,     --  int     cchMultiByte,   // number of characters in string 
+         C_POINTER, --  LPWSTR  lpWideCharStr,  // address of wide-character buffer 
+         C_INT},    --  int     cchWideChar     // size of buffer 
+        C_INT)      -- int
+    if xMultiByteToWideChar=-1 then ?9/0 end if 
+--#with reformat
+    initX = 1
+end procedure
+
+function WideString(string s)
+--
+-- Convert the input UTF8 string to WideChar. 
+-- The calling routine must free() the result.
+--
+integer nLen    -- length of UTF8 input, in bytes, plus 1 for the trailing null byte
+integer wLen    -- length of WideChar output, in WideChars, plus 1 for a trailing null word
+atom pRes
+    nLen = length(s)+1
+    wLen = c_func(xMultiByteToWideChar,{CP_UTF8,0,s,nLen,NULL,0})+1
+    pRes = allocate(wLen*2)
+    wLen = c_func(xMultiByteToWideChar,{CP_UTF8,0,s,nLen,pRes,wLen})
+    return pRes
+end function
+
+function MessageBoxW(string text, string title, integer style)
+atom hWnd
+atom pText, pTitle
+integer res
+    if not initX then Xinit() end if
+    hWnd = c_func(xGetActiveWindow, {})
+    pText = WideString(text)
+    pTitle = WideString(title)
+    res = c_func(xMessageBoxW, {hWnd,pText,pTitle,style})
+    free(pText)
+    free(pTitle)
+    return res
+end function
+
+--DEV all this should have "if platform()=WINDOWS then" around it...
+include builtins\cffi.e
+constant 
+tCOORD = """
+typedef struct _COORD {
+  SHORT X;
+  SHORT Y;
+} COORD, *PCOORD;
+""",
+tCFI="""
+typedef struct _CONSOLE_FONT_INFOEX {
+  ULONG cbSize;
+  DWORD nFont;
+  COORD dwFontSize;
+  UINT  FontFamily;
+  UINT  FontWeight;
+  WCHAR FaceName[LF_FACESIZE];
+} CONSOLE_FONT_INFOEX, *PCONSOLE_FONT_INFOEX;
+""",
+tGCOCP = """
+UINT WINAPI GetConsoleOutputCP(void);
+""",
+tSCOCP = """
+BOOL WINAPI SetConsoleOutputCP(
+  _In_  UINT wCodePageID
+);
+""",		   
+tSCCFX = """
+BOOL WINAPI SetCurrentConsoleFontEx(
+  _In_  HANDLE hConsoleOutput,
+  _In_  BOOL bMaximumWindow,
+  _In_  PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx
+);
+""",
+tGSH = """
+HANDLE WINAPI GetStdHandle(
+  _In_  DWORD nStdHandle
+);
+""",
+STD_OUTPUT_HANDLE = -11,
+idCOORD = define_struct(tCOORD),
+idCFI = define_struct(tCFI),
+k32 = open_dll("kernel32.dll"),
+xGetConsoleOutputCP = define_cffi_func(k32,tGCOCP),
+xSetConsoleOutputCP = define_cffi_func(k32,tSCOCP),
+xSetCurrentConsoleFontEx = define_cffi_func(k32,tSCCFX),
+xGetStdHandle = define_cffi_func(k32,tGSH),
+pCFI = allocate_struct(idCFI),
+$
+set_struct_field(idCFI,pCFI,"cbSize",get_struct_size(idCFI))
+set_struct_field(idCFI,pCFI,"nFont",12)
+set_struct_field(idCFI,pCFI,"dwFontSize.X",11)
+set_struct_field(idCFI,pCFI,"dwFontSize.Y",18)
+set_struct_field(idCFI,pCFI,"FontFamily",54)
+set_struct_field(idCFI,pCFI,"FontWeight",400)
+--set_struct_field(idCFI,pCFI,"FaceName","Lucida Console")
+constant {name_offset} = get_field_details(idCFI,"FaceName")
+--poke2(pCFI+name_offset,"Lucida Console\0")
+poke2(pCFI+name_offset,"Consolas\0")
+--poke2(pCFI+name_offset,"Arial Unicode MS\0")
+
+puts(1,"")  -- force console to exist
+atom hConsole = c_func(xGetStdHandle,{STD_OUTPUT_HANDLE})
+atom prevCP = c_func(xGetConsoleOutputCP,{})
+printf(1,"prevCP:%d\n",prevCP)
+if c_func(xSetCurrentConsoleFontEx,{hConsole,FALSE,pCFI})=0 then
+    printf(1,"SetCurrentConsoleFontEx failed\n")
+end if
+-- the following is equivalent to running "chcp 65001":
+if c_func(xSetConsoleOutputCP,{CP_UTF8})=0 then
+    printf(1,"SetConsoleOutputCP failed\n")
+end if
+
+puts(1,"├─│└ ─│ ┄ ┆ ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼ \n")
+sequence lc = {}, uc = {}
+for ch=1 to 255 do
+    if islower(ch) then lc &= ch end if
+    if isupper(ch) then uc &= ch end if
+end for
+lc = utf32_to_utf8(lc)&"\n"
+uc = utf32_to_utf8(uc)&"\n"
+puts(1,lc)
+puts(1,uc)
+puts(1,"♣♦♥♠\n")
+--puts(1,utf32_to_utf8({219}))  -- nope.. (left arrow with stroke)
+--constant s_suits = "♣♦♥♠", s_nums = "A23456789TJQK"
+--  for c=1 to 52 do
+--      printf(1,"  \x1B[\x02m♣\x1B[m%c", {--32 - mod(1+c,4) / 2,
+--                      s_suits[mod(c,4)+1], s_nums[floor(c/4)+1]});
+--  end for
+--DEV
+puts(1,"\u25b3\n")  -- nope...
+puts(1,"△\n")   -- nope...
+
+--sequence s = {88,32,73,110,104,97,108,116,115,118,101,114,122,101,105,99,104,110,105,115,13,10,49,48,46,52,46,50,32,75,111,110,122,101,112,116,105,111,110,101,108,108,101,32,68,97,114,115,116,101,108,108,117,110,103,32,115,116,114,97,116,101,103,105,115,99,104,101,114,32,67,111,110,116,114,111,108,108,105,110,103,105,110,115,116,114,117,109,101,110,116,101,32,49,53,52,13,10,49,48,46,53,32,73,110,110,111,118,97,116,105,111,110,115,98,101,119,101,114,116,117,110,103,32,105,109,32,82,97,104,109,101,110,32,100,101,114,32,66,105,108,97,110,122,105,101,114,117,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,53,53,13,10,49,48,46,54,32,65,107,116,117,101,108,108,101,32,69,110,116,119,105,99,107,108,117,110,103,101,110,32,117,110,100,32,70,111,114,115,99,104,117,110,103,115,98,101,100,97,114,102,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,53,56,13,10,76,105,116,101,114,97,116,117,114,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,54,48,13,10,49,49,32,75,111,110,116,105,110,117,105,101,114,108,105,99,104,101,32,66,117,115,105,110,101,115,115,32,73,110,110,111,118,97,116,105,111,110,58,13,10,83,121,115,116,101,109,97,116,105,115,99,104,101,32,87,101,105,116,101,114,101,110,116,119,105,99,107,108,117,110,103,32,107,111,109,112,108,101,120,101,114,32,71,101,115,99,104,228,102,116,115,108,246,115,117,110,103,101,110,13,10,100,117,114,99,104,32,82,101,105,102,101,103,114,97,100,109,111,100,101,108,108,45,98,97,115,105,101,114,116,101,115,32,77,97,110,97,103,101,109,101,110,116,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,54,51,13,10,82,111,98,101,114,116,32,87,105,110,116,101,114,32,117,110,100,32,84,111,98,105,97,115,32,77,101,116,116,108,101,114,13,10,49,49,46,49,32,69,105,110,108,101,105,116,117,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,54,51,13,10,49,49,46,50,32,83,105,110,110,44,32,90,119,101,99,107,32,117,110,100,32,84,121,112,101,110,32,118,111,110,32,82,101,105,102,101,103,114,97,100,109,111,100,101,108,108,101,110,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,54,52,13,10,49,49,46,51,32,65,110,119,101,110,100,117,110,103,32,105,110,32,100,101,114,32,80,114,97,120,105,115,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,54,55,13,10,49,49,46,52,32,83,121,115,116,101,109,97,116,105,115,99,104,101,32,69,110,116,119,105,99,107,108,117,110,103,32,118,111,110,32,82,101,105,102,101,103,114,97,100,109,111,100,101,108,108,101,110,32,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,55,48,13,10,49,49,46,53,32,83,121,115,116,101,109,97,116,105,115,99,104,101,32,78,117,116,122,117,110,103,32,118,111,110,32,82,101,105,102,101,103,114,97,100,109,111,100,101,108,108,101,110,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,55,55,13,10,49,49,46,54,32,75,111,110,107,108,117,115,105,111,110,32,117,110,100,32,65,117,115,98,108,105,99,107,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,56,48,13,10,76,105,116,101,114,97,116,117,114,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,56,49,13,10,84,101,105,108,32,86,32,71,101,110,101,114,97,116,105,111,110,32,8211,32,68,101,115,105,103,110,32,8211,32,84,101,115,116,32,8211,32,76,97,117,110,99,104,13,10,49,50,32,87,105,101,32,75,111,110,115,117,109,101,110,116,101,110,32,73,110,110,111,118,97,116,105,111,110,101,110,32,119,97,104,114,110,101,104,109,101,110,13,10,78,101,117,97,114,116,105,103,107,101,105,116,32,117,110,100,32,83,105,110,110,104,97,102,116,105,103,107,101,105,116,32,97,108,115,32,122,101,110,116,114,97,108,101,32,68,101,116,101,114,109,105,110,97,110,116,101,110,32,46,46,46,46,46,46,46,46,46,32,49,56,55,13,10,84,111,114,115,116,101,110,32,84,111,109,99,122,97,107,44,32,68,101,110,110,105,115,32,86,111,103,116,32,117,110,100,32,74,111,115,101,102,32,70,114,105,115,99,104,101,105,115,101,110,13,10,49,50,46,49,32,69,105,110,108,101,105,116,117,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,56,55,13,10,49,50,46,50,32,73,110,110,111,118,97,116,105,111,110,115,119,97,104,114,110,101,104,109,117,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,56,56,13,10,49,50,46,50,46,49,32,78,101,117,97,114,116,105,103,107,101,105,116,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,56,57,13,10,49,50,46,50,46,50,32,83,105,110,110,104,97,102,116,105,103,107,101,105,116,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,49,57,50,13,10,49,50,46,50,46,51,32,90,117,115,97,109,109,101,110,102,97,115,115,117,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,48,50,13,10,49,50,46,51,32,73,110,110,111,118,97,116,105,111,110,115,109,97,110,97,103,101,109,101,110,116,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,48,50,13,10,49,50,46,51,46,49,32,83,116,114,97,116,101,103,105,115,99,104,101,32,79,114,105,101,110,116,105,101,114,117,110,103,101,110,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,48,50,13,10,49,50,46,51,46,50,32,67,114,111,115,115,45,102,117,110,107,116,105,111,110,97,108,101,32,73,110,116,101,103,114,97,116,105,111,110,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,48,52,13,10,49,50,46,51,46,51,32,90,117,115,97,109,109,101,110,102,97,115,115,117,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,48,53,13,10,49,50,46,52,32,83,99,104,108,117,115,115,98,101,116,114,97,99,104,116,117,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,48,54,13,10,76,105,116,101,114,97,116,117,114,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,48,55,13,10,49,51,32,67,117,115,116,111,109,101,114,45,68,114,105,118,105,110,103,32,77,97,114,107,101,116,105,110,103,58,32,78,101,117,101,32,75,117,110,100,101,110,98,101,100,252,114,102,110,105,115,115,101,32,119,101,99,107,101,110,32,46,46,46,46,46,46,32,50,49,49,13,10,68,101,110,110,105,115,32,72,101,114,104,97,117,115,101,110,32,117,110,100,32,77,97,114,99,117,115,32,83,99,104,246,103,101,108,13,10,49,51,46,49,32,67,117,115,116,111,109,101,114,45,68,114,105,118,105,110,103,32,105,109,32,77,97,114,107,101,116,105,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,49,49,13,10,49,51,46,49,46,49,32,67,117,115,116,111,109,101,114,45,68,114,105,118,101,110,32,117,110,100,32,67,117,115,116,111,109,101,114,45,68,114,105,118,105,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,49,50,13,10,49,51,46,49,46,50,32,72,101,114,97,117,115,102,111,114,100,101,114,117,110,103,101,110,32,107,117,110,100,101,110,111,114,105,101,110,116,105,101,114,116,101,114,32,73,110,110,111,118,97,116,105,111,110,115,115,116,114,97,116,101,103,105,101,110,32,46,46,46,32,50,49,51,13,10,49,51,46,50,32,80,114,111,122,101,115,115,32,100,101,115,32,67,117,115,116,111,109,101,114,45,68,114,105,118,105,110,103,32,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,49,52,13,10,49,51,46,50,46,49,32,85,110,116,101,114,110,101,104,109,101,110,32,97,117,102,32,110,101,117,101,32,66,101,100,252,114,102,110,105,115,115,101,32,101,105,110,115,116,101,108,108,101,110,32,46,46,46,46,46,46,46,46,46,46,46,46,32,50,49,52,13,10,49,51,46,50,46,50,32,77,105,116,97,114,98,101,105,116,101,114,32,118,111,110,32,104,101,117,116,105,103,101,110,32,66,101,100,252,114,102,110,105,115,115,101,110,32,108,246,115,101,110,32,46,46,46,46,46,46,46,46,46,46,46,46,46,32,50,49,54} 
+--s = s[965..1008]
+--DEV...
+sequence s = {84,101,105,108,32,86,32,71,101,110,101,114,97,116,105,111,110,32,8211,32,68,101,115,105,103,110,32,8211,32,84,101,115,116,32,8211,32,76,97,117,110,99,104,13,10}
+--?match("Teil",s)
+puts(1,s)
+--?"\n\n"
+s = utf16_to_utf8(s)
+puts(1,s)
+
+--puts(1,"日本語") -- not covered...
+--中国    -- means China  -- {20013,22269} = {#4E2D,#56FD}
+--?utf8_to_utf32("中国")
+
+--note these required hacks to ptok.e and ptree.e to get working (search for rosettacode/unicode)
+constant π = 3.14
+printf(1,"π=%g\n",{π})
+constant √ = "root"
+printf(1,"√=%s\n",{√})
+constant λ = "lambda"
+printf(1,"λ=%s\n",{λ})
+constant Σ = "sum"
+printf(1,"Σ=%s\n",{Σ})
+--printf(1,"\u221B")
+--∛
+--?"\u2502 "
+--? "\u2514\u2500" 
+--? "\u251c\u2500"
+
+puts(1,"\u2502\u2514\u2500\u251c\u2500\n")
+puts(1,"£\n")
+
+--"as⃝df̅" becomes "f̅ds⃝a", not "̅fd⃝sa". 
+--"as\u203Ddf\u0305"
+string ctest = "as\u203Ddf\u0305"
+puts(1,ctest)
+
+-- this might have a place in builtins/unicode.e, or perhaps not...
+function unicode_reverse(string utf8)
+sequence utf32 = utf8_to_utf32(utf8)
+integer ch
+    --
+    -- The assumption is made that <char><comb1><comb2>
+    -- and <char><comb2><comb1> would work the same.
+    -- Of course <char> must be first, so this loop
+    -- converts <ch><c1..cN> to <c1..cN><ch>, and the
+    -- following reverse() makes that <ch><cN..c1>.
+    -- (where c1..cN are >=1 combining characters)
+    --
+    for i=1 to length(utf32) do
+        ch = utf32[i]
+        if (ch>=0x300 and ch<=0x36f)
+        or (ch>=0x1dc0 and ch<=0x1dff)
+        or (ch>=0x20d0 and ch<=0x20ff)
+        or (ch>=0xfe20 and ch<=0xfe2f) then
+            utf32[i] = utf32[i-1]
+            utf32[i-1] = ch
+        end if
+    end for
+    utf32 = reverse(utf32)
+    utf8 = utf32_to_utf8(utf32)
+    return utf8
+end function
+--ctest = reverse(ctest)
+string rtest = unicode_reverse(ctest)
+puts(1,rtest)
+
+function poker(string hand)
+    hand = substitute(hand,"10","t")
+    sequence cards = split(hand,no_empty:=1)
+    if length(cards)!=5 then return "invalid hand" end if
+    sequence ranks = repeat(0,13),
+             suits = repeat(0,4)
+    integer jokers = 0
+    for i=1 to length(cards) do
+        sequence ci = utf8_to_utf32(cards[i])
+        if ci="joker" then
+            jokers += 1
+            if jokers>2 then return "invalid hand" end if
+        else
+            if length(ci)!=2 then return "invalid hand" end if
+            integer rank = find(lower(ci[1]),"23456789tjqka")
+            integer suit = find(ci[2],utf8_to_utf32("♥♣♦♠"))
+            if rank=0 or suit=0 then return "invalid hand" end if
+            ranks[rank] += 1
+            suits[suit] += 1
+        end if
+    end for
+    integer straight = match({1,1,1,1,1},ranks) 
+    if not straight then 
+        straight = sort(ranks)[$]=1 and match({0,0,0,0,0,0,0,0},ranks)
+    end if
+    integer _flush = (max(suits)+jokers = 5)
+    integer _pairs = max(ranks)+jokers
+    integer pair = find(2,ranks)
+    integer full_house = _pairs=3 and pair and (jokers=0 or find(2,ranks,pair+1))
+    integer two_pair = find(2,ranks,pair+1)
+    integer high_card = rfind(1,sq_ne(ranks,0))+1
+    if jokers and _pairs=jokers+1 then
+        straight = 1
+        integer k = find(1,ranks), j = jokers
+        for l=k to min(k+5-j,13) do
+            if ranks[l]=0 then
+                if j=0 then
+                    straight = 0
+                    exit
+                end if
+                j -= 1
+            end if
+        end for
+        if straight and j then
+            high_card = min(high_card+j,14)
+        end if
+    elsif straight and ranks[1]!=0 then 
+        high_card = find(0,ranks)
+    end if
+    if _pairs=5             then return {10,"five of a kind", find(5-jokers,ranks)+1} end if
+    if straight and _flush  then return {9,"straight flush", high_card} end if
+    if _pairs=4             then return {8,"four of a kind", find(4-jokers,ranks)+1} end if
+    if full_house           then return {7,"full house", find(3-jokers,ranks)+1} end if
+    if _flush               then return {6,"flush", high_card} end if
+    if straight             then return {5,"straight", high_card} end if
+    if _pairs=3             then return {4,"three of a kind", find(3-jokers,ranks)+1} end if
+    if pair and two_pair    then return {3,"two pair", two_pair+1} end if
+    if pair                 then return {2,"one pair", pair+1} end if
+    if jokers               then return {2,"one pair", high_card} end if
+                                 return {1,"high card",high_card}
+end function
+
+sequence hands = {{0,"2♥ 2♦ 2♣ k♣ q♦"},     -- three-of-a-kind (4)
+                  {0,"2♥ 5♥ 7♦ 8♣ 9♠"},     -- high-card (1)
+                  {0,"a♥ 2♦ 3♣ 4♣ 5♦"},     -- straight (5)
+                  {0,"2♥ 3♥ 2♦ 3♣ 3♦"},     -- full-house (7)
+                  {0,"2♥ 7♥ 2♦ 3♣ 3♦"},     -- two-pair (3)
+                  {0,"2♥ 7♥ 7♦ 7♣ 7♠"},     -- four-of-a-kind (8)
+                  {0,"10♥ j♥ q♥ k♥ a♥"},    -- straight-flush (9)
+                  {0,"4♥ 4♠ k♠ 5♦ 10♠"},    -- one-pair (2)
+                  {0,"q♣ 10♣ 7♣ 6♣ 4♣"},    -- flush (6)
+                  {0,"joker  2♦  2♠  k♠  q♦"},  -- three-of-a-kind (4)
+                  {0,"joker  5♥  7♦  8♠  9♦"},  -- straight (5)
+                  {0,"joker  2♦  3♠  4♠  5♠"},  -- straight (5)
+                  {0,"joker  3♥  2♦  3♠  3♦"},  -- four-of-a-kind (8)
+                  {0,"joker  7♥  2♦  3♠  3♦"},  -- three-of-a-kind (4)
+                  {0,"joker  7♥  7♦  7♠  7♣"},  -- five-of-a-kind (10)
+                  {0,"joker  j♥  q♥  k♥  A♥"},  -- straight-flush (9)
+                  {0,"joker  4♣  k♣  5♦ 10♠"},  -- one-pair (2)
+                  {0,"joker  k♣  7♣  6♣  4♣"},  -- flush (6)
+                  {0,"joker  2♦  joker  4♠  5♠"},   -- straight (5)
+                  {0,"joker  Q♦  joker  A♠ 10♠"},   -- straight (5)
+                  {0,"joker  Q♦  joker  A♦ 10♦"},   -- straight-flush (9)
+                  {0,"joker  2♦  2♠  joker  q♦"}}   -- four-of-a-kind (8)
+
+--/*
+
+2H 2D 2C kC qD: three-of-a-kind
+2H 5H 7D 8C 9S: high-card
+aH 2D 3C 4C 5D: straight
+2H 3H 2D 3C 3D: full-house
+2H 7H 2D 3C 3D: two-pair
+2H 7H 7D 7C 7S: four-of-a-kind 
+10H jH qH kH aH: straight-flush
+4H 4S kS 5D 10S: one-pair
+qC 10C 7C 6C 4C: flush
+
+2♥ 2♦ 2♣ k♣ q♦: three-of-a-kind
+2♥ 5♥ 7♦ 8♣ 9♠: high-card
+a♥ 2♦ 3♣ 4♣ 5♦: straight
+2♥ 3♥ 2♦ 3♣ 3♦: full-house
+2♥ 7♥ 2♦ 3♣ 3♦: two-pair
+2♥ 7♥ 7♦ 7♣ 7♠: four-of-a-kind 
+10♥ j♥ q♥ k♥ a♥: straight-flush
+4♥ 4♠ k♠ 5♦ 10♠: one-pair
+q♣ 10♣ 7♣ 6♣ 4♣: flush
+
+joker  2D  2S  kS  qD: three-of-a-kind
+joker  5H  7D  8S  9D: straight
+joker  2D  3S  4S  5S: straight
+joker  3H  2D  3S  3D: four-of-a-kind
+joker  7H  2D  3S  3D: three-of-a-kind
+joker  7H  7D  7S  7C: five-of-a-kind
+joker  jH  qH  kH  AH: straight-flush
+joker  4C  kC  5D 10S: one-pair
+joker  kC  7C  6C  4C: flush
+joker  2D  joker  4S  5S: straight
+joker  QD  joker  AS 10S: straight
+joker  QD  joker  AD 10D: straight-flush
+joker  2D  2S  joker  qD: four-of-a-kind
+
+joker  2♦  2♠  k♠  q♦: three-of-a-kind
+joker  5♥  7♦  8♠  9♦: straight
+joker  2♦  3♠  4♠  5♠: straight
+joker  3♥  2♦  3♠  3♦: four-of-a-kind
+joker  7♥  2♦  3♠  3♦: three-of-a-kind
+joker  7♥  7♦  7♠  7♣: five-of-a-kind
+joker  j♥  q♥  k♥  A♥: straight-flush
+joker  4♣  k♣  5♦ 10♠: one-pair
+joker  k♣  7♣  6♣  4♣: flush
+joker  2♦  joker  4♠  5♠: straight
+joker  Q♦  joker  A♠ 10♠: straight
+joker  Q♦  joker  A♦ 10♦: straight-flush
+joker  2♦  2♠  joker  q♦: four-of-a-kind
+--*/
+
+for i=1 to length(hands) do
+    hands[i][1] = poker(hands[i][2])
+end for
+ppOpt({pp_Ascii,{#20,#FF}})
+pp(reverse(sort(hands)))
+
+
+? "hello"        -- PLAIN TEXT  
+    --> "hello" 
+     
+?  "ÅßČ░☼□"   -- UTF8 TEXT 
+    -->{195,133,195,159,196,140,226,150,145,226,152,188,226,150,161} 
+
+puts(1,"ÅßČ░☼□") 
+--> "ÅßČ░☼□"  
+print(1, "ÅßČ░☼□" ) 
+
+--/*
+?"ⵚE"
+?utf8_to_utf32("ⵚE")
+?"\xE2\xB5\x9A"&"E"
+lc = "\xE2\xB5\x9A"&"E"
+?utf8_to_utf32("\xE2\xB5\x9A"&"E")
+?"\u2D5A"&"E"
+uc = "\u2D5A"&"E"
+?utf8_to_utf32("\u2D5A"&"E")
+--*/
+
+    {} = MessageBoxW(lc&"\n"&uc, "Unicode 水 test", MB_OK)
+--  {} = MessageBoxW("Hello 水 test of MessageBoxW\n"&ctest&" <==> "&rtest, "Unicode 水 test", MB_OK)
+--str := "日本語"
+-- (I have no idea what 水 might mean, just t'first thing I found on t'internet)
+
+--constant s="ア"
+--?s --DEV
+--for i=1 to length(s) do
+--  puts(1,s[i])
+--  ?s[i]
+--end for
+
+--?'π' --DEV (doc)
+--?"π" --DEV
+--  λ
+{} = c_func(xSetConsoleOutputCP,{prevCP})
+
+
+--/*
+=={{header|Phix}}==
+Woke up this morning with a neat idea for detecting straights, though jokers messed it up a bit.<br>
+Uses an ad-hoc ranking system, not recommended for use in tournaments! Displays hands best-first.<br>
+Note: I have left a copy of this in demo\HelloUTF8.exw to prove it works, but non-ascii on a Windows
+console is not Phix's forte. For an example of using the unicode card characters see [[Playing_cards#Phix]]
+<lang Phix>function poker(string hand)
+function poker(string hand)
+    hand = substitute(hand,"10","t")
+    sequence cards = split(hand,no_empty:=1)
+    if length(cards)!=5 then return "invalid hand1" end if
+    sequence ranks = repeat(0,13),
+             suits = repeat(0,4)
+    integer jokers = 0
+    for i=1 to length(cards) do
+        sequence ci = utf8_to_utf32(cards[i])
+        if ci="joker" then
+            jokers += 1
+            if jokers>2 then return "invalid hand2" end if
+        else
+            if length(ci)!=2 then return "invalid hand3" end if
+            integer rank = find(lower(ci[1]),"23456789tjqka")
+            integer suit = find(ci[2],utf8_to_utf32("♥♣♦♠"))
+--          if rank=0 or suit=0 then return "invalid hand4" end if
+            if rank=0 then ?ci return "invalid hand4" end if
+            if suit=0 then return "invalid hand5" end if
+            ranks[rank] += 1
+            suits[suit] += 1
+        end if
+    end for
+    integer straight = match({1,1,1,1,1},ranks) 
+    if not straight then 
+        straight = sort(ranks)[$]=1 and match({0,0,0,0,0,0,0,0},ranks)
+    end if
+    integer _flush = (max(suits)+jokers = 5)
+    integer _pairs = max(ranks)+jokers
+    integer pair = find(2,ranks)
+    integer full_house = _pairs=3 and pair and (jokers=0 or find(2,ranks,pair+1))
+    integer two_pair = find(2,ranks,pair+1)
+    integer high_card = rfind(1,sq_ne(ranks,0))+1
+    if jokers and _pairs=jokers+1 then
+        straight = 1
+        integer k = find(1,ranks), j = jokers
+        for l=k to min(k+5-j,13) do
+            if ranks[l]=0 then
+                if j=0 then
+                    straight = 0
+                    exit
+                end if
+                j -= 1
+            end if
+        end for
+        if straight and j then
+            high_card = min(high_card+j,14)
+        end if
+    elsif straight and ranks[1]!=0 then 
+        high_card = find(0,ranks)
+    end if
+    if _pairs=5             then return {10,"five of a kind", find(5-jokers,ranks)+1} end if
+    if straight and _flush  then return {9,"straight flush", high_card} end if
+    if _pairs=4             then return {8,"four of a kind", find(4-jokers,ranks)+1} end if
+    if full_house           then return {7,"full house", find(3-jokers,ranks)+1} end if
+    if _flush               then return {6,"flush", high_card} end if
+    if straight             then return {5,"straight", high_card} end if
+    if _pairs=3             then return {4,"three of a kind", find(3-jokers,ranks)+1} end if
+    if pair and two_pair    then return {3,"two pair", two_pair+1} end if
+    if pair                 then return {2,"one pair", pair+1} end if
+    if jokers               then return {2,"one pair", high_card} end if
+                                 return {1,"high card",high_card}
+end function
+
+sequence hands = {{0,"2♥ 2♦ 2♣ k♣ q♦"},
+                  {0,"2♥ 5♥ 7♦ 8♣ 9♠"},
+                  {0,"a♥ 2♦ 3♣ 4♣ 5♦"},
+                  {0,"2♥ 3♥ 2♦ 3♣ 3♦"},
+                  {0,"2♥ 7♥ 2♦ 3♣ 3♦"},
+                  {0,"2♥ 7♥ 7♦ 7♣ 7♠"},
+                  {0,"10♥ j♥ q♥ k♥ a♥"},
+                  {0,"4♥ 4♠ k♠ 5♦ 10♠"},
+                  {0,"q♣ 10♣ 7♣ 6♣ 4♣"},
+                  {0,"joker  2♦  2♠  k♠  q♦"},
+                  {0,"joker  5♥  7♦  8♠  9♦"},
+                  {0,"joker  2♦  3♠  4♠  5♠"},
+                  {0,"joker  3♥  2♦  3♠  3♦"},
+                  {0,"joker  7♥  2♦  3♠  3♦"},
+                  {0,"joker  7♥  7♦  7♠  7♣"},
+                  {0,"joker  j♥  q♥  k♥  A♥"},
+                  {0,"joker  4♣  k♣  5♦ 10♠"},
+                  {0,"joker  k♣  7♣  6♣  4♣"},
+                  {0,"joker  2♦  joker  4♠  5♠"},
+                  {0,"joker  Q♦  joker  A♠ 10♠"},
+                  {0,"joker  Q♦  joker  A♦ 10♦"},
+                  {0,"joker  2♦  2♠  joker  q♦"}}
+
+for i=1 to length(hands) do
+    hands[i][1] = poker(hands[i][2])
+end for
+ppOpt({pp_Ascii,{#20,#FF}})
+pp(reverse(sort(hands)))</lang>
+{{out}}
+<pre>
+{{{10, "five of a kind", 7}, "joker  7♥  7♦  7♠  7♣"},
+ {{9, "straight flush", 14}, "joker  j♥  q♥  k♥  A♥"},
+ {{9, "straight flush", 14}, "joker  Q♦  joker  A♦ 10♦"},
+ {{9, "straight flush", 14}, "10♥ j♥ q♥ k♥ a♥"},
+ {{8, "four of a kind", 7}, "2♥ 7♥ 7♦ 7♣ 7♠"},
+ {{8, "four of a kind", 3}, "joker  3♥  2♦  3♠  3♦"},
+ {{8, "four of a kind", 2}, "joker  2♦  2♠  joker  q♦"},
+ {{7, "full house", 3}, "2♥ 3♥ 2♦ 3♣ 3♦"},
+ {{6, "flush", 13}, "joker  k♣  7♣  6♣  4♣"},
+ {{6, "flush", 12}, "q♣ 10♣ 7♣ 6♣ 4♣"},
+ {{5, "straight", 14}, "joker  Q♦  joker  A♠ 10♠"},
+ {{5, "straight", 9}, "joker  5♥  7♦  8♠  9♦"},
+ {{5, "straight", 6}, "joker  2♦  joker  4♠  5♠"},
+ {{5, "straight", 5}, "joker  2♦  3♠  4♠  5♠"},
+ {{5, "straight", 5}, "a♥ 2♦ 3♣ 4♣ 5♦"},
+ {{4, "three of a kind", 3}, "joker  7♥  2♦  3♠  3♦"},
+ {{4, "three of a kind", 2}, "joker  2♦  2♠  k♠  q♦"},
+ {{4, "three of a kind", 2}, "2♥ 2♦ 2♣ k♣ q♦"},
+ {{3, "two pair", 3}, "2♥ 7♥ 2♦ 3♣ 3♦"},
+ {{2, "one pair", 13}, "joker  4♣  k♣  5♦ 10♠"},
+ {{2, "one pair", 4}, "4♥ 4♠ k♠ 5♦ 10♠"},
+ {{1, "high card", 9}, "2♥ 5♥ 7♦ 8♣ 9♠"}}
+</pre>
+--*/

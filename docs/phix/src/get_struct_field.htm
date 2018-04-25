@@ -1,0 +1,80 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">get_struct_field</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          include cffi.e<br>
+          <a href="atom.htm">atom</a> v = get_struct_field(<a href="integer.htm">integer</a> id, <a href="atom.htm">atom</a> pStruct, <a href="string.htm">string</a> fieldname)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            get a named field from some previously allocated structure, which (ie pStruct) is most likely to be the result of 
+            an earlier call to <a href="allocate_struct.htm">allocate_struct</a>().
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The return value is always an atom. You may need to use say <a href="peek_string.htm">peek_string</a>() or even
+            get_struct_field() itself again, on some results.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include cffi.e
+constant idMBP = define_struct(...)
+atom pMBP = allocate_struct(idMBP)
+.. <set contents of pMBP>
+atom pTitle = get_struct_field(idMBP,pMBP,"lpszText")
+?peek_string(pTitle)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> cffi.e
+</font><font color="#008080">constant</font><font color="#000000"> idMBP</font><font color="#0000FF"> =</font><font color="#5E005E"> define_struct</font><font color="#0000FF">(...)
+</font><font color="#004080">atom</font><font color="#000000"> pMBP</font><font color="#0000FF"> =</font><font color="#5E005E"> allocate_struct</font><font color="#0000FF">(</font><font color="#000000">idMBP</font><font color="#0000FF">)
+.. &lt;</font><font color="#000000">set contents of pMBP</font><font color="#0000FF">&gt;
+</font><font color="#004080">atom</font><font color="#000000"> pTitle</font><font color="#0000FF"> =</font><font color="#5E005E"> get_struct_field</font><font color="#0000FF">(</font><font color="#000000">idMBP</font><font color="#0000FF">,</font><font color="#000000">pMBP</font><font color="#0000FF">,</font><font color="#008000">"lpszText"</font><font color="#0000FF">)
+?</font><font color="#5E005E">peek_string</font><font color="#0000FF">(</font><font color="#000000">pTitle</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="allocate_struct.htm">allocate_struct</a>,
+          <a href="set_struct_field.htm">set_struct_field</a>,
+          <a href="peek_string.htm">peek_string</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,165 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">tagset</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="sequence.htm">sequence</a> s = tagset(<a href="integer.htm">integer</a> lim, start=1, step=1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            When passed a single parameter (by far the most common use) returns a <a href="sequence.htm">sequence</a> of integers: {1,2,3,..,lim}.
+            <br>
+            <br>
+            The optional start and step parameters are reasonably intuitive, as long as you remember that start is <i>after</i> lim, 
+            eg tagset(20,10,2) returns {10,12,14,16,18,20}.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            This routine is particularly useful when performing a tag sort, but can freely be used for other purposes.
+            <br>
+            <br>
+            A tag sort reorders a list of indexes but leaves the data they refer to completely unaltered.
+            <br>
+            <br>
+            When step is non-1, the result is not guaranteed to contain lim, eg tagset(25,21,3) ==&gt; {21,24}.<br>
+            When start=lim the result is always of length 1.<br>
+            Negative steps are also permitted, with obvious consequences for start and lim, eg tagset(24,28,-2) ==&gt; {28,26,24}.<br>
+            If start is greater than lim and step is positive the result is always an empty sequence, likewise when
+            start is less than lim and step is negative.
+            <br>
+            <br>
+            All inputs must always be integers, and every element of the output is always an integer.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example Program:</b>
+         </td>
+         <td>
+<!--eucode>
+sequence Names = {"C. C. Catch", "Army of Lovers", "Boney M.", "Dschinghis Khan"}
+sequence Years = { 1985,          1987,             1975,       1979            }
+
+function by_year(integer i, integer j)
+integer res = compare(Years[i],Years[j])
+    if res=0 then
+        res = compare(Names[i],Names[j])
+    end if
+    return res
+end function
+sequence yeartags = custom_sort(routine_id("by_year"),tagset(length(Years)))
+
+for i=1 to length(yeartags) do
+    integer ti = yeartags[i]
+    printf(1,"Year: %d, Name: %s\n",{Years[ti],Names[ti]})
+end for
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">sequence</font><font color="#000000"> Names</font><font color="#0000FF"> = {</font><font color="#008000">"C. C. Catch"</font><font color="#0000FF">,</font><font color="#008000"> "Army of Lovers"</font><font color="#0000FF">,</font><font color="#008000"> "Boney M."</font><font color="#0000FF">,</font><font color="#008000"> "Dschinghis Khan"</font><font color="#0000FF">}
+</font><font color="#004080">sequence</font><font color="#000000"> Years</font><font color="#0000FF"> = {</font><font color="#000000"> 1985</font><font color="#0000FF">,         </font><font color="#000000"> 1987</font><font color="#0000FF">,            </font><font color="#000000"> 1975</font><font color="#0000FF">,      </font><font color="#000000"> 1979           </font><font color="#0000FF"> }
+
+</font><font color="#008080">function</font><font color="#000000"> by_year</font><font color="#0000FF">(</font><font color="#004080">integer</font><font color="#000000"> i</font><font color="#0000FF">,</font><font color="#004080"> integer</font><font color="#000000"> j</font><font color="#0000FF">)
+</font><font color="#004080">integer</font><font color="#000000"> res</font><font color="#0000FF"> =</font><font color="#7060A8"> compare</font><font color="#0000FF">(</font><font color="#000000">Years</font><font color="#800000">[</font><font color="#000000">i</font><font color="#800000">]</font><font color="#0000FF">,</font><font color="#000000">Years</font><font color="#800000">[</font><font color="#000000">j</font><font color="#800000">]</font><font color="#0000FF">)
+</font><font color="#008080">    if</font><font color="#000000"> res</font><font color="#0000FF">=</font><font color="#000000">0</font><font color="#008080"> then
+</font><font color="#000000">        res</font><font color="#0000FF"> =</font><font color="#7060A8"> compare</font><font color="#0000FF">(</font><font color="#000000">Names</font><font color="#800000">[</font><font color="#000000">i</font><font color="#800000">]</font><font color="#0000FF">,</font><font color="#000000">Names</font><font color="#800000">[</font><font color="#000000">j</font><font color="#800000">]</font><font color="#0000FF">)
+</font><font color="#008080">    end if
+    return</font><font color="#000000"> res
+</font><font color="#008080">end function
+</font><font color="#004080">sequence</font><font color="#000000"> yeartags</font><font color="#0000FF"> =</font><font color="#5E005E"> custom_sort</font><font color="#0000FF">(</font><font color="#5E005E">routine_id</font><font color="#800000">(</font><font color="#008000">"by_year"</font><font color="#800000">)</font><font color="#0000FF">,</font><font color="#5E005E">tagset</font><font color="#800000">(</font><font color="#7060A8">length</font><font color="#800080">(</font><font color="#000000">Years</font><font color="#800080">)</font><font color="#800000">)</font><font color="#0000FF">)
+
+</font><font color="#008080">for</font><font color="#000000"> i</font><font color="#0000FF">=</font><font color="#000000">1</font><font color="#008080"> to</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#000000">yeartags</font><font color="#0000FF">)</font><font color="#008080"> do
+</font><font color="#004080">    integer</font><font color="#000000"> ti</font><font color="#0000FF"> =</font><font color="#000000"> yeartags</font><font color="#0000FF">[</font><font color="#000000">i</font><font color="#0000FF">]
+</font><font color="#5E005E">    printf</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#008000">"Year: %d, Name: %s\n"</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#000000">Years</font><font color="#800080">[</font><font color="#000000">ti</font><font color="#800080">]</font><font color="#0000FF">,</font><font color="#000000">Names</font><font color="#800080">[</font><font color="#000000">ti</font><font color="#800080">]</font><font color="#800000">}</font><font color="#0000FF">)
+</font><font color="#008080">end for</font>
+</pre>
+          <br>
+            This program, with a sort by name as well as by year, is included in the distribution as demo\tagsort.exw
+            <br>
+            <br>
+            Despite any apparent simplicity, the humble tag sort can be extremely powerful once fully mastered, and 
+            just as importantly minimises unintended side effects.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Another Example:</b>
+         </td>
+         <td>
+<!--eucode>
+sequence Cases = {"Case 3", "caSe 1", "cAse 4", "casE 2"}
+
+sequence cases
+function case_insensitive(integer i, integer j)
+    return compare(cases[i],cases[j])
+end function
+
+cases = lower(Cases) -- take a modified copy, may warrant loop/string tests.
+--cases = Cases      -- result is 3412, as expected with 'Z' < 'a'.
+--cases = upper(Cases) -- same result (1234) as using lower, obviously.
+sequence casetags = custom_sort(routine_id("case_insensitive"),tagset(length(cases)))
+
+for i=1 to length(casetags) do
+    printf(1,"%s\n",{Cases[casetags[i]]})
+end for
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">sequence</font><font color="#000000"> Cases</font><font color="#0000FF"> = {</font><font color="#008000">"Case 3"</font><font color="#0000FF">,</font><font color="#008000"> "caSe 1"</font><font color="#0000FF">,</font><font color="#008000"> "cAse 4"</font><font color="#0000FF">,</font><font color="#008000"> "casE 2"</font><font color="#0000FF">}
+
+</font><font color="#004080">sequence</font><font color="#000000"> cases
+</font><font color="#008080">function</font><font color="#000000"> case_insensitive</font><font color="#0000FF">(</font><font color="#004080">integer</font><font color="#000000"> i</font><font color="#0000FF">,</font><font color="#004080"> integer</font><font color="#000000"> j</font><font color="#0000FF">)
+</font><font color="#008080">    return</font><font color="#7060A8"> compare</font><font color="#0000FF">(</font><font color="#000000">cases</font><font color="#800000">[</font><font color="#000000">i</font><font color="#800000">]</font><font color="#0000FF">,</font><font color="#000000">cases</font><font color="#800000">[</font><font color="#000000">j</font><font color="#800000">]</font><font color="#0000FF">)
+</font><font color="#008080">end function
+
+</font><font color="#000000">cases</font><font color="#0000FF"> =</font><font color="#5E005E"> lower</font><font color="#0000FF">(</font><font color="#000000">Cases</font><font color="#0000FF">)</font><font color="#000080"><i> -- take a modified copy, may warrant loop/string tests.
+--cases = Cases      -- result is 3412, as expected with 'Z' &lt; 'a'.
+--cases = upper(Cases) -- same result (1234) as using lower, obviously.
+</i></font><font color="#004080">sequence</font><font color="#000000"> casetags</font><font color="#0000FF"> =</font><font color="#5E005E"> custom_sort</font><font color="#0000FF">(</font><font color="#5E005E">routine_id</font><font color="#800000">(</font><font color="#008000">"case_insensitive"</font><font color="#800000">)</font><font color="#0000FF">,</font><font color="#5E005E">tagset</font><font color="#800000">(</font><font color="#7060A8">length</font><font color="#800080">(</font><font color="#000000">cases</font><font color="#800080">)</font><font color="#800000">)</font><font color="#0000FF">)
+
+</font><font color="#008080">for</font><font color="#000000"> i</font><font color="#0000FF">=</font><font color="#000000">1</font><font color="#008080"> to</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#000000">casetags</font><font color="#0000FF">)</font><font color="#008080"> do
+</font><font color="#5E005E">    printf</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#008000">"%s\n"</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#000000">Cases</font><font color="#800080">[</font><font color="#000000">casetags</font><font color="#00FF00">[</font><font color="#000000">i</font><font color="#00FF00">]</font><font color="#800080">]</font><font color="#800000">}</font><font color="#0000FF">)
+</font><font color="#008080">end for</font>
+</pre>
+          <br>
+            This example is also included in demo\tagsort.exw
+            <br>
+            <br>
+            Obviously on a large dataset, this method would be significantly faster than calling <a href="upper.htm">upper</a>() or 
+            <a href="lower.htm">lower</a>() (twice) for each comparison.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\ptagset.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

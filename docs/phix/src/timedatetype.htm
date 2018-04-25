@@ -1,0 +1,105 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">the timedate type</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          include builtins\timedate.e
+          <br>
+          <br>
+          timedate <i>identifier</i>
+          <br>
+          <i>-- or --</i>
+          <br>
+          <a href="integer.htm">integer</a> i = timedate(<a href="object.htm">object</a> x)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            This serves to define the timedate type. You <a href="usingtypes.htm#can">can</a> also call it like an ordinary function 
+            to determine if an object is an timedate.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            A timedate can hold the result from <a href="date.htm">date</a>() and a successful call to 
+            <a href="parse_date_string.htm">parse_date_string</a>(), and can be modified using 
+            <a href="adjust_timedate.htm">adjust_timedate</a>(), 
+            <a href="set_timezone.htm">set_timezone</a>(), and 
+            <a href="change_timezone.htm">change_timezone</a>().
+            The DT_XXX constants as defined in the <a href="date.htm">date</a>() documentation can be used to examine the contents of a timedate.
+            <br>
+            <br>
+            Internally, a timedate is a <a href="sequence.htm">sequence</a> of between 8 and 10 integers, depending on whether it has a timezone. 
+            The result from <a href="date.htm">date</a>() is a valid timedate, without a timezone, as is {0,0,0,0,0,0,0,0}.
+            <br>
+            <br>
+            This type is intended to speed development by trapping errors (eg "number expected") faster, 
+            as opposed to catching partial or unusable values. Attempts to parse say "3:15pm" must clearly leave 
+            day/month/year as zero, so any validation cannot be too fussy. It will however trigger a
+            typecheck failure if the month/day/hour/minute/second/dayofweek/dayofyear/timezone are 
+            outside 0..12/31/23/59/59/7/366/<a href="length.htm">length</a>(timezones) respectively.
+            When invoked as a function, returns 1 if x is a timedate otherwise returns 0.
+            <br>
+            <br>
+            To quietly catch errors from <a href="parse_date_string.htm">parse_date_string</a>(), store the result in a sequence
+            variable and either use the timedate function to test it or check that the <a href="length.htm">length</a>() is not 3 
+            before attempting to use it as a timedate.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include builtins\timedate.e
+timedate td = parse_date_string("1/1/2001",{"D/M/YYYY"})
+?format_timedate(td,"Dddd, Mmmm dth, yyyy")
+-- displays "Monday, January 1st, 2001"
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> builtins\timedate.e
+</font><font color="#004080">timedate</font><font color="#000000"> td</font><font color="#0000FF"> =</font><font color="#5E005E"> parse_date_string</font><font color="#0000FF">(</font><font color="#008000">"1/1/2001"</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#008000">"D/M/YYYY"</font><font color="#800000">}</font><font color="#0000FF">)
+?</font><font color="#5E005E">format_timedate</font><font color="#0000FF">(</font><font color="#000000">td</font><font color="#0000FF">,</font><font color="#008000">"Dddd, Mmmm dth, yyyy"</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- displays "Monday, January 1st, 2001"</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="date.htm">date</a>,
+          <a href="length.htm">length</a>,
+          <a href="parse_date_string.htm">parse_date_string</a>,
+          <a href="adjust_timedate.htm">adjust_timedate</a>,
+          <a href="set_timezone.htm">set_timezone</a>,
+          <a href="change_timezone.htm">change_timezone</a>,
+          <a href="format_timedate.htm">format_timedate</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

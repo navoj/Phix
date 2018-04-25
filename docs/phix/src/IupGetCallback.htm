@@ -1,0 +1,74 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupGetCallback</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="atom.htm">atom</a> func = IupGetCallback(<a href="Ihandle.htm">Ihandle</a> ih, <a href="string.htm">string</a> name)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Returns the callback associated to an event.
+            <br>
+            <br>
+            ih: identifier of the interface element. <br>
+            name: name of the callback.
+            <br>
+            <br>
+            Returns: the callback or NULL if there is none.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            This function replaces the deprecated combination:
+<!--eucode>
+IupGetFunction(IupGetAttribute(ih, name))
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#FF0000">IupGetFunction</font><font color="#0000FF">(</font><font color="#5E005E">IupGetAttribute</font><font color="#800000">(</font><font color="#000000">ih</font><font color="#0000FF">,</font><font color="#000000"> name</font><font color="#800000">)</font><font color="#0000FF">)</font>
+</pre>
+            <br>
+            IupGetCallback also returns the correct callback if an event was associated using <a href="IupGetGlobalFunction.htm">IupSetFunction</a> and 
+            <a href="IupSetAttribute.htm">IupSetAttribute</a>, so old applications work normally.<br>
+            (Note that IupGetFunction has been renamed/wrapped as 
+            <a href="IupGetGlobalFunction.htm">IupGetGlobalFunction</a>() in pGUI, hence the red/invalid colour.)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupSetCallback.htm">IupSetCallback</a>,
+          <a href="IupGetGlobalFunction.htm">IupGetGlobalFunction</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,76 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">custom_sort</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="sequence.htm">sequence</a> s2 = custom_sort(<a href="integer.htm">integer</a> rid, <a href="sequence.htm">sequence</a> s1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Sort the elements of <a href="sequence.htm">sequence</a> s1, using the compare function rid, which
+            must have been obtained from calling <a href="routine_id.htm">routine_id</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Your compare function must be a function of two arguments similar to the builtin compare(). <br>
+            It must compare two objects and return -1, 0 or +1.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example Program:</b>
+         </td>
+         <td>
+<!--DEV (demo/csort.ex) -->
+          <font color="#5500FF">
+           <b>demo\csort.ex</b>
+          </font>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\sort.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="sort.htm">sort</a>,
+          <a href="compare.htm">compare</a>,
+          <a href="routine_id.htm">routine_id,</a>
+          <a href="tagset.htm">tagset</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

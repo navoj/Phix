@@ -1,0 +1,104 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupLoadImage</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandln</a> ih = IupLoadImage(<a href="string.htm">string</a> filename)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            filename: Name of the file to be loaded.
+            <br>
+            <br>
+            Returns: the identifier of the created image, or NULL if an error occurs. 
+            When it fails the global attribute "IUPIM_LASTERROR" is set with a message describing the error.
+            <br>
+                <a name=IupGetNativeHandleImage></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Auxillary Functions</b>
+         </td>
+         <td>
+            Native Handle to imImage<br>
+            <a href="cdCanvas.htm#imImage">imImage</a> result = <b>IupGetNativeHandleImage</b>(<a href="atom.htm">atom</a> handle)
+            <br>
+            <br>
+            handle: image native handle, ie: <br>
+            In Win32 is a HANDLE of a DIB. <br>
+            In GTK is a GdkPixbuf*. <br>
+            In Motif is a Pixmap. <br>
+            Its memory is released after the imImage is created.
+            <br>
+            <br>
+            Returns: the imImage handle. Useful when pasting data from an IupClipboard.
+            <br>
+            <a name=IupGetImageNativeHandle></a>
+            <br>
+            imImage to Native Handle<br>
+            <a href="atom.htm">atom</a> result = <b>IupGetImageNativeHandle</b>(<a href="cdCanvas.htm#imImage">imImage</a> image)
+            <br>
+            <br>
+            image: the imImage handle. Must be a bitmap image.
+            <br>
+            <br>
+            Returns: the image native handle, ie:<br>
+            In Win32 is a HANDLE for a DIB. <br>
+            In GTK is a GdkPixbuf*. <br>
+            In Motif is a Pixmap. <br>
+            Usefull when copying data to a IupClipboard.
+            <br>
+            <a name=IupImageFromImImage></a>
+            <br>
+            imImage to <a href="IupImage.htm">IupImage</a> (since 3.10)<br>
+            <a href="Ihandle.htm">Ihandle</a> ih = <b>IupImageFromImImage</b>(<a href="cdCanvas.htm#imImage">imImage</a> image)
+            <br>
+            <br>
+            image: the imImage handle. Must be a bitmap image.
+            <br>
+            <br>
+            Returns: the <a href="IupImage.htm">IupImage</a> handle. 
+            <br>
+            <a name=IupSaveImage></a>
+            <br>
+            <a href="object.htm">object</a> res = <b>IupSaveImage</b>(<a href="Ihandle.htm">Ihandle</a> ih, <a href="string.htm">string</a> file_name, <a href="string.htm">string</a> fmt)
+            <br>
+            <br>
+            ih: handle of the <a href="IupImage.htm">IupImage</a>.<br>
+            file_name: Name of the file to be loaded.<br>
+            format: format descriptor for IM. For example: "BMP", <wbr>"JPEG", <wbr>"GIF", <wbr>"TIFF", <wbr>"PNG", <wbr>"PNM", <wbr>"PCX", <wbr>"ICO", <wbr>etc.
+            <br>
+            <br>
+            Returns: 1 on success, otherwise a <a href="string.htm">string</a> message describing the error.
+            <br>
+            <br>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

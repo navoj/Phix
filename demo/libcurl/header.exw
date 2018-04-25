@@ -1,0 +1,44 @@
+--
+-- header.exw
+--
+-- shows how to get header info 
+--
+-- Ray Smith 29/08/2002, reworked PL 31/12/17
+
+constant url = "http://example.com"
+
+include libcurl.e
+
+curl_global_init()
+
+atom curl = curl_easy_init()
+
+function curl_header_callback(atom pData, integer size, integer nmemb, atom /*pUserData*/)
+    integer bytes_processed = size*nmemb
+    printf(1, "Header=%s\n", {trim(peek({pData, bytes_processed}))})
+    return bytes_processed
+end function
+constant header_cb = call_back({'+', routine_id("curl_header_callback")})
+
+printf(1, "Obtaining headers for remote file %s\n", {url})
+
+atom pErrorBuffer = allocate(CURL_ERROR_SIZE)
+curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, pErrorBuffer)
+curl_easy_setopt(curl, CURLOPT_URL, url)
+curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_cb)
+--curl_easy_setopt(curl, CURLOPT_FAILONERROR, true)
+--curl_easy_setopt(curl, CURLOPT_VERBOSE, true)
+
+object ret = curl_easy_perform_ex(curl)
+if atom(ret) then
+   printf(1, "Error %d(%s) downloading file\n", {ret,peek_string(pErrorBuffer)})
+else
+    ?{"bytes received",length(ret)}
+end if
+
+curl_easy_cleanup(curl)
+free(pErrorBuffer)
+
+puts(1, "Press any key to continue.\n")
+{} = wait_key()
+

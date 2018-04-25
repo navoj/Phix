@@ -1,0 +1,168 @@
+--
+-- read_cookies.exw
+--
+constant url = "http://www.orange.fr/"
+--constant url = "http://example.com"
+    
+include libcurl.e
+
+-- http://www.cookiecentral.com/faq/
+-- The layout of Netscape's cookies.txt file is such that each line contains one
+-- name-value pair. An example cookies.txt file may have an entry that looks
+-- like this:
+
+-- .netscape.com TRUE / FALSE 946684799 NETSCAPE_ID 100103
+
+-- Each line represents a single piece of stored information. A tab is inserted
+-- between each of the fields.
+
+-- From left-to-right, here is what each field represents:
+
+--   domain     - The domain that created AND that can read the variable.
+--   flag       - A TRUE/FALSE value indicating if all machines within a given
+--                domain can access the variable. This value is set
+--                automatically by the browser, depending on the value you set
+--                for domain.
+--   path       - The path within the domain that the variable is valid for.
+--   secure     - A TRUE/FALSE value indicating if a secure connection with the
+--                domain is needed to access the variable.
+--   expiration - The UNIX time that the variable will expire on.
+--                UNIX time is defined as the number of seconds since
+--                Jan 1, 1970 00:00:00 GMT.
+--   name       - The name of the variable.
+--   value      - The value of the variable.
+
+constant
+--       COOKIE_DOMAIN = 1,
+--       COOKIE_FLAG = 2,
+--       COOKIE_PATH = 3,
+--       COOKIE_SECURE = 4,
+--       COOKIE_EXPIRATION = 5, 
+         COOKIE_NAME = 6,
+         COOKIE_VALUE = 7
+
+procedure print_cookies(atom curl)
+integer curlcode
+object cookies
+--integer res
+sequence s
+
+    puts(1, "Cookies, curl knows:\n")
+    {curlcode,cookies} = curl_easy_getinfo(curl, CURLINFO_COOKIELIST)
+    if curlcode!=CURLE_OK then ?9/0 end if
+    if atom(cookies) then
+        ?9/0
+--  close(f_debug)
+--  res = wait_key()
+--  abort(1)
+    elsif length(cookies)=0 then
+        puts(1, "(none)\n")
+    else
+        ?cookies
+        for i=1 to length(cookies) do
+--    analyzeObject(cookies[i], sprintf("cookies[%d]", i), f_debug, 0)
+            s = split(cookies[i],"\t")
+            printf(1, "[%d]: %s = %s\n", {i, s[COOKIE_NAME], s[COOKIE_VALUE]})
+        end for
+    end if
+end procedure
+
+--tryme:
+--/!*
+function make_slist(sequence strings)
+atom slist = NULL
+    for i=1 to length(strings) do
+        string s = strings[i]
+        slist = curl_slist_append(slist,s)
+    end for
+    return slist
+end function
+--*!/
+
+
+printf(1, "\nReading cookies for %s\n\n", {url})
+
+curl_global_init()
+
+atom curl = curl_easy_init()
+
+atom pErrorBuffer = allocate(CURL_ERROR_SIZE)
+curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, pErrorBuffer)
+curl_easy_setopt(curl, CURLOPT_URL, url)
+--curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_cb)
+--integer fn = open(out,"wb")
+--curl_easy_setopt(curl, CURLOPT_WRITEDATA, fn)
+-- example.com is redirected[?], so we tell libcurl to follow redirection
+--curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1)
+--curl_easy_setopt(curl, CURLOPT_FAILONERROR, true)
+--curl_easy_setopt(curl, CURLOPT_VERBOSE, true)
+
+curl_easy_setopt(curl, CURLOPT_PROXYTYPE, CURLPROXY_HTTP)
+curl_easy_setopt(curl, CURLOPT_PROXY, "")
+string cookiefile = join_path({current_dir(),"cookies.txt"})
+curl_easy_setopt(curl, CURLOPT_COOKIEFILE, cookiefile)
+curl_easy_setopt(curl, CURLOPT_COOKIEJAR, cookiefile)
+--curl_easy_setopt(curl, CURLOPT_VERBOSE, 1)
+--??? (see if it crashes first) [and it does!-DEV]
+--curl_easy_setopt(curl, CURLOPT_RESOLVE, "orange.fr")
+--tryme:
+atom hosts = make_slist({"orange.fr"})
+--atom hosts = NULL
+--hosts = curl_slist_append(hosts, "example.com:80:127.0.0.1")
+
+curl_easy_setopt(curl, CURLOPT_RESOLVE, hosts)
+--curl_easy_setopt(curl, CURLOPT_URL, "http://www.orange.fr/")
+
+--SKIP PEER VERIFICATION
+--
+-- If you want to connect to a site who isn't using a certificate that is
+-- signed by one of the certs in the CA bundle you have, you can skip the
+-- verification of the server's certificate. This makes the connection
+-- A LOT LESS SECURE.
+--
+-- If you have a CA cert for the server stored someplace else than in the
+-- default bundle, then the CURLOPT_CAPATH option might come handy for
+-- you.
+--
+--curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0)
+
+-- SKIP HOSTNAME VERIFICATION
+--
+-- If the site you're connecting to uses a different host name that what
+-- they have mentioned in their server certificate's commonName (or
+-- subjectAltName) fields, libcurl will refuse to connect. You can skip
+-- this check, but this will make the connection less secure.
+--
+--curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0)
+
+--?1
+--trace(1)
+object res = curl_easy_perform_ex(curl)
+--?res
+if integer(res) then
+--  printf(2, "Curl perform failed: %s\n", {curl_easy_strerror(res)})
+    printf(2, "Error %d(%s)\n", {res,peek_string(pErrorBuffer)})
+else
+    ?{"bytes received",length(res)}
+
+    print_cookies(curl)
+
+    puts(1, "Erasing curl's knowledge of cookies!\n")
+    curl_easy_setopt(curl, CURLOPT_COOKIELIST, "ALL")
+
+    print_cookies(curl)
+
+end if
+
+curl_easy_cleanup(curl)
+curl_slist_free_all(hosts)
+free(pErrorBuffer)
+
+include builtins\timedate.e
+?format_timedate(adjust_timedate(date(),-time()))
+
+puts(1, "Press any key to continue.\n")
+{} = wait_key()
+
+
+  

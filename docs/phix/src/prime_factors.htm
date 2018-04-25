@@ -1,0 +1,88 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">prime_factors</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="sequence.htm">sequence</a> s = prime_factors(<a href="integer.htm">integer</a> n, bool duplicates=false)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Returns a list of prime factors of n.
+            <br>
+            <br>
+            Note that, when duplicates is false, prime_factors() always returns {} when passed a prime number.
+            <br>
+            <br>
+            When duplicates is true, for all numbers >=2, returns a list such that multiplying all the elements
+            of it together produces the value n, ie a true decomposition.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+s = prime_factors(6) -- s is {2,3}
+s = prime_factors(720) -- s is {2,3,5}
+s = prime_factors(12345) -- s is {3,5,823}
+s = prime_factors(27) -- s is {3}
+s = prime_factors(27,duplicates:=true) -- s is {3,3,3}
+</eucode-->
+<pre>
+<font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> prime_factors</font><font color="#0000FF">(</font><font color="#000000">6</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {2,3}
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> prime_factors</font><font color="#0000FF">(</font><font color="#000000">720</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {2,3,5}
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> prime_factors</font><font color="#0000FF">(</font><font color="#000000">12345</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {3,5,823}
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> prime_factors</font><font color="#0000FF">(</font><font color="#000000">27</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {3}
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> prime_factors</font><font color="#0000FF">(</font><font color="#000000">27</font><font color="#0000FF">,</font><font color="#000000">duplicates</font><font color="#0000FF">:=</font><font color="#004600">true</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {3,3,3}</i></font>
+</pre>
+            <br>
+            In contrast, <a href="factors.htm">factors</a>(720) is 
+            {2,<wbr>3,<wbr>4,<wbr>5,<wbr>6,<wbr>8,<wbr>9,<wbr>10,<wbr>12,<wbr>15,<wbr>16,<wbr>18,<wbr>20,<wbr>24,<wbr>30,<wbr>36,<wbr>40,<wbr>45,<wbr>48,<wbr>60,<wbr>72,<wbr>80,<wbr>90,<wbr>120,<wbr>144,<wbr>180,<wbr>240,<wbr>360},
+            and <a href="factors.htm">factors</a>(12345) is {3,<wbr>5,<wbr>15,<wbr>823,<wbr>2469,<wbr>4115}.
+            <br>
+            <br>
+            The use of a <a href="procedures.htm#namedparams">named parameter</a> when setting the duplicates flag is recommended, 
+            to make the intent clear and the code easier to read.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\pfactors.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="factors.htm">factors</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,82 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">prompt_number</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="atom.htm">atom</a> a = prompt_number(<a href="string.htm">string</a> prompt, <a href="sequence.htm">sequence</a> range={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Prompt the user to enter a number. The prompt parameter is a string of text that is displayed on the screen. 
+            The range parameter can be a <a href="sequence.htm">sequence</a> of two values {lower, upper} which determine the range of values 
+            that the user may enter. If a user enters a number that is less than lower or greater than upper, they 
+            will be prompted again. If the range parameter is not supplied or explictly {} as per the default, there 
+            are no restrictions on the number that can be entered and returned by this routine.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            If this routine is too simple for your needs, feel free to copy (and ideally rename) it and make your 
+            own more specialized version. You can find the original in builtins\get.e
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+age = prompt_number("What is your age? ", {0, 150})
+</eucode-->
+<pre>
+<font color="#000000">age</font><font color="#0000FF"> =</font><font color="#5E005E"> prompt_number</font><font color="#0000FF">(</font><font color="#008000">"What is your age? "</font><font color="#0000FF">,</font><font color="#800000"> {</font><font color="#000000">0</font><font color="#0000FF">,</font><font color="#000000"> 150</font><font color="#800000">}</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+t = prompt_number("Enter a temperature in Celcius:\n", {})
+</eucode-->
+<pre>
+<font color="#000000">t</font><font color="#0000FF"> =</font><font color="#5E005E"> prompt_number</font><font color="#0000FF">(</font><font color="#008000">"Enter a temperature in Celcius:\n"</font><font color="#0000FF">,</font><font color="#800000"> {}</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="get.htm">get</a>,
+          <a href="prompt_string.htm">prompt_string</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

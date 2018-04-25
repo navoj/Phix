@@ -1,0 +1,82 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupGetText</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="string.htm">string</a> result = IupGetText(<a href="string.htm">string</a> title, <a href="string.htm">string</a> text)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Shows a modal dialog to edit a multiline text.
+            <br>
+            <br>
+            text: the initial value of the text.
+            <br>
+            <br>
+            Returns: the modified text or "" if cancelled.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            The string is limited to 10240 characters (about 250..300 lines of average length).
+            <br>
+            <br>
+            The dialog uses a global attribute called "PARENTDIALOG" as the parent dialog if it is defined. <br>
+            It also uses a global attribute called "ICON" as the dialog icon if it is defined.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+            <div class="wraptocenter">
+             <span></span>
+             <img src="images/gettext.png" />
+            </div>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupMessage.htm">IupMessage</a>,
+          <a href="IupListDialog.htm">IupListDialog</a>,
+          <a href="IupAlarm.htm">IupAlarm</a>,
+          <a href="IupPopup.htm">xIupSetLanguage</a>
+<br>DEV
+See Also
+IupMessage, IupListDialog, IupAlarm, *IupSetLanguage.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

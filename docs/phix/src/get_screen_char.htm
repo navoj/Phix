@@ -1,0 +1,77 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">get_screen_char</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="integer.htm">integer</a> {ch,attr} = get_screen_char(<a href="integer.htm">integer</a> line, <a href="integer.htm">integer</a> column)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Return a 2-element <a href="sequence.htm">sequence</a> consisting of two integers, of the form
+          <b>{ascii-code, attributes}</b> for
+            the character on the screen at line, column.
+            The first is the ASCII code for the character. The second
+            is an integer that contains the foreground and background color of the character,
+            and possibly other information describing the appearance of the character
+            on the screen.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>With get_screen_char() and put_screen_char() you can
+           save and restore a character on the screen along with its attributes.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+-- read character and attributes at top left corner
+s = get_screen_char(1,1) 
+-- store character and attributes at line 25, column 10
+put_screen_char(25, 10, {s})
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>-- read character and attributes at top left corner
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> get_screen_char</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#000000">1</font><font color="#0000FF">) 
+</font><font color="#000080"><i>-- store character and attributes at line 25, column 10
+</i></font><font color="#5E005E">put_screen_char</font><font color="#0000FF">(</font><font color="#000000">25</font><font color="#0000FF">,</font><font color="#000000"> 10</font><font color="#0000FF">,</font><font color="#800000"> {</font><font color="#000000">s</font><font color="#800000">}</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="put_screen_char.htm">put_screen_char</a>,
+          <a href="save_text_image.htm">save_text_image</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

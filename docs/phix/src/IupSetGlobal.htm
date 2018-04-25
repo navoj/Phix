@@ -1,0 +1,77 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupSetGlobal</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            IupSetGlobal(<a href="string.htm">string</a> name, <a href="nullable_string.htm">atom_string</a> v)
+            <br>
+            <i>-- or --</i>
+            <br>
+            IupSetStrGlobal(<a href="string.htm">string</a> name, <a href="nullable_string.htm">nullable_string</a> v)
+            <br>
+            <i>-- or --</i>
+            <br>
+            IupStoreGlobal(<a href="string.htm">string</a> name, <a href="nullable_string.htm">nullable_string</a> v)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Sets an attribute in the global environment. If the driver process the attribute then it will not be stored internally.
+            <br>
+            <br>
+            name: name of the attribute.<br>
+            v: value of the attribute. If it equals NULL, the attribute will be removed.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            IupSetGlobal can store only constant strings (like "Title", "30", etc) or application pointers. <br>
+            The given value is not duplicated as a string, only a reference is stored. <br>
+            Therefore, you can store application custom attributes, such as a context structure to be used in a callback.
+            <br>
+            <br>
+            IupSetStrGlobal (old IupStoreGlobal) can only store strings. The given string value will be duplicated internally.
+            <br>
+            <br>
+            <a href="IupSetAttribute.htm">IupSetAttribute</a> functions can also be used to set global attributes, just set the element to NULL.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupSetAttribute.htm">IupSetAttribute</a>,
+          <a href="IupGetGlobal.htm">IupGetGlobal</a>,
+          <a href="iupgattr.htm">Global Attributes</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

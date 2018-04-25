@@ -1,0 +1,160 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupMenu</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandle</a> ih = IupMenu(<a href="Ihandle.htm">Ihandles</a> children={},
+            <a href="string.htm">string</a> attributes="", <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates a menu element, which groups 3 types of interface elements: item, submenu and separator. Any other interface element defined inside a menu will be an error.
+            <br>
+            <br>
+            children: List of identifiers that will be grouped by the menu. It can be empty.<br>
+            For more information on the attributes and data parameters see <a href="IupSetAttributes.htm">IupSetAttributes</a>.
+            <br>
+            <br>
+            Returns: the identifier of the created element.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            A menu can be a menu bar of a dialog, defined by the dialog&rsquo;s MENU attribute, or a popup menu. 
+            <br>
+            <br>
+            A popup menu is displayed for the user using the <a href="IupPopup.htm">IupPopup</a> function (usually on the mouse position) and disappears when an item is selected.
+            <br>
+            <br>
+            <a href="IupDestroy.htm">IupDestroy</a> should be called only for popup menus. 
+            Menu bars associated with dialogs are automatically destroyed when the dialog is destroyed. 
+            But if you change the menu of a dialog for another menu, the previous one should be destroyed using <a href="IupDestroy.htm">IupDestroy</a>. 
+            If you replace a menu bar of a dialog, the previous menu is unmapped.
+            <br>
+            <br>
+            Any item inside a menu bar can retrieve attributes from the dialog using <a href="IupGetAttribute.htm">IupGetAttribute</a>. It is not necessary to call IupGetDialog.
+            <br>
+            <br>
+            The menu can be created with no elements and filled dynamically using <a href="IupAppend.htm">IupAppend</a>() or <a href="IupInsert.htm">IupInsert</a>(). 
+            <br>
+            <br>
+            The <a href="IupMenuItem.htm">IupMenuItem</a> check is affected by the RADIO attribute in IupMenu
+            <br>
+            <br>
+            When translating C code, note that internally Phix only uses the C function IupMenuv, which accepts a single null-terminated list, and does not use 
+            the variable-parameter C IupMenu function. It is perfectly legal (in Phix) to specify an empty list ({}) for the children parameter, but not NULL, 
+            and further any list supplied automatically has a NULL terminator added, so you don&rsquo;t have to.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#BGCOLOR">BGCOLOR</a>
+         </td>
+         <td>
+            the background color of the menu, affects all items in the menu. (since 3.0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          RADIO
+         </td>
+         <td>
+            (non inheritable) enables the automatic toggle of one child item. When a child item is selected the other item is automatically deselected. 
+            The menu acts like a <a href="IupRadio.htm">IupRadio</a> for its children. Submenus and their children are not affected.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#WID">WID</a>
+         </td>
+         <td>
+            (non inheritable) In Windows, returns the HMENU of the menu.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Callbacks:</b>
+         </td>
+         <td>
+
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          OPEN_CB
+         </td>
+         <td>
+            Called just before the menu is opened.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MENUCLOSE_CB
+         </td>
+         <td>
+            Called just after the menu is closed.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="callbacks.htm#MAP_CB">MAP_CB</a>,
+            <a href="callbacks.htm#UNMAP_CB">UNMAP_CB</a>,
+            <a href="callbacks.htm#DESTROY_CB">DESTROY_CB</a> : common callbacks are supported.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupDialog.htm">IupDialog</a>,
+          <a href="IupMenuItem.htm">IupMenuItem</a>,
+          <a href="IupSeparator.htm">IupSeparator</a>,
+          <a href="IupSubmenu.htm">IupSubmenu</a>,
+          <a href="IupPopup.htm">IupPopup</a>,
+          <a href="IupDestroy.htm">IupDestroy</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

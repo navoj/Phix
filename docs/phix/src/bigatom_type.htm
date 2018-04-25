@@ -1,0 +1,81 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">bigatom type</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          include builtins\bigatom.e
+          <br>
+          <br>
+          bigatom <i>identifier</i>
+          <br>
+          <i>-- or --</i>
+          <br>
+          <a href="integer.htm">integer</a> i = bigatom(<a href="object.htm">object</a> x)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Declare a new bigatom variable, or test whether x is a bigatom(i=1) or not(i=0).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            This serves to define the bigatom type. You <a href="usingtypes.htm#can">can</a> also call it like an ordinary function 
+            to determine if an object is an bigatom.
+            <br>
+            <br>
+            For full technical details of the internal structure (which is quite straightforward
+            but not something you ever really need to know) please refer to builtins\bigatom.e
+            <br>
+            <br>
+            Use <code><a href="ba_scale.htm">ba_scale</a>()</code> to specify the required precision before invoking
+            <code><a href="ba_new.htm">ba_new</a>()</code> to create an instance value.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include bigatom.e
+bigatom ba = ba_new("5.99")
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> bigatom.e
+bigatom ba</font><font color="#0000FF"> =</font><font color="#000000"> ba_new</font><font color="#0000FF">(</font><font color="#008000">"5.99"</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="ba_new.htm">ba_new</a>,
+          <a href="ba_scale.htm">ba_scale</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

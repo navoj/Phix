@@ -1,0 +1,178 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">new_dict</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="integer.htm">integer</a> tid = new_dict(<a href="sequence.htm">sequence</a> kd_pairs={}, 
+                                                           <a href="integer.htm">integer</a> pool_only=0)
+            <br>
+            <i>-- or --</i>
+            <br>
+          <a href="integer.htm">integer</a> tid = new_dict(<a href="string.htm">string</a> dictname="")
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates a new dictionary, so that clashes with other uses of {key,data} pairings can be avoided, and optionally 
+            initialises it with a set of {key,data} pairs, or a diagnostic name.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            If kd_pairs is a string then it is treated as a name for the dictionary, which may be useful for diagnostic purposes,
+            and can be retrieved using <a href="dict_name.htm">dict_name</a>().
+            Otherwise every element of kd_pairs, if present, should be a <a href="sequence.htm">sequence</a> of length 2, and said {key,data} gets passed to 
+            <a href="setd.htm">setd</a>(), along with the id of the newly created dictionary.
+            <br>
+            <br>
+            The returned tid is intended to be passed as the last parameter to <a href="setd.htm">setd</a>(), <a href="getd.htm">getd</a>(),
+            <a href="deld.htm">deld</a>(), <a href="destroy_dict.htm">destroy_dict</a>(), <a href="traverse_dict.htm">traverse_dict</a>(),
+            and similar, taking care not to miss any.
+            <br>
+            <br>
+            For smaller applications, there is a default dictionary, 1, that can be used without ever calling new_dict(), however larger
+            applications and in particular third party components will obviously benefit from keeping their data private (by the simple
+            act of not sharing their tid<small><sup>1</sup></small>).
+            <br>
+            <br>
+            When you have no further use for it, an entire dictionary can be removed by invoking destroy_dict(tid), except for the
+            default dictionary, 1, as mentioned above, which is special and is the only dictionary that cannot be deleted - attempts 
+            to do so merely empty it and leave it still available for use.
+            <br>
+            <br>
+            Dictionaries are <b>not</b> thread-safe, for details of that, or if you are curious about the mysterious pool_only
+            parameter, see the Technicalia drop-down.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Disclaimer:</b>
+         </td>
+         <td>
+            <small><sup>1</sup></small>Rogue code that wantonly writes garbage to a tid of, say, 5, when it did <i>not</i> obtain 
+            that 5 from new_dict(), can obviously wreak havoc. Should it ever prove necessary it would probably be fairly easy to
+            change integer tid to {integer tid, string passkey} just to make it far harder to accidentally replicate a tid.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+integer tid = new_dict({{1,"one"},{2,"two"}})
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">integer</font><font color="#000000"> tid</font><font color="#0000FF"> =</font><font color="#5E005E"> new_dict</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#800080">{</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#008000">"one"</font><font color="#800080">}</font><font color="#0000FF">,</font><font color="#800080">{</font><font color="#000000">2</font><font color="#0000FF">,</font><font color="#008000">"two"</font><font color="#800080">}</font><font color="#800000">}</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+-- multithreaded applications need to use locking (see Technicalia)
+integer dictcs = init_cs(), tid
+    enter_cs(dictcs)
+    tid = new_dict("thread data")
+    leave_cs(dictcs)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>-- multithreaded applications need to use locking (see Technicalia)
+</i></font><font color="#004080">integer</font><font color="#000000"> dictcs</font><font color="#0000FF"> =</font><font color="#5E005E"> init_cs</font><font color="#0000FF">(),</font><font color="#000000"> tid
+</font><font color="#5E005E">    enter_cs</font><font color="#0000FF">(</font><font color="#000000">dictcs</font><font color="#0000FF">)
+</font><font color="#000000">    tid</font><font color="#0000FF"> =</font><font color="#5E005E"> new_dict</font><font color="#0000FF">(</font><font color="#008000">"thread data"</font><font color="#0000FF">)
+</font><font color="#5E005E">    leave_cs</font><font color="#0000FF">(</font><font color="#000000">dictcs</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="enter_cs.htm">enter_cs</a>,
+          <a href="destroy_dict.htm">destroy_dict</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+            Multiple threads concurrently accessing dictionaries will cause corruption unless protected as shown in Example 2.<br>
+            If your application is not multithreaded, or only one thread accesses dictionaries, then nothing that follows is of 
+            <i>any</i> concern to you, and if I were you, I&rsquo;d get out while I still can.
+            <br>
+            <br>
+            A single critical section protecting all dictionaries is normally sufficient, and in the vast majority of cases there
+            would be no point making life any more difficult for yourself, however per-dictionary locks are also perfectly viable, 
+            and if only one thread has access to a particular dictionary, then only new_dict() and destroy_dict() may need locking 
+            - but for either of the last two options (ie per-dict and create/destroy-only-locking), then a big enough pool must be 
+            created at the get-go:
+            <br>
+            <br>
+            If pool_only is greater than 1, the routine adds the specified number of entries to the freelist and returns 0.
+            Such a call is of course expected to be made before any <a href="create_thread.htm">create_thread</a>() or other
+            new_dict() calls, and certainly before any <a href="destroy_dict.htm">destroy_dict</a>() calls - you should verify 
+            the result actually is zero to guard against the latter.
+            <br>
+            <br>
+            Subsequent invocations of new_dict(pool_only:=1) [presumably from within an appropriate critical section] will yield 0 
+            if the pool is exhausted. In that case, the program should unlock, sleep and retry a bit later. You can actually specify
+            a diagnostic name and pool_only of 1 (or 0), however passing a string plus pool_only>1 triggers a fatal error.
+            <br>
+            <br>
+            If in fact you are trying to shut down, but other threads have died or forgotten to destroy_dict(), it is not entirely 
+            unreasonable (after a time) to offer a "create anyway" option - it is not actually very likely, let alone guaranteed 
+            to fail - unless some other thread is beavering away making as many calls to builtins\dict.e routines as it can.<br>
+            I only mention this because systems which are multithreaded and require many dictionaries are somewhat more 
+            likely to have complex and critical shutdown requirements, and stand to lose much more data if terminated abruptly.
+            Tip: it costs very little to create a pool of say 500 dicts, and any such overhead would be completely and utterly 
+            dwarfed by trying to create 500 threads. Conversely, limiting the pool size may keep memory useage spikes down and
+            otherwise help spread out the workload.
+            <br>
+            <br>
+            Let me reiterate to make all this as clear as possible: 
+            <ul>
+            <li>If the program is not multithreaded, or only one thread accesses dictionaries, no locking required, go away now.</li>
+            <li>If multiple threads might access the same dictionary, locks are required around <i><b>every</b></i> call.</li>
+            <li>In the latter case you can have one lock for all dictionaries or one lock per dictionary (see last two points).</li>
+            <li>If a dictionary is only ever accessed by one thread, you can limit locking to new_dict/destroy_dict, but you
+                <b><i>must</i></b> work within a limited-size pool of dictionaries (or lock <i>all</i> calls).</li>
+            <li>Likewise any use of per-dictionary locks mandates the use of a limited-size pool of dictionaries.</li>
+            <li>The locks around new_dict/destroy_dict calls must always of course be system-wide, not per-dictionary.</li>
+            </ul>
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

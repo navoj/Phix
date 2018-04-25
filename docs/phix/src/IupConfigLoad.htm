@@ -1,0 +1,127 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupConfigLoad</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> errcode = IupConfigLoad(<a href="Ihandle.htm">Ihandle</a> config)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Loads the configuration file. 
+            <br>
+            <br>
+            config: Identifier of the configuration database (see <a href="IupConfig.htm">IupConfig</a>)
+            <br>
+            <br>
+            Returns an error code:<br>
+            &nbsp;0 = no error;<br>
+            -1 = error opening the file;<br>
+            -2 = error accessing the file;<br>
+            -3 = error during filename construction
+            <br>
+            <br>
+            <b>NOTE</b>: A new application should expect to get an error code of -1, before <a href="IupConfigSave.htm">IupConfigSave</a>()
+            has ever been called to actually create the new config file.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            The filename (with path) can be set using a regular attribute called APP_FILENAME. 
+            <br>
+            <br>
+            More interestingly, and more portable, is to let the filename be dynamically constructed using the APP_NAME attribute. <br>
+            In this case APP_FILENAME must <i>not</i> be defined. The file names created depend on the operating system.
+            <br>
+            <br>
+            There are two defined usages. First, a User Configuration File is stored in the user Home folder. <br>
+            Second, an Application Configuration File is stored in the same folder of the executable.
+            <br>
+            <br>
+            The User Configuration File is the most common usage, simply leave the attribute APP_CONFIG set to the default of No. <br>
+            On Linux, the filename will be "&lt;HOME&gt;/.&lt;APP_NAME&gt;", 
+            where &lt;HOME&gt; is replaced by the "HOME" environment variable contents, 
+            and &lt;APP_NAME&gt; is replaced by the APP_NAME attribute value. <br>
+            On Windows, the filename will be "&lt;HOMEDRIVE&gt;&lt;HOMEPATH&gt;\&lt;APP_NAME&gt;.cfg", 
+            where HOMEDRIVE and HOMEPATH are also obtained from environment variables.
+            <br>
+            <br>
+            The Application Configuration File is defined by setting the attribute APP_CONFIG to Yes (default is No), and in this case 
+            the attribute APP_PATH must also be set. <br>
+            On UNIX, the filename will be "&lt;APP_PATH&gt;.&lt;APP_NAME&gt;", and<br>
+            on Windows it will be "&lt;APP_PATH&gt;&lt;APP_NAME&gt;.cfg". <br>
+            Notice that the attribute APP_PATH must contain a folder separator ("/" or "\\", either will work on any platform) at the end.
+            <br>
+            <br>
+            After the IupConfigLoad function is called the attribute FILENAME is set (on ih) reflecting the constructed filename.<br>
+            As a developer it is usually quite instructive to view the contents of that file, especially during testing and debugging.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            APP_FILENAME, APP_NAME, APP_CONFIG, APP_PATH, FILENAME, &lt;GROUP&gt;.&lt;KEY&gt; as per Notes just above
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+            An application usually performs something like the following at start up:
+            <br>
+<!--eucode>
+Ihandle config = IupConfig()
+IupSetAttribute(config, "APP_NAME", "MyAppName")
+{} = IupConfigLoad(config)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#5E005E">Ihandle</font><font color="#000000"> config</font><font color="#0000FF"> =</font><font color="#5E005E"> IupConfig</font><font color="#0000FF">()
+</font><font color="#5E005E">IupSetAttribute</font><font color="#0000FF">(</font><font color="#000000">config</font><font color="#0000FF">,</font><font color="#008000"> "APP_NAME"</font><font color="#0000FF">,</font><font color="#008000"> "MyAppName"</font><font color="#0000FF">)
+{} =</font><font color="#5E005E"> IupConfigLoad</font><font color="#0000FF">(</font><font color="#000000">config</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupConfig.htm">IupConfig</a>,
+          <a href="IupConfigSave.htm">IupConfigSave</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

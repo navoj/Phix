@@ -1,0 +1,76 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">upper</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="object.htm">object</a> x2 = upper(<a href="object.htm">object</a> x1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Convert an <a href="atom.htm">atom</a> or <a href="sequence.htm">sequence</a> to upper case.
+            <br>
+            <br>
+            Should you need to, you can also invoke isupper(<a href="integer.htm">integer</a> ch) to determine if a character is upper case. [ASCII only]
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+s = upper("Phix")
+-- s is "PHIX"
+a = upper('g')
+-- a is 'G'
+s = upper({"Phix", "Programming"})
+-- s is {"PHIX", "PROGRAMMING"}
+</eucode-->
+<pre>
+<font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> upper</font><font color="#0000FF">(</font><font color="#008000">"Phix"</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- s is "PHIX"
+</i></font><font color="#000000">a</font><font color="#0000FF"> =</font><font color="#5E005E"> upper</font><font color="#0000FF">(</font><font color="#008000">'g'</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- a is 'G'
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> upper</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#008000">"Phix"</font><font color="#0000FF">,</font><font color="#008000"> "Programming"</font><font color="#800000">}</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- s is {"PHIX", "PROGRAMMING"}</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\pcase.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="lower.htm">lower</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

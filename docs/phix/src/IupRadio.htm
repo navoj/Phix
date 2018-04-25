@@ -1,0 +1,120 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupRadio</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandle</a> ih = IupRadio(<a href="Ihandle.htm">Ihandln</a> child=NULL, 
+            <a href="string.htm">string</a> attributes="", <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates a void container for grouping mutually exclusive toggles. Only one of its descendent toggles will be active at a time. The toggles can be at any composition.
+            <br>
+            <br>
+            It does not have a native representation. 
+            <br>
+            <br>
+            child: Identifier of an interface element. Usually it is an <a href="IupVbox.htm">IupVbox</a> or <a href="IupHbox.htm">IupHbox</a> containing 
+            the toggles associated to the radio. It can be NULL.<br>
+            For more information on the attributes and data parameters see <a href="IupSetAttributes.htm">IupSetAttributes</a>.
+            <br>
+            <br>
+            Returns: the identifier of the created element.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            The radio can be created with no elements and filled dynamically using <a href="IupAppend.htm">IupAppend</a>() or <a href="IupInsert.htm">IupInsert</a>(). 
+            <br>
+            <br>
+            A toggle that is a child of an IupRadio automatically receives a name when its is mapped into the native system.
+            <br>
+            <br>
+            Currently <a href="IupFlatButton.htm">IupFlatButton</a> with TOGGLE=YES, <a href="IupToggle.htm">IupToggle</a>, and IupGLToggle are affected when inside a IupRadio.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#EXPAND">EXPAND</a>
+         </td>
+         <td>
+            (non inheritable) The default value is "YES".
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VALUE
+         </td>
+         <td>
+            (non inheritable) name identifier of the active toggle. The name is set by means of <a href="IupSetHandle.htm">IupSetHandle</a>. 
+            When consulted if the toggles are not mapped into the native system the return value may be NULL or invalid.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VALUE_HANDLE
+         </td>
+         <td>
+            (non inheritable) Changes the active toggle. The value passed must be the handle of a child contained in the radio. When consulted if the toggles are not mapped into the native system the return value may be NULL or invalid. (since 3.0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#WID">WID</a>
+         </td>
+         <td>
+            (read-only) returns -1 if mapped.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="common.htm#FONT">FONT</a>, 
+            <a href="common.htm#POSITION">POSITION</a>, 
+            <a href="common.htm#CLIENTSIZE">CLIENTSIZE</a>, 
+            <a href="common.htm#CLIENTOFFSET">CLIENTOFFSET</a>, 
+            <a href="common.htm#MINSIZE">MINSIZE</a>, 
+            <a href="common.htm#MAXSIZE">MAXSIZE</a>,
+            <a href="common.htm#VISIBLE">VISIBLE</a>: also accepted.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

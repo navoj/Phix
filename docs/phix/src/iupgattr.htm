@@ -1,0 +1,871 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">Global Attributes</h1>
+      <div id="mainSection">
+        Global attributes are not associated with any particular element. They represent and affect the global behavior of the toolkit.
+        <br>
+        <br>
+        To access global attributes use the <a href="IupGetGlobal.htm">IupGetGlobal</a> and <a href="IupSetGlobal.htm">IupSetGlobal</a> functions. <br>
+        The functions <a href="IupGetAttribute.htm">IupGetAttribute</a> and <a href="IupSetAttribute.htm">IupSetAttribute</a> can also 
+        be used if you set the element handle to NULL.
+        <br>
+          <a name=LANGUAGE></a>
+        <br>
+        <h3>General</h3>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          LANGUAGE
+         </td>
+         <td>
+            The language used by some pre-defined dialogs.
+            <br>
+            <br>
+            Can have the values ENGLISH and PORTUGUESE. Default: ENGLISH. Can also be set by IupSetLanguage.
+            <br>
+              <a name=VERSION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VERSION
+         </td>
+         <td>
+            (read-only) Returns the name of IUP&rsquo;s version.
+            <br>
+            <br>
+            The value follows the "major.minor.micro" format, major referring to broader changes, minor referring to 
+            smaller changes, and micro referring to corrections only. Ex.: "1.7.2".
+            <br>
+              <a name=COPYRIGHT></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          COPYRIGHT
+         </td>
+         <td>
+            (read-only) Returns the IUP&rsquo;s copyright.
+            <br>
+            <br>
+            Ex: "Copyright (C) 1994-2014 Tecgraf/PUC-Rio".
+            <br>
+              <a name=DRIVER></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DRIVER
+         </td>
+         <td>
+            (read-only) Informs the current driver being used.
+            <br>
+            <br>
+            Two drivers are available now, one for each platform: "GTK", "Motif" and "Win32".
+         </td>
+        </tr>
+       </table>
+       <br>
+        &nbsp;
+          <a name=LOCKLOOP></a>
+       <br>
+       <h3>System Control</h3>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          LOCKLOOP
+         </td>
+         <td>
+            When the last visible dialog is closed the <a href="IupExitLoop.htm">IupExitLoop</a> function is called. <br>
+            To avoid that set LOCKLOOP=YES before hiding the last dialog. <br>
+            Possible values: "YES" or "NO". Default: "NO". 
+            <br>
+              <a name=LASTERROR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          LASTERROR
+         </td>
+         <td>
+            [Windows Only]  (read-only) If an error is found, returns a string with the system error description.
+            <br>
+              <a name=UTF8MODE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          UTF8MODE
+         </td>
+         <td>
+            [Windows and GTK Only] By default IUP uses strings in the current locale (See <a href="common.htm#FONT">FONT</a> attribute). 
+            To use UTF-8 strings set this attribute to Yes. Default: NO.
+            <br>
+              <a name=UTF8MODE_FILE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          UTF8MODE_FILE
+         </td>
+         <td>
+            [Windows Only] By default IUP uses file names in the current locale, even when UTF8MODE=Yes. To use UTF-8 file names set this attribute to Yes. Default: NO.
+            <br>
+              <a name=DEFAULTPRECISION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DEFAULTPRECISION
+         </td>
+         <td>
+            The default number of decimal places used in floating point output by some controls (<a href="IupMatrixEx.htm">IupMatrixEx</a> and IupGetParam). 
+            Local attributes may overwrite the default. Default: 2.
+            <br>
+              <a name=DEFAULTDECIMALSYMBOL></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DEFAULTDECIMALSYMBOL
+         </td>
+         <td>
+            Symbol used for decimal separator in numeric values used in floating point output by some controls (<a href="IupMatrixEx.htm">IupMatrixEx</a>,
+            IupGetParam and IupPlot). <br>
+            Can be "." or "," only. Default uses the one defined by the system locale.
+            <br>
+              <a name=SHOWMENUIMAGES></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SHOWMENUIMAGES [GTK Only]
+         </td>
+         <td>
+            Force the display of images in menus. Default: Yes
+            <br>
+              <a name=GLOBALMENU></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          GLOBALMENU
+         </td>
+         <td>
+            [GTK Only] Flag indicating that GTK is using a global menu instead of a per window menu. See more information at the GTK driver documentation.
+            <br>
+              <a name=IMAGEAUTOSCALE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGEAUTOSCALE
+         </td>
+         <td>
+            Automatically scale all images, except stock images, by a given real factor. <br>
+            If "DPI" value is used then the factor will be automatically calculated from the ratio between screen resolution and IMAGESDPI. <br>
+            Only images with BPP&gt;8 are scaled. 
+            <br>
+              <a name=IMAGESDPI></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGESDPI
+         </td>
+         <td>
+            Defines the resolution of the images of the application. Common values are 96, 144, 192, and 288 DPI. Default: 96.
+            <br>
+              <a name=IMAGESTOCKSIZE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGESTOCKSIZE
+         </td>
+         <td>
+            Force a size for stock images by controlling the image height. <br>
+            If that image size is not available the stock image is resized to match the given size. <br>
+            By default the size will be automatically calculated from the screen resolution: <br>
+            if &lt;= 96 DPI then size = 16, <br>
+            else if 144 DPI size = 24, <br>
+            else if 192 DPI size = 32, <br>
+            else size = 48. <br>
+            Only images with BPP&gt;8 are scaled. 
+            <br>
+              <a name=IUPLUA_THREADED></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IUPLUA_THREADED
+         </td>
+         <td>
+            If defined allow IUP to be used inside coroutines in Lua.
+            <br>
+              <a name=SINGLEINSTANCE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SINGLEINSTANCE
+         </td>
+         <td>
+            [Windows Only]
+            Restricts the number of instances of the application by using a name to identify it. <br>
+            The value must also be a partial match to the title of a dialog that will receive the COPYDATA_CB callback with the command line of the second instance. <br>
+            When consulted returns NULL if inside the second instance. <br>
+            So usually in the application initialization after <a href="IupOpen.htm">IupOpen</a>, set SINGLEINSTANCE and then consult its value, 
+            if NULL abort the second instance by calling <a href="IupClose.htm">IupClose</a> and returning from main.
+         </td>
+        </tr>
+       </table>
+       <br>
+        &nbsp;
+          <a name=CURSORPOS></a>
+       <br>
+       <h3>System Mouse and Keyboard</h3>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          CURSORPOS
+         </td>
+         <td>
+            Controls and returns the cursor position in absolute coordinates relative to the origin of the main screen. <br>
+            The origin of the main screen is at the upper left corner, in Windows it is affected by the position of the Start Menu when it is at the top or left side of the screen. <br>
+            Accepts values in the format "XxY" (in C "%dx%d), example "200x200". In GTK and Motif also generates mouse motion messages. (since GTK 2.8)
+            <br>
+              <a name=MOUSEBUTTON></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MOUSEBUTTON
+         </td>
+         <td>
+            (write-only) Simulates a mouse button press, release or motion at the given coordinates. <br>
+            The position is in absolute coordinates relative to the upper left corner of the screen. <br>
+            Accept values in the format "XxY button state" (in C "%dx%d %c %d"), example "200x200 1 1". <br>
+            button can be one of the IUP_BUTTON1,... definitions. <br>
+            state can be 2=double click, 1=pressed, 0=released, or -1=motion. <br>
+            The cursor position is always updated. <br>
+            In Windows button can be 'W' and state=delta, so a wheel button scroll is simulated.
+            <br>
+            <br>
+            IMPORTANT: not fully working. In Windows and GTK, menu items are not activated. <br>
+            Although submenus open, menu items even in the menu bar are not activated. <br>
+            In Windows, inside the <a href="IupFileDlg.htm">IupFileDlg</a> dialog, clicks in the folder navigation list are not correctly interpreted. <br>
+            In Motif click and drag operations are not performed.
+            <br>
+              <a name=SHIFTKEY></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SHIFTKEY
+         </td>
+         <td>
+            (read-only) Returns the state of the Shift keys (left and right). Possible values: "ON" or "OFF".
+            <br>
+              <a name=CONTROLKEY></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          CONTROLKEY
+         </td>
+         <td>
+            (read-only) Returns the state of the Control keys (left and right). Possible values: "ON" or "OFF".
+            <br>
+              <a name=MODKEYSTATE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MODKEYSTATE
+         </td>
+         <td>
+            (read-only) Returns the state of the keyboard modifier keys: Shift, Ctrl, Alt and sYs(Win/Apple). <br>
+            In the format of 4 characters: "SCAY". When not pressed the respective letter is replaced by a space " ". 
+            <br>
+              <a name=KEYPRESS></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          KEYPRESS
+         </td>
+         <td>
+            (write-only) Sends a key press message to the element with the focus. The value is a key code. <br>
+            See the Keyboard Codes table for a list of the possible values. 
+            <br>
+              <a name=KEYRELEASE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          KEYRELEASE
+         </td>
+         <td>
+            (write-only) Sends a key release message to the element with the focus. The value is a key code. See the Keyboard Codes table for a list of the possible values. 
+            <br>
+              <a name=KEY></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          KEY
+         </td>
+         <td>
+            (write-only) Sends a key press and a key release messages to the element with the focus. The value is a key code. See the Keyboard Codes table for a list of the possible values. 
+            <br>
+              <a name=AUTOREPEAT></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          AUTOREPEAT
+         </td>
+         <td>
+            [Motif Only] Turns on/off  ("YES" or "NO") the auto-repeat of keyboard keys in the whole system. May be used as an optimization in high performance applications.
+            <br>
+              <a name=INPUTCALLBACKS></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          INPUTCALLBACKS
+         </td>
+         <td>
+            Turns on/off  ("YES" or "NO") the global callbacks used to intercept global mouse and keyboard events. <br>
+            The callbacks must be set using the <a href="IupSetGlobalFunction.htm">IupSetGlobalFunction</a> function using the following names: 
+            GLOBALKEYPRESS_CB, GLOBALMOTION_CB, GLOBALBUTTON_CB and GLOBALWHEEL_CB (Windows Only). <br>
+            Their parameters are the same as the standard callbacks, but without the Ihandle parameter. <br>
+            (ie/see <a href="callbacks.htm#KEYPRESS_CB">KEYPRESS_CB</a>, <a href="callbacks.htm#MOTION_CB">MOTION_CB</a>, 
+             <a href="callbacks.htm#BUTTON_CB">BUTTON_CB</a>, and <a href="callbacks.htm#WHEEL_CB">WHEEL_CB</a>)
+         </td>
+        </tr>
+       </table>
+       <br>
+        &nbsp;
+          <a name=SYSTEM></a>
+       <br>
+       <h3>System Information</h3>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          SYSTEM
+         </td>
+         <td>
+            (read-only) Informs the current operating system. On UNIX, it is equivalent to the command "uname -s" (sysname). <br>
+            On Windows, it identifies if you are on Windows 2000, Windows XP or Windows Vista. Some known names: 
+            <br>
+            <br>
+"MacOS" 
+"FreeBSD" 
+"Linux" 
+"SunOS" 
+"Solaris" 
+"IRIX" 
+"AIX" 
+"HP-UX" 
+"Win2K" 
+"WinXP" 
+"Vista" 
+"Win7" 
+"Win8" 
+            <br>
+            <br>
+            Notice that "Windows 8.1" will normally be detected as "Windows 8", unless a special Manifest is used. See MSDN for more information.
+            <br>
+              <a name=SYSTEMVERSION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SYSTEMVERSION
+         </td>
+         <td>
+            (read-only) Informs the current operating system version number.
+
+            On UNIX, it is equivalent to the command  "uname -r" (release). <br>
+            On Windows, it identifies the system version number and service pack version. <br>
+            On MacOSX is system version.
+            <br>
+              <a name=SYSTEMLANGUAGE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SYSTEMLANGUAGE
+         </td>
+         <td>
+            (read-only) Returns a text with a description of the system language.
+            <br>
+              <a name=SYSTEMLOCALE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SYSTEMLOCALE
+         </td>
+         <td>
+            (read-only) Returns a text with a description of the system locale.
+            <br>
+              <a name=SCROLLBARSIZE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SCROLLBARSIZE
+         </td>
+         <td>
+            (read-only) Returns the width of the vertical scrollbar (the same as the height of the horizontal scrollbar).
+            <br>
+              <a name=COMCTL32VER6></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          COMCTL32VER6
+         </td>
+         <td>
+            (read-only) [Windows Only] Returns Yes or No if the Windows common controls are using Visual Styles or not.
+            <br>
+              <a name=GTKVERSION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          GTKVERSION
+         </td>
+         <td>
+            (read-only) [GTK Only] Returns the run time version of the GTK toolkit. <br>
+            This is the version being used at the time of the <a href="IupOpen.htm">IupOpen</a> function was called by the application.
+            <br>
+              <a name=GTKDEVVERSION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          GTKDEVVERSION
+         </td>
+         <td>
+            (read-only) [GTK Only] Returns the development version of the GTK toolkit. <br>
+            This is the version at the time the IUP library was compiled. 
+            <br>
+              <a name=MOTIFVERSION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MOTIFVERSION
+         </td>
+         <td>
+            (read-only) [Motif Only] Returns the version of the run time Motif.
+            <br>
+              <a name=MOTIFNUMBER></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MOTIFNUMBER
+         </td>
+         <td>
+            (read-only) [Motif Only] Returns the number of the Motif Version if full form, e.x: 2.2.3 = "2203".
+            <br>
+              <a name=COMPUTERNAME></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          COMPUTERNAME
+         </td>
+         <td>
+            (read-only) Returns the hostname.
+            <br>
+              <a name=USERNAME></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          USERNAME
+         </td>
+         <td>
+            (read-only) Returns the user logged in.
+            <br>
+              <a name=GL_VERSION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          GL_VERSION
+         </td>
+         <td>
+            (read-only) Returns the OpenGL version. Available only after the first call to IupGLMakeCurrent.
+            <br>
+              <a name=GL_VENDOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          GL_VENDOR
+         </td>
+         <td>
+            (read-only) Returns the OpenGL vendor information. Available only after the first call to IupGLMakeCurrent.
+            <br>
+              <a name=GL_RENDERER></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          GL_RENDERER
+         </td>
+         <td>
+            (read-only) Returns the OpenGL renderer information. Available only after the first call to IupGLMakeCurrent.
+            <br>
+              <a name=XSERVERVENDOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          XSERVERVENDOR
+         </td>
+         <td>
+            (read-only) [GTK and Motif Only] X-Windows Server Vendor string.
+            <br>
+              <a name=XVENDORRELEASE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          XVENDORRELEASE
+         </td>
+         <td>
+            (read-only) [GTK and Motif Only] X-Windows Server Vendor release number.
+         </td>
+        </tr>
+       </table>
+       <br>
+        &nbsp;
+          <a name=FULLSIZE></a>
+       <br>
+       <h3>Screen Information</h3>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          FULLSIZE
+         </td>
+         <td>
+            (read-only) Returns the full screen size in pixels.
+
+            String in the "widthxheight" format.
+            <br>
+              <a name=SCREENSIZE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SCREENSIZE
+         </td>
+         <td>
+            (read-only) Returns the screen size in pixels available for dialogs, i.e. not including menu bars, task bars, etc. <br>
+            In Motif has the same value as the FULLSIZE attribute. <br>
+            The main screen size does not include additional monitors.
+            <br>
+            <br>
+            String in the "widthxheight" format.
+            <br>
+              <a name=SCREENDEPTH></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SCREENDEPTH
+         </td>
+         <td>
+            (read-only) Returns the screen depth in bits per pixel.
+            <br>
+              <a name=SCREENDPI></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SCREENDPI
+         </td>
+         <td>
+            (read-only) Returns a real value with the screen resolution in pixels per inch (same as dots per inch - DPI).
+            <br>
+              <a name=TRUECOLORCANVAS></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TRUECOLORCANVAS
+         </td>
+         <td>
+            (read-only) Indicates if the display allows creating TrueColor (&gt;8bpp) <a href="IupCanvas.htm">IupCanvas</a> controls, even if PseudoColor is the default, i.e. even if SCREENDEPTH&lt;=8. <br>
+            Returns "YES" or "NO". Useful in Motif.
+            <br>
+              <a name=DWM_COMPOSITION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DWM_COMPOSITION
+         </td>
+         <td>
+            (read-only) [Win32 Only] Returns the Desktop Window Manager Composition flag. Returns "YES" or "NO". <br>
+            Works only in Windows Vista and newer. Returns NULL if not supported.
+            <br>
+              <a name=VIRTUALSCREEN></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VIRTUALSCREEN
+         </td>
+         <td>
+            (read-only) [Win32 and GTK Only] Returns the virtual screen position and size in pixels. <br>
+            It is the virtual space defined by all monitors in the system.
+            <br>
+            <br>
+            String in the "x y width height" format.
+            <br>
+              <a name=MONITORSINFO></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MONITORSINFO
+         </td>
+         <td>
+            (read-only) [Win32 and GTK Only] Returns the position and size in pixels of all monitors. <br>
+            Each monitor information is terminated by a "\n" character.
+            <br>
+            <br>
+            String in the "x y width height\nx y width height\n..." format.
+         </td>
+        </tr>
+       </table>
+       <br>
+        &nbsp;
+          <a name=HINSTANCE></a>
+       <br>
+       <h3>System Data</h3>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          HINSTANCE
+         </td>
+         <td>
+            (read-only) [Win32 Only] Returns a handle (HINSTANCE) that identifies the application in the native system.
+            <br>
+              <a name=DLL_HINSTANCE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DLL_HINSTANCE
+         </td>
+         <td>
+            [Win32 Only] Changes and returns a handle (HINSTANCE) that identifies the DLL where resources are stored.
+            <br>
+              <a name=APPSHELL></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          APPSHELL
+         </td>
+         <td>
+            (read-only) [Motif Only] Returns the shell Widget created by XtOpenApplication.
+            <br>
+              <a name=XDISPLAY></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          XDISPLAY
+         </td>
+         <td>
+            (read-only) [GTK and Motif Only] Returns the X-Windows Display. 
+            <br>
+              <a name=XSCREEN></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          XSCREEN
+         </td>
+         <td>
+            (read-only) [GTK and Motif Only] Returns the X-Windows Screen. 
+         </td>
+        </tr>
+       </table>
+       <br>
+        &nbsp;
+          <a name=DLGBGCOLOR></a>
+       <br>
+       <h3>Default Attributes</h3>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          DLGBGCOLOR
+         </td>
+         <td>
+            The default background color for all elements that have the background similar of the dialog.
+            <br>
+              <a name=DLGFGCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DLGFGCOLOR
+         </td>
+         <td>
+            The default foreground color for all elements that have text over the background of the dialog or similar. Usually is "0 0 0".
+            <br>
+              <a name=MENUBGCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MENUBGCOLOR
+         </td>
+         <td>
+            [Windows Only] The default menu background color. Usually is "255 255 255".
+            <br>
+              <a name=MENUFGCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MENUFGCOLOR
+         </td>
+         <td>
+            [Windows Only] The system default menu foreground color. Usually is "0 0 0". Unused in IUP.
+            <br>
+              <a name=TXTBGCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TXTBGCOLOR
+         </td>
+         <td>
+            The default background color for editable text, also used by lists and tree. Usually is "255 255 255".
+            <br>
+              <a name=TXTFGCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TXTFGCOLOR
+         </td>
+         <td>
+            The default foreground color for editable text, also used by lists and tree. Usually is "0 0 0".
+            <br>
+              <a name=TXTHLCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          TXTHLCOLOR
+         </td>
+         <td>
+            The default highlight color for editable text, also used by lists and tree. <br>
+            The highlight color is used when the text is selected. <br>
+            Usually is "0 0 0" in Motif, and "51 153 255" in Windows. <br>
+            Can be changed only in <a href="IupTree.htm">IupTree</a>, and only in Windows and Motif. <br>
+            But it can be used for drawing selected areas in custom controls.
+            <br>
+              <a name=LINKFGCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          LINKFGCOLOR
+         </td>
+         <td>
+            The default foreground color for linked text. In GTK and Motif is "0 0 238".
+            <br>
+              <a name=DEFAULTFONT></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DEFAULTFONT
+         </td>
+         <td>
+            The default font used by all elements, except for menus.
+            <br>
+              <a name=DEFAULTFONTFACE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DEFAULTFONTFACE
+         </td>
+         <td>
+            Auxiliary attribute to retrieve and set the default font face used by all elements. <br>
+            It retrieves the typeface from <a href="iupgattr.htm#DEFAULTFONT">DEFAULTFONT</a>.
+            When changed will actually change the DEFAULTFONT.
+            <br>
+              <a name=DEFAULTFONTSIZE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DEFAULTFONTSIZE
+         </td>
+         <td>
+            Auxiliary attribute to retrieve and set the default font size used by all elements. <br>
+            It retrieves the size from <a href="iupgattr.htm#DEFAULTFONT">DEFAULTFONT</a>.
+            When changed will actually change the DEFAULTFONT.
+            <br>
+              <a name=DEFAULTFONTSTYLE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DEFAULTFONTSTYLE
+         </td>
+         <td>
+            Auxiliary attribute to retrieve and set the default font style used by all elements. <br>
+            It retrieves the style from <a href="iupgattr.htm#DEFAULTFONT">DEFAULTFONT</a>. 
+            When changed will actually change the DEFAULTFONT.
+            <br>
+              <a name=DEFAULTBUTTONPADDING></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DEFAULTBUTTONPADDING
+         </td>
+         <td>
+            Default button padding used in pre-defined dialogs. Default: 12x4".
+         </td>
+        </tr>
+       </table>
+       <br>
+        &nbsp;
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

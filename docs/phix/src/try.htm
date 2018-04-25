@@ -1,0 +1,178 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">Try/Catch Statement</h1>
+      <div id="mainSection">
+        A try statement allows a program to regain control following a normally fatal runtime error.
+<!--eucode>
+    try 
+       <block> 
+    catch e 
+       <block> 
+    end try 
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">    try 
+</font><font color="#0000FF">       &lt;</font><font color="#000000">block</font><font color="#0000FF">&gt; 
+</font><font color="#008080">    catch</font><font color="#000000"> e 
+</font><font color="#0000FF">       &lt;</font><font color="#000000">block</font><font color="#0000FF">&gt; 
+</font><font color="#008080">    end try </font>
+</pre>
+        In addition the builtin routine <a href="throw.htm">throw</a>() can be used to transfer control directly to the catch block, 
+        potentially from within several nested routine calls.
+        <br>
+        <br>
+        The catch statement traps an exception within the try block, or any routines it invokes, that is not first caught by another nested try/catch statement.<br>
+        Any exceptions that must be re-thrown must be done so explicitly, and unlike other languages there is only one (non-optional) catch clause. <br>
+        There are no confusing <i>classes</i> of exceptions, and no implicit filtering, and hence no unexpected leaks to the outside world.
+        <br>
+        <br>
+        The exception variable is declared immediately after the catch keyword and is a <a href="sequence.htm">sequence</a>.
+        It can be given with any valid identifier as a name, though "e" is usually sufficient.<br>
+        Just like the loop variable of a for statement, it can be predeclared and then persists after
+        the end try, otherwise it is automatically declared and drops out of scope on the end try.<br>
+        For details of the contents of the exception variable, see <a href="throw.htm">throw</a>().
+        <br>
+        <h3>Comments</h3>
+        Note that a try/catch statement may interfere with your ability to debug code within the try block (although trace and printf are still fine).<br>
+        It can certainly negate the idea of a "fail fast" development methodology, should the program quietly soldier on rather than 
+        immediately alert you to a problem and force you to fix it. <br>
+        The authors of the Go programming language (and certainly neither Rob Pike nor Ken Thompson can be considered amateurs) at first
+        completely omitted exceptions, but eventually (after some probably quite relentless pressure) added a panic/recover mechanism; 
+        clearly they had their reservations, so perhaps you should too.
+        <br>
+        <br>
+        There is no guarantee that all exceptions can be caught: rogue code that corrupts the stack will make it impossible to even look for a suitable handler.<br>
+        The phix abort() and crash() routines now invoke throw() when an exception handler is detected, however the equivalent of the former in 
+        non-phix code (ie kernel32.dll/ExitProcess or sys_exit from a dll/so or inline assembly) cannot be caught (by any means that I know or care of).
+        Also, passing invalid arguments to throw() (e not atom when user_data not {}, or wrong-type-elements) is deemed to be non-catchable.
+        Apart from that I am not currently aware of any errors, or any types or classes of error, that can never be caught.<br>
+        <small>(In at least one release a try statement even had the power to prevent you from quitting a debug/trace session; it no longer re-throws e12pa, ie '!' keyed.)</small>
+        <br>
+        <br>
+        There is no type checking on a catch clause, since <a href="throw.htm">throw</a>() always provides a <a href="sequence.htm">sequence</a>, hence 
+        user defined types <!--(&gt;T_object) --> are <i>not</i> permitted on predeclared exception variables.
+        <br>
+        <br>
+        The catch clause is actually opTryend (ie restore the previous exception handler, if any), then a jump to the end try, and then the actual catch
+        handler itself (which also restores the previous exception handler, if any). Leaving a blank (or comment-only) line before the catch keyword may 
+        make some listing files (-d command line option) slightly easier to follow.
+        <br>
+        <br>
+        Compilation issues the error "invalid (circumvents try handler reset)" when appropriate.
+        The try block may not contain any exit/break/continue statements that would circumvent the reset of the handler. In contrast, return statements are 
+        perfectly valid, as are any exit/break/continue statements within the catch block, or wholly nested within (/not leaking from) the try block.
+        <dl>
+        <dt>aside:</dt>
+        <dd>However, the use of #ilASM{} to effect a jump with said circumvention is <i>not</i> protected against, but it will probably go horribly wrong, 
+        should anything untoward happen, especially before a return discards the handler naturally, or a containing try effects a higher-level handler reset.
+        The system stack is rebalanced along with the exception hander reset, mainly in case something happened deep inside a c_func/proc/call_back, and 
+        hence jumping to the "wrong" handler may very well unbalance the system stack. (The triggering of a higher level catch may help.)</dd>
+        </dl>
+        Said compilation error can be avoided by setting a flag or two, then testing and performing the appropriate exit/break/continue after the end try.
+        <br>
+        <br>
+        Compilation issues "Warning: empty catch block" messages when appropriate.
+        A blanket "ignore all" handler in the top-level main loop of an application may sound like an easy way to make your code "robust".
+        However it also risks making you completely blind towards any emerging problems - which can in some cases be perfectly fine - if a
+        "jumping giraffe" game tries to draw the eyeballs off-screen, no-one cares, but a bug in the phix compiler is quite different.
+        At the very least you should consider something like <code>if DEBUG then ?9/0 end if</code> and in that way your live customers 
+        can experience the trouble-free life you think they deserve, while your development staff are kept honest and immediately informed 
+        of any developing issues, and forced to address them. <br>
+        Be warned that "trouble-free life" may turn into the classic headbutting a brick wall experience of no clue as to what is going wrong 
+        - a log file of quietly ignored exceptions may help.
+        <br>
+        <br>
+        I have four recommendations (which may overlap and overpreach a bit):
+        <ol>
+        <li>Write the code without a try container and see how far you get. Typically something like a subscript error can and should be
+        fixed immediately, with the try statement being intended to guard against something completely different.
+        If not careful, a try statement <i>will</i> mask errors that you might much rather it did not.</li>
+        <li>Always try and localise a try statement as much as possible, to cover the least amount of code and solve a very specific
+        problem. Your catch clauses will obviously be much easier to write.<sup><small>&nbsp;</small></sup><br>
+        Admittedly half the point of a catch clause is to "common up" error handling, but don&rsquo;t go overboard.</li>
+        <li>Use try statements to deal with third-party code that you cannot or would rather not modify, as opposed to permission
+        for your own sloppily-written abomination<sup><small>&#8482;</small></sup>.<br>
+        A perfect example of the former: display "unable to play video" rather than let a corrupt file euthanise your entire application.
+        Obviously the compiler simply <i>cannot</i> distinguish between "blimey, who&rsquo;d&rsquo;ve thunk that could ever happen" from 
+        "stupid human does not know first thing about writing code", and must therefore treat them identically. In other words if you
+        think the runtime should quietly deal with these but tell me about those, you are crediting it with too much intelligence.</li>
+        <li>Start a new catch clause as <code>?e</code>, then gradually add conditions and filters, with comments, for specific 
+        cases where a "do nothing" response is genuinely the best thing to do.<sup><small>&nbsp;</small></sup><br>
+        Let everything you have not yet seen show up, including that bug you have just introduced, as well as the bug you probably will 
+        introduce sometime next week.</li>
+        </ol>
+        <br>
+<!--
+DEV I no longer care...
+        Uncaught exceptions from throw() are reported inside the routine itself, in contrast to say printf() where the error is normally
+        reported on the calling statement. Two thoughts: firstly, that reporting it on the call would throw away all the updates just done 
+        to e[E_LINE] etc, though admittedly they are pretty well replicated in the normal scheme of error handling, and secondly, that the
+        throw() call is unlikely to be any more helpful - what you probably want to do is walk back down the call stack in your search for
+        a path with missing exception handling, so I may as well force you into walking the stack anyway.
+
+-- Pretty much any run-time error is covered, however there are always going to be some exceptions 
+-- that cannot be caught - for instance passing invalid parameters to throw() terminates abruptly, 
+-- in preference to trying to blunder on with whatever nonsense it got. I might add that it takes 
+-- some quite deliberate stupidity to trigger that one. Equally, handlers are nested so you cannot
+-- guarantee some else won't get their size nine boots in first, or, for that matter, clobber the
+-- internals of the handling mechanism.
+
+        <br>
+        <br>
+DEV (TO GO):<br>
+        Technicalia:<br>
+        A new field is required in every frame on the call stack to contain the address of the exception handler. Obviously NULL means
+        there is no handler, but also the special value 1 means there is one somewhere lower down the stack (so we need to issue fake
+        opRetf until we reach it). opFrame will be responsible for setting that 0/1 on all new frames. I expect most of the support 
+        code will live in builtins\VM\pStack.e, plus FEH.e will also contain a quick test on the new field to decide whether to invoke 
+        ehandler or fehDiag.
+        <br>
+        <br>
+        Looking at the current frame layout, {params/N/rtn/fromaddr/retaddr/prevebp/root}, it strikes me that retaddr is the one that
+        is most critical, hence (perversely) I suggest replicating that past root, then clobbering the original one in the middle to 
+        ensure we catch as many errors as we ever could. Obviously a) the first step is to add a null past root and get that working, 
+        and b) this strategy has two benefits: the clobber of the original can be quickly undone, and we avoid the trap of thinking 
+        we have got the slot done and dusted when the reality is that some edge cases (on vsb boundaries) still corrupt the stack.
+        <br>
+        <br>
+        Every try statement will create a new local temporary to faciliate the save/restore of the exception handler field, as needed
+        to cope with nested exception handlers.
+        <br>
+        <br>
+<pre>
+        opTry ->        atom tmp := [ebp+NN];
+                        [ebp+NN] := addr(:catch);
+
+                        <i>&lt;block&gt;</i>
+
+        opCatch ->      [ebp+NN] := tmp;
+                        jmp :endtry
+                    ::catch
+                        [ebp+NN] := tmp;
+                        sequence e := eax;
+
+                        <i>&lt;block&gt;</i>
+
+        opLabel ->  ::endtry
+        
+        opThrow ->      mov eax,[e]             -- (opUnassigned)
+                        mov ecx,[user_data]     -- (or h4)
+                        call :!pThrow           -- (see pDiagN.e)
+</pre>
+        throw() will be implemented mostly in hll, but it will need a hook into pDiag.e (or parts of pDiag.e factored out) to convert
+        addresses into line numbers, etc. Perhaps if throw() is linked in, like routine_id(), interpretation should pre-populate the
+        symtab with real names.
+        <br>
+        <br>
+-->
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

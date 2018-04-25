@@ -1,0 +1,103 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">get_bytes</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          include get.e
+          <br>
+          <a href="sequence.htm">sequence</a> s = get_bytes(<a href="integer.htm">integer</a> fn, <a href="integer.htm">integer</a> i)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Read the next i bytes from file number fn. Return the bytes
+             as a <a href="sequence.htm">sequence</a>. The <a href="sequence.htm">sequence</a> will be of length i, except
+             when there are fewer than i bytes remaining to be read in the
+             file.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            When i &gt; 0 and <a href="length.htm">length(s)</a> &lt; i you know you have reached the end of file. 
+            Eventually, an <a href="Strings.htm#empty_seq">empty sequence</a> will be returned for s.
+          <br>
+          <br>
+            This function is normally used with files opened in binary mode, "rb".
+            This avoids the confusing situation in text mode where DOS will convert CR LF pairs to LF.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include get.e
+integer fn
+fn = open("temp", "rb")  -- an existing file
+sequence whole_file
+whole_file = {}
+sequence chunk
+while 1 do
+    chunk = get_bytes(fn, 100) -- read 100 bytes at a time
+    whole_file &= chunk        -- chunk might be empty, that's ok
+    if length(chunk) < 100 then
+        exit
+    end if
+end while
+close(fn)
+? length(whole_file)  -- should match DIR size of "temp"
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> get.e
+</font><font color="#004080">integer</font><font color="#000000"> fn
+fn</font><font color="#0000FF"> =</font><font color="#7060A8"> open</font><font color="#0000FF">(</font><font color="#008000">"temp"</font><font color="#0000FF">,</font><font color="#008000"> "rb"</font><font color="#0000FF">) </font><font color="#000080"><i> -- an existing file
+</i></font><font color="#004080">sequence</font><font color="#000000"> whole_file
+whole_file</font><font color="#0000FF"> = {}
+</font><font color="#004080">sequence</font><font color="#000000"> chunk
+</font><font color="#008080">while</font><font color="#000000"> 1</font><font color="#008080"> do
+</font><font color="#000000">    chunk</font><font color="#0000FF"> =</font><font color="#5E005E"> get_bytes</font><font color="#0000FF">(</font><font color="#000000">fn</font><font color="#0000FF">,</font><font color="#000000"> 100</font><font color="#0000FF">)</font><font color="#000080"><i> -- read 100 bytes at a time
+</i></font><font color="#000000">    whole_file</font><font color="#0000FF"> &amp;=</font><font color="#000000"> chunk       </font><font color="#000080"><i> -- chunk might be empty, that's ok
+</i></font><font color="#008080">    if</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#000000">chunk</font><font color="#0000FF">) &lt;</font><font color="#000000"> 100</font><font color="#008080"> then
+        exit
+    end if
+end while
+</font><font color="#7060A8">close</font><font color="#0000FF">(</font><font color="#000000">fn</font><font color="#0000FF">)
+?</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#000000">whole_file</font><font color="#0000FF">) </font><font color="#000080"><i> -- should match DIR size of "temp"</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="getc.htm">getc</a>,
+          <a href="gets.htm">gets</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

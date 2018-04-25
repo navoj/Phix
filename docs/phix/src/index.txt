@@ -1,0 +1,1801 @@
+--
+-- index.txt
+-- =========
+--
+-- format of each line is <keyword>[ <url>]
+--  an error occurs if a keyword occurs more than once.
+--  multiple tabs/spaces are automatically stripped.
+--  if the url is omitted then keyword.htm is assumed.
+--  "html/" is automatically prepended to url, and
+--  an error occurs if url does not contain ".htm"
+-- blank lines and any beginning with any of -=>! are ignored,
+-- which can freely be used to organise this into sections.
+--  (I use -- for Ctrl Q sections and > for F4 jumping, and
+--   ! to omit things that I ought to get back to later.)
+-- you can also indent things (ignored), if that helps any.
+-- see also src/toc.txt
+--
+
+? qu.htm
+abort
+abs
+adjust_timedate
+allocate
+allocate_pointer_array eucompat.htm#allocate_pointer_array
+allocate_string
+allocate_wstring allocate_string.htm
+allocate_struct
+allow_break
+and logicops.htm
+and_bits
+any_key
+append
+arccos
+arcsin
+arctan
+atan2
+atom
+atom_string nullable_string.htm
+atom_to_float32 atom_to_floatNN.htm
+atom_to_float64 atom_to_floatNN.htm
+atom_to_float80 atom_to_floatNN.htm
+b_a_exp bigatom.htm
+b_a_log bigatom.htm
+b_a_sqrt bigatom.htm
+ba_abs bigatom.htm
+ba_add bigatom.htm
+ba_ceil bigatom.htm
+ba_compare bigatom.htm
+ba_divide bigatom.htm
+ba_euler bigatom.htm
+ba_exp bigatom.htm
+ba_idivide bigatom.htm
+ba_floor bigatom.htm
+ba_frac bigatom.htm
+ba_log bigatom.htm
+ba_log10 bigatom.htm
+ba_logb bigatom.htm
+ba_multiply bigatom.htm
+ba_new
+ba_power bigatom.htm
+ba_print bigatom.htm
+ba_printf bigatom.htm
+ba_remainder bigatom.htm
+ba_root bigatom.htm
+ba_round
+ba_scale
+ba_scale_of bigatom.htm
+ba_sprint bigatom.htm
+ba_sprintf
+ba_sqrt bigatom.htm
+ba_sub bigatom.htm
+ba_trunc bigatom.htm
+bigatom
+bigatom_to_atom bigatom.htm
+binary_search bsearch.htm
+bits_to_int
+bk_color
+bool integer.htm#bool
+break switch.htm
+bytes_to_int
+c_func
+c_proc
+call
+call_back
+call_func
+call_proc
+canonical_path cpath.htm
+case switch.htm
+catch try.htm
+C_HANDLE define_c_func.htm
+cbfunc Icallback.htm
+cdBackground cdCanvasSetForeground.htm#cdBackground
+cdCanvan cdCanvas.htm
+cdCanvas
+cdCanvasActivate
+cdCanvasClear
+cdCanvasArc
+cdCanvasBegin
+cdCanvasEnd
+cdCanvasBackground cdCanvasSetForeground.htm#cdBackground
+cdCanvasBox
+cdCanvasFlush
+cdCanvasFont
+cdCanvasForeground cdCanvasSetForeground.htm#cdForeground
+cdCanvasGetAttribute
+cdCanvasGetColorPlanes
+cdCanvasGetContext
+cdCanvasGetBackground cdCanvasSetForeground.htm#cdBackground
+cdCanvasGetForeground cdCanvasSetForeground.htm#cdForeground
+cdCanvasGetFont
+cdCanvasGetFontDim
+cdCanvasGetImageRGB
+cdCanvasGetLineStyle cdCanvasLineStyle.htm
+cdCanvasGetLineWidth cdCanvasLineWidth.htm
+cdCanvasGetNativeFont cdCanvasSetNativeFont.htm
+cdCanvasGetOrigin
+cdCanvasGetSize
+cdCanvasGetTextBounds
+cdCanvasGetTextBox
+cdCanvasGetTextSize
+cdCanvasGetTransform cdCanvasTransform.htm#cdCanvasGetTransform
+cdCanvasGetVectorTextBounds
+cdCanvasGetVectorTextSize
+cdCanvasInvertYAxis
+cdCanvasLine
+cdCanvasLineStyle
+cdCanvasLineWidth
+cdCanvasMM2Pixel
+cdCanvasMultiLineVectorText
+cdCanvasNativeFont cdCanvasSetNativeFont.htm#GetSet
+cdCanvasOrigin
+cdCanvasPixel
+cdCanvasPixel2MM
+cdCanvasPutImageRectRGB
+cdCanvasPutImImage
+cdCanvasRect
+cdCanvasRoundedBox
+cdCanvasRoundedRect
+cdCanvasSector
+cdCanvasSetAttribute
+cdCanvasSetfAttribute cdCanvasSetAttribute.htm
+cdCanvasSetBackground cdCanvasSetForeground.htm#cdBackground
+cdCanvasSetForeground
+cdCanvasSetLineStyle cdCanvasLineStyle.htm
+cdCanvasSetLineWidth cdCanvasLineWidth.htm
+cdCanvasSetNativeFont
+cdCanvasText
+cdCanvasTextAlignment
+cdCanvasTransform
+cdCanvasTransformMultiply cdCanvasTransform.htm#cdCanvasTransformMultiply
+cdCanvasTransformPoint cdCanvasTransform.htm#cdCanvasTransformPoint
+cdCanvasTransformRotate cdCanvasTransform.htm#cdCanvasTransformRotate
+cdCanvasTransformScale cdCanvasTransform.htm#cdCanvasTransformScale
+cdCanvasTransformTranslate cdCanvasTransform.htm#cdCanvasTransformTranslate
+cdCanvasUpdateYAxis
+cdCanvasVectorTextDirection
+cdCanvasVertex
+cdClear cdCanvasClear.htm
+cdContextCaps
+cdCreateCanvas
+cdCreateCanvasf cdCreateCanvas.htm#cdCreateCanvasf
+cdEncodeColor
+cdfCanvasText cdCanvasText.htm
+cdForeground cdCanvasSetForeground.htm#cdForeground
+cdGetBackground cdCanvasSetForeground.htm#cdBackground
+cdGetForeground cdCanvasSetForeground.htm#cdForeground
+cdGetNativeFont cdCanvasSetNativeFont.htm
+cdGetScreenColorPlanes
+cdGetScreenSize
+cdInitContextPlus cdCreateCanvas.htm#cdInitContextPlus
+cdKillCanvas
+cdLine cdCanvasLine.htm#cdLine
+cdNativeFont cdCanvasSetNativeFont.htm#GetSet
+cdSetBackground cdCanvasSetForeground.htm#cdBackground
+cdSetForeground cdCanvasSetForeground.htm#cdForeground
+cdSetNativeFont cdCanvasSetNativeFont.htm
+cdText cdCanvasText.htm
+cdTextAlignment cdCanvasTextAlignment.htm
+cdUseContextPlus cdCreateCanvas.htm#cdUseContextPlus
+cdVersion
+cdVersionDate
+ceil
+change_timezone
+chdir
+check_break
+check_free_list
+choose factorial.htm
+clear map.htm
+clear_directory
+clear_screen
+CLIENTSIZE common.htm#CLIENTSIZE
+CLIENTOFFSET common.htm#CLIENTOFFSET
+close
+columnize
+command_line
+compare
+constant constants.htm
+continue exit.htm
+copy_file
+cos
+crash
+crash_file
+crash_message
+crash_routine
+create_directory
+create_thread
+CURL_ERROR_SIZE CURLoption.htm#CURLOPT_ERRORBUFFER
+CURL_GLOBAL_ALL curl_global_init.htm
+CURL_GLOBAL_DEFAULT curl_global_init.htm
+CURL_LOCK_ACCESS_SHARED curl_share_setopt.htm#CURL_LOCK_ACCESS_SHARED
+CURL_LOCK_ACCESS_SINGLE curl_share_setopt.htm#CURL_LOCK_ACCESS_SINGLE
+CURL_LOCK_DATA_CONNECT curl_share_setopt.htm#CURL_LOCK_DATA_CONNECT
+CURL_LOCK_DATA_COOKIE curl_share_setopt.htm#CURL_LOCK_DATA_COOKIE
+CURL_LOCK_DATA_DNS curl_share_setopt.htm#CURL_LOCK_DATA_DNS
+CURL_LOCK_DATA_SSL_SESSION curl_share_setopt.htm#CURL_LOCK_DATA_SSL_SESSION
+CURL_SOCKET_BAD CURLoption.htm#CURLINFO_ACTIVESOCKET
+CURL_WAIT_POLLIN curl_multi_wait.htm
+CURL_WAIT_POLLPRI curl_multi_wait.htm
+CURL_WAIT_POLLOUT curl_multi_wait.htm
+CURLE_AGAIN CURLcode.htm#CURLE_AGAIN
+CURLE_CANT_OPEN_FILE CURLcode.htm#CURLE_CANT_OPEN_FILE
+CURLE_FAILED_INIT CURLcode.htm#CURLE_FAILED_INIT
+CURLE_HTTP_RETURNED_ERROR CURLcode.htm#CURLE_HTTP_RETURNED_ERROR
+CURLE_OK CURLcode.htm#CURLE_OK
+CURLE_OUT_OF_MEMORY CURLcode.htm#CURLE_OUT_OF_MEMORY
+CURLE_UNKNOWN_OPTION CURLcode.htm#CURLE_UNKNOWN_OPTION
+CURLE_RECV_ERROR CURLcode.htm#CURLE_RECV_ERROR
+CURLE_UNSUPPORTED_PROTOCOL CURLcode.htm#CURLE_UNSUPPORTED_PROTOCOL
+CURLINFO_ACTIVESOCKET curl_easy_getinfo.htm#CURLINFO_ACTIVESOCKET
+CURLINFO_CERTINFO curl_easy_getinfo.htm#CURLINFO_CERTINFO
+CURLINFO_CONTENT_TYPE curl_easy_getinfo.htm#CURLINFO_CONTENT_TYPE
+CURLINFO_COOKIELIST curl_easy_getinfo.htm#CURLINFO_COOKIELIST
+CURLINFO_LASTSOCKET curl_easy_getinfo.htm#CURLINFO_LASTSOCKET
+CURLINFO_REDIRECT_URL curl_easy_getinfo.htm#CURLINFO_REDIRECT_URL
+CURLINFO_RESPONSE_CODE curl_easy_getinfo.htm#CURLINFO_RESPONSE_CODE
+CURLINFO_TEXT CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLINFO_HEADER_IN CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLINFO_HEADER_OUT CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLINFO_DATA_IN CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLINFO_DATA_OUT CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLINFO_SSL_DATA_IN CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLINFO_SSL_DATA_OUT CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLINFO_END CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLM_OK CURLcode.htm#CURLM_OK
+CURLM_UNKNOWN_OPTION CURLcode.htm#CURLM_UNKNOWN_OPTION
+CURLMcode CURLcode.htm#CURLMcode
+CURLMoption curl_multi_setopt.htm#CURLMoption
+CURLMOPT_TIMERFUNCTION curl_multi_setopt.htm#CURLMOPT_TIMERFUNCTION
+CURLMOPT_TIMERDATA curl_multi_setopt.htm#CURLMOPT_TIMERDATA
+CURLoption
+CURLOPT_CERTINFO CURLoption.htm#CURLOPT_CERTINFO
+CURLOPT_CONNECT_ONLY CURLoption.htm#CURLOPT_CONNECT_ONLY
+CURLOPT_COOKIEFILE CURLoption.htm#CURLOPT_COOKIEFILE
+CURLOPT_COOKIEJAR CURLoption.htm#CURLOPT_COOKIEJAR
+CURLOPT_COOKIELIST CURLoption.htm#CURLOPT_COOKIELIST
+CURLOPT_CUSTOMREQUEST CURLoption.htm#CURLOPT_CUSTOMREQUEST
+CURLOPT_DEBUGFUNCTION CURLoption.htm#CURLOPT_DEBUGFUNCTION
+CURLOPT_DNS_USE_GLOBAL_CACHE CURLoption.htm#CURLOPT_DNS_USE_GLOBAL_CACHE
+CURLOPT_ERRORBUFFER CURLoption.htm#CURLOPT_ERRORBUFFER
+CURLOPT_FAILONERROR CURLoption.htm#CURLOPT_FAILONERROR
+CURLOPT_FOLLOWLOCATION CURLoption.htm#CURLOPT_FOLLOWLOCATION
+CURLOPT_HEADERFUNCTION CURLoption.htm#CURLOPT_HEADERFUNCTION
+CURLOPT_HTTPGET CURLoption.htm#CURLOPT_HTTPGET
+CURLOPT_HTTPHEADER CURLoption.htm#CURLOPT_HTTPHEADER
+CURLOPT_NOPROGRESS CURLoption.htm#CURLOPT_NOPROGRESS
+CURLOPT_POST CURLoption.htm#CURLOPT_POST
+CURLOPT_POSTFIELDS CURLoption.htm#CURLOPT_POSTFIELDS
+CURLOPT_POSTFIELDSIZE CURLoption.htm#CURLOPT_POSTFIELDSIZE
+CURLOPT_PROGRESSFUNCTION CURLoption.htm#CURLOPT_PROGRESSFUNCTION
+CURLOPT_PROXY CURLoption.htm#CURLOPT_PROXY
+CURLOPT_PROXYTYPE CURLoption.htm#CURLOPT_PROXYTYPE
+CURLOPT_RESOLVE CURLoption.htm#CURLOPT_RESOLVE
+CURLOPT_SHARE CURLoption.htm#CURLOPT_SHARE
+CURLOPT_SSL_VERIFYHOST CURLoption.htm#CURLOPT_SSL_VERIFYHOST
+CURLOPT_SSL_VERIFYPEER CURLoption.htm#CURLOPT_SSL_VERIFYPEER
+CURLOPT_URL CURLoption.htm#CURLOPT_URL
+CURLOPT_USERAGENT CURLoption.htm#CURLOPT_USERAGENT
+CURLOPT_USERPWD CURLoption.htm#CURLOPT_USERPWD
+CURLOPT_VERBOSE CURLoption.htm#CURLOPT_VERBOSE
+CURLOPT_WRITEDATA CURLoption.htm#CURLOPT_WRITEDATA
+CURLOPT_WRITEFUNCTION CURLoption.htm#CURLOPT_WRITEFUNCTION
+CURLOPT_XFERINFOFUNCTION CURLoption.htm#CURLOPT_XFERINFOFUNCTION
+CURLPROXY_HTTP CURLoption.htm#CURLOPT_PROXYTYPE
+CURLSHcode CURLcode.htm#CURLSHcode
+CURLSHE_OK CURLcode.htm#CURLSHE_OK
+CURLSHoption curl_share_setopt.htm#CURLSHoption
+CURLSHOPT_SHARE curl_share_setopt.htm#CURLSHOPT_SHARE
+CURLSHOPT_UNSHARE curl_share_setopt.htm#CURLSHOPT_UNSHARE
+CURLSHOPT_LOCKFUNC curl_share_setopt.htm#CURLSHOPT_LOCKFUNC
+CURLSHOPT_UNLOCKFUNC curl_share_setopt.htm#CURLSHOPT_UNLOCKFUNC
+CURLSHOPT_USERDATA curl_share_setopt.htm#CURLSHOPT_USERDATA
+curl_easy_cleanup
+curl_easy_duphandle
+curl_easy_get_file curl_easy_perform.htm#curl_easy_get_file
+curl_easy_getinfo
+curl_easy_init
+curl_easy_perform
+curl_easy_perform_ex curl_easy_perform.htm#curl_easy_perform_ex
+curl_easy_recv
+curl_easy_reset
+curl_easy_send
+curl_easy_setopt
+curl_easy_strerror CURLcode.htm#curl_easy_strerror
+curl_global_cleanup
+curl_global_init
+curl_loadlib
+curl_lock_access curl_share_setopt.htm#curl_lock_access
+curl_multi_add_handle
+curl_multi_cleanup
+curl_multi_info_read
+curl_multi_init
+curl_multi_perform
+curl_multi_remove_handle
+curl_multi_setopt
+curl_multi_strerror CURLcode.htm#curl_easy_strerror
+curl_multi_timeout
+curl_multi_wait
+curl_share_cleanup
+curl_share_data curl_share_setopt.htm#curl_share_data
+curl_share_init
+curl_share_setopt
+curl_share_strerror CURLcode.htm#curl_easy_strerror
+curl_slist_append
+curl_slist_free_all
+curl_version
+curl_version_info
+current_dir
+cursor
+custom_sort
+date
+day_of_week
+day_of_year
+db_close
+db_compress
+db_create
+db_create_table
+db_delete_record
+db_delete_table
+db_dump
+db_fatal_id
+db_find_key
+db_insert
+db_open
+db_record_data
+db_record_key
+db_rename_table
+db_replace_data
+db_select
+db_select_table
+db_table_list
+db_table_size
+decode_flags
+default switch.htm
+DEFAULTENTER IupDialog.htm#DEFAULTENTER
+DEFAULTESC IupDialog.htm#DEFAULTESC
+define_c_func
+define_c_proc
+define_c_var
+define_cffi_func
+define_cffi_proc
+define_struct
+deld
+delete
+delete_cs
+delete_file
+delete_routine
+deserialize
+destroy_dict
+dict_name
+dict_size
+dir
+display_text_image
+DLL sharedlib.htm
+DOS32 platform.htm
+DRAGBEGIN_CB dragndrop.htm#DRAGBEGIN_CB
+DRAGCURSOR dragndrop.htm#DRAGCURSOR
+DRAGDATA_CB dragndrop.htm#DRAGDATA_CB
+DRAGDATASIZE_CB dragndrop.htm#DRAGDATASIZE_CB
+DRAGEND_CB dragndrop.htm#DRAGEND_CB
+DRAGSOURCE dragndrop.htm#DRAGSOURCE
+DRAGSOURCEMOVE dragndrop.htm#DRAGSOURCEMOVE
+DRAGTYPES dragndrop.htm#DRAGTYPES
+DROPDATA_CB dragndrop.htm#DROPDATA_CB
+DROPMOTION_CB dragndrop.htm#DROPMOTION_CB
+DROPTARGET dragndrop.htm#DROPTARGET
+DROPTYPES dragndrop.htm#DROPTYPES
+DT_YEAR date.htm
+DT_MONTH date.htm
+DT_DAY date.htm
+DT_HOUR date.htm
+DT_MINUTE date.htm
+DT_SECOND date.htm
+DT_DOW date.htm
+DT_MSEC date.htm
+DT_DOY date.htm
+DT_GMT date.htm
+D_NAME dir.htm
+D_ATTRIBUTES dir.htm
+D_SIZE dir.htm
+D_YEAR dir.htm
+D_MONTH dir.htm
+D_DAY dir.htm
+D_HOUR dir.htm
+D_MINUTE dir.htm
+D_SECOND dir.htm
+E_CODE try.htm
+E_ADDR try.htm
+E_LINE try.htm
+E_RTN  try.htm
+E_NAME try.htm
+E_FILE try.htm
+E_PATH try.htm
+E_USER try.htm
+Edix
+elapsed
+elapsed_short elapsed.htm
+else if.htm
+elsif if.htm
+enter_cs
+enum
+equal
+exit
+exit_thread
+exp log.htm
+extract_json_field
+factorial
+factors
+fallthrough switch.htm
+fallthru switch.htm
+FALSE logicops.htm
+False logicops.htm
+false logicops.htm
+file_exists
+file_length get_file_size.htm
+file_type get_file_type.htm
+filebase get_file_base.htm
+fileext get_file_extension.htm
+filename get_file_name.htm
+FILETYPE_UNDEFINED get_file_type.htm
+FILETYPE_NOT_FOUND get_file_type.htm
+FILETYPE_FILE get_file_type.htm
+FILETYPE_DIRECTORY get_file_type.htm
+pathname get_file_path.htm
+find
+find_any
+find_from find.htm
+find_replace
+flatten
+float32_to_atom floatNN_to_atom.htm
+float64_to_atom floatNN_to_atom.htm
+float80_to_atom floatNN_to_atom.htm
+FLOATING common.htm#FLOATING
+floor
+flush
+for
+for_each map.htm
+format
+format_timedate
+free
+free_console
+function functions.htm
+gcd
+get
+get_bytes
+get_field_details
+get_file_base
+get_file_extension
+get_file_name
+get_file_path
+get_file_size
+get_file_type
+get_interpreter
+get_key
+get_logical_drives
+get_position
+get_proc_address
+get_proper_dir
+get_proper_path
+get_screen_char
+get_struct_field
+get_struct_size
+get_thread_exitcode
+get_thread_id
+get_text
+getc
+getc0 getc.htm
+getd
+getd_index
+getd_by_index
+getd_partial_key
+getenv
+gets
+global scope.htm
+glBegin
+glBindTexture
+glCallList
+glClear
+glClearColor
+glClearDepth
+glColor
+glColor3 glColor.htm
+glColor3b glColor.htm
+glColor3bv glColor.htm
+glColor3d glColor.htm
+glColor3dv glColor.htm
+glColor3f glColor.htm
+glColor3fv glColor.htm
+glColor3i glColor.htm
+glColor3iv glColor.htm
+glColor3s glColor.htm
+glColor3sv glColor.htm
+glColor3ub glColor.htm
+glColor3ubv glColor.htm
+glColor3ui glColor.htm
+glColor3uiv glColor.htm
+glColor3us glColor.htm
+glColor3usv glColor.htm
+glColor4b glColor.htm
+glColor4bv glColor.htm
+glColor4d glColor.htm
+glColor4dv glColor.htm
+glColor4f glColor.htm
+glColor4fv glColor.htm
+glColor4i glColor.htm
+glColor4iv glColor.htm
+glColor4s glColor.htm
+glColor4sv glColor.htm
+glColor4ub glColor.htm
+glColor4ubv glColor.htm
+glColor4ui glColor.htm
+glColor4uiv glColor.htm
+glColor4us glColor.htm
+glColor4usv glColor.htm
+glDisable glEnable.htm
+glEnable
+glEnd glBegin.htm
+glFrustum
+glGetBooleanv glGet.htm
+glGetDoublev glGet.htm
+glGetError
+glGetFloatv glGet.htm
+glGetIntegerv glGet.htm
+glGetString
+glLight
+glLightf glLight.htm
+glLightfv glLight.htm
+glLighti glLight.htm
+glLightiv glLight.htm
+glLoadIdentity
+glMatrixMode
+glNormal
+glNormal3 glNormal.htm
+glNormal3b glNormal.htm
+glNormal3bv glNormal.htm
+glNormal3d glNormal.htm
+glNormal3dv glNormal.htm
+glNormal3f glNormal.htm
+glNormal3fv glNormal.htm
+glNormal3i glNormal.htm
+glNormal3iv glNormal.htm
+glNormal3s glNormal.htm
+glNormal3sv glNormal.htm
+GLOBALBUTTON_CB iupgattr.htm#INPUTCALLBACKS
+GLOBALKEYPRESS_CB iupgattr.htm#INPUTCALLBACKS
+GLOBALMOTION_CB iupgattr.htm#INPUTCALLBACKS
+GLOBALWHEEL_CB iupgattr.htm#INPUTCALLBACKS
+glOrtho
+glPopMatrix glPushMatrix.htm
+glPushMatrix
+glRotate
+glRotated glRotate.htm
+glRotatef glRotate.htm
+glScale
+glShadeModel
+glTexCoord
+glTexCoord1d glTexCoord.htm
+glTexCoord1f glTexCoord.htm
+glTexCoord1i glTexCoord.htm
+glTexCoord1s glTexCoord.htm
+glTexCoord2d glTexCoord.htm
+glTexCoord2f glTexCoord.htm
+glTexCoord2i glTexCoord.htm
+glTexCoord2s glTexCoord.htm
+glTexCoord3d glTexCoord.htm
+glTexCoord3f glTexCoord.htm
+glTexCoord3i glTexCoord.htm
+glTexCoord3s glTexCoord.htm
+glTexCoord4d glTexCoord.htm
+glTexCoord4f glTexCoord.htm
+glTexCoord4i glTexCoord.htm
+glTexCoord4s glTexCoord.htm
+glTexCoord1dv glTexCoord.htm
+glTexCoord1fv glTexCoord.htm
+glTexCoord1iv glTexCoord.htm
+glTexCoord1sv glTexCoord.htm
+glTexCoord2dv glTexCoord.htm
+glTexCoord2fv glTexCoord.htm
+glTexCoord2iv glTexCoord.htm
+glTexCoord2sv glTexCoord.htm
+glTexCoord3dv glTexCoord.htm
+glTexCoord3fv glTexCoord.htm
+glTexCoord3iv glTexCoord.htm
+glTexCoord3sv glTexCoord.htm
+glTexCoord4dv glTexCoord.htm
+glTexCoord4fv glTexCoord.htm
+glTexCoord4iv glTexCoord.htm
+glTexCoord4sv glTexCoord.htm
+glTranslate
+glTranslated glTranslate.htm
+glTranslatef glTranslate.htm
+gluLookAt
+gluPerspective
+gluProject
+gluUnProject
+glVertex
+glVertex2d glVertex.htm
+glVertex2f glVertex.htm
+glVertex2i glVertex.htm
+glVertex2s glVertex.htm
+glVertex3d glVertex.htm
+glVertex3f glVertex.htm
+glVertex3i glVertex.htm
+glVertex3s glVertex.htm
+glVertex4d glVertex.htm
+glVertex4f glVertex.htm
+glVertex4i glVertex.htm
+glVertex4s glVertex.htm
+glVertex2dv glVertex.htm
+glVertex2fv glVertex.htm
+glVertex2iv glVertex.htm
+glVertex2sv glVertex.htm
+glVertex3dv glVertex.htm
+glVertex3fv glVertex.htm
+glVertex3iv glVertex.htm
+glVertex3sv glVertex.htm
+glVertex4dv glVertex.htm
+glVertex4fv glVertex.htm
+glVertex4iv glVertex.htm
+glVertex4sv glVertex.htm
+glViewport
+gmatch
+gsub
+has map.htm
+head
+Icallback
+IDE pGUI-IDE.htm
+IDLE_ACTION callbacks.htm#IDLE_ACTION
+if
+iff
+Ihandle
+Ihandles Ihandle.htm
+Ihandln Ihandle.htm
+iif iff.htm
+im_color_space imFileImageLoadBitmap.htm#aux
+im_data imFileImageLoadBitmap.htm#aux
+im_height imFileImageLoadBitmap.htm#aux
+im_width imFileImageLoadBitmap.htm#aux
+im_depth imFileImageLoadBitmap.htm#aux
+im_pixel imFileImageLoadBitmap.htm#aux
+imConvertColorSpace imFileImageLoadBitmap.htm#aux
+imFileImageLoadBitmap
+imFileImageSave imFileImageLoadBitmap.htm#aux
+imImage cdCanvas.htm#imImage
+imImageClone imFileImageLoadBitmap.htm#aux
+imImageCreate imFileImageLoadBitmap.htm#aux
+imImageCreateBased imFileImageLoadBitmap.htm#aux
+imImageDestroy imFileImageLoadBitmap.htm#aux
+imImageGetAttribString imFileImageLoadBitmap.htm#aux
+imImageRemoveAlpha imFileImageLoadBitmap.htm#aux
+imImageSetAttribString imFileImageLoadBitmap.htm#aux
+imProcessFlip imFileImageLoadBitmap.htm#aux
+imProcessMirror imFileImageLoadBitmap.htm#aux
+imProcessNegative imFileImageLoadBitmap.htm#aux
+imProcessRenderConstant imFileImageLoadBitmap.htm#aux
+imProcessRenderFloodFill imFileImageLoadBitmap.htm#aux
+imProcessResize imFileImageLoadBitmap.htm#aux
+imProcessRotate180 imFileImageLoadBitmap.htm#aux
+imProcessRotate90 imFileImageLoadBitmap.htm#aux
+imProcessToneGamut imFileImageLoadBitmap.htm#aux
+include
+include_paths
+init_cs
+INPUTCALLBACKS iupgattr.htm#INPUTCALLBACKS
+insert
+instance
+int_to_bits
+int_to_bytes
+integer
+is_dict
+is_leap_year
+is_match wildcard_match.htm
+islower lower.htm
+isupper upper.htm
+BUTTON_CB callbacks.htm#BUTTON_CB
+CLOSE_CB callbacks.htm#CLOSE_CB
+IUP_BUTTON1 callbacks.htm#BUTTON_CB
+IUP_BUTTON2 callbacks.htm#BUTTON_CB
+IUP_BUTTON3 callbacks.htm#BUTTON_CB
+MOTION_CB callbacks.htm#MOTION_CB
+RESIZE_CB callbacks.htm#RESIZE_CB
+WHEEL_CB callbacks.htm#WHEEL_CB
+VALUE_CB IupMatrix.htm#VALUE_CB
+iup_isshift callbacks.htm#BUTTON_CB
+iup_iscontrol callbacks.htm#BUTTON_CB
+iup_isbutton1 callbacks.htm#BUTTON_CB
+iup_isbutton2 callbacks.htm#BUTTON_CB
+iup_isbutton3 callbacks.htm#BUTTON_CB
+iup_isdouble callbacks.htm#BUTTON_CB
+iup_isalt callbacks.htm#BUTTON_CB
+iup_issys callbacks.htm#BUTTON_CB
+iup_isbutton4 callbacks.htm#BUTTON_CB
+iup_isbutton5 callbacks.htm#BUTTON_CB
+iup_cb_from_name Icallback.htm
+iup_name_from_cb Icallback.htm
+IUP_CLOSE callbacks.htm#IUP_CLOSE
+IUP_CONTINUE callbacks.htm#IUP_CONTINUE
+IUP_DEFAULT callbacks.htm#IUP_DEFAULT
+IUP_IGNORE callbacks.htm#IUP_IGNORE
+IupAlarm
+IupAppend
+IupBackgroundBox
+IupButton
+IupCalendar
+IupCanvas
+IupCbox
+IupCells
+IupClipboard
+IupClose
+IupCloseOnEscape IupClose.htm
+IupColorBrowser
+IupColorDlg
+IupConfig
+IupConfigDialogClosed
+IupConfigDialogShow
+IupConfigGetVariableDouble IupConfigGetVariableInt.htm
+IupConfigGetVariableDoubleDef IupConfigGetVariableInt.htm#Def
+IupConfigGetVariableDoubleId IupConfigGetVariableInt.htm
+IupConfigGetVariableDoubleIdDef IupConfigGetVariableInt.htm#Def
+IupConfigGetVariableInt
+IupConfigGetVariableIntDef IupConfigGetVariableInt.htm#Def
+IupConfigGetVariableIntId IupConfigGetVariableInt.htm
+IupConfigGetVariableIntIdDef IupConfigGetVariableInt.htm#Def
+IupConfigGetVariableStr
+IupConfigGetVariableStrDef IupConfigGetVariableStr.htm#Def
+IupConfigGetVariableStrId IupConfigGetVariableStr.htm
+IupConfigGetVariableStrIdDef IupConfigGetVariableStr.htm#Def
+IupConfigLoad
+IupConfigRecentInit
+IupConfigRecentUpdate
+IupConfigSave
+IupConfigSetVariableDouble IupConfigSetVariableInt.htm
+IupConfigSetVariableDoubleId IupConfigSetVariableInt.htm
+IupConfigSetVariableInt
+IupConfigSetVariableIntId IupConfigSetVariableInt.htm
+IupConfigSetVariableStr
+IupConfigSetVariableStrId IupConfigSetVariableStr.htm
+IupControlsOpen IupOpen.htm#IupControlsOpen
+IupConvertXYToPos
+IupCopyClassAttributes
+IupCreate
+IupDatePick
+IupDestroy
+IupDetach
+IupDetachBox
+IupDial
+IupDialog
+IupElementPropertiesDialog
+IupExitLoop
+IupExpander
+IupFileDlg
+IupFill
+IupFlatButton
+IupFlush
+IupFontDlg
+IupFrame
+IupGauge IupProgressBar.htm
+IupGetAllAttributes
+IupGetAllClasses
+IupGetAllDialogs
+IupGetAllNames
+IupGetAttribute
+IupGetAttributeHandle
+IupGetAttributeId IupGetAttribute.htm#utility
+IupGetAttributeId2 IupGetAttribute.htm#utility
+IupGetAttributePtr IupGetAttribute.htm
+IupGetAttributes IupGetAllAttributes.htm
+IupGetBrother
+IupGetCallback
+IupGetChild
+IupGetChildCount
+IupGetChildPos
+IupGetClassAttributes
+IupGetClassCallbacks
+IupGetClassName
+IupGetClassType
+IupGetColor
+IupGetDialog
+IupGetDialogChild
+IupGetFile
+IupGetFocus
+IupGetFunction IupGetGlobalFunction.htm
+IupGetGlobal
+IupGetGlobalFunction
+IupGetHandle
+IupGetName
+IupGetNativeHandleImage IupLoadImage.htm#IupGetNativeHandleImage
+IupGetNextChild
+IupGetImageNativeHandle IupLoadImage.htm#IupGetImageNativeHandle
+IupGetInt IupGetAttribute.htm#utility
+IupGetInt2 IupGetAttribute.htm#utility
+IupGetIntInt IupGetAttribute.htm#utility
+IupGetIntId IupGetAttribute.htm#utility
+IupGetIntId2 IupGetAttribute.htm#utility
+IupGetFloat IupGetAttribute.htm#utility
+IupGetFloatId IupGetAttribute.htm#utility
+IupGetFloatId2 IupGetAttribute.htm#utility
+IupGetDouble IupGetAttribute.htm#utility
+IupGetDoubleId IupGetAttribute.htm#utility
+IupGetDoubleId2 IupGetAttribute.htm#utility
+IupGetRGB IupGetAttribute.htm#utility
+IupGetRGBId IupGetAttribute.htm#utility
+IupGetRGBId2 IupGetAttribute.htm#utility
+IupGetParam
+IupGetParent
+IupGetText
+IupGLButton
+IupGLCanvas
+IupGLCanvasBox
+IupGLCanvasOpen IupGLCanvas.htm#IupGLCanvasOpen
+IupGLControlsOpen IupGLControls.htm
+IupGLExpander
+IupGLFrame
+IupGLIsCurrent IupGLCanvas.htm#IupGLIsCurrent
+IupGLLabel
+IupGLLink
+IupGLMakeCurrent IupGLCanvas.htm#IupGLMakeCurrent
+IupGLPalette IupGLCanvas.htm#IupGLPalette
+IupGLProgressBar
+IupGLScrollBox
+IupGLSeparator
+IupGLSizeBox
+IupGLSubCanvas
+IupGLSwapBuffers IupGLCanvas.htm#IupGLSwapBuffers
+IupGLToggle
+IupGLUseFont IupGLCanvas.htm#IupGLUseFont
+IupGLVal IupGLValuator.htm
+IupGLValuator
+IupGLWait IupGLCanvas.htm#IupGLWait
+IupGridBox
+IupHbox
+IupHelp
+IupHide
+IupImage
+IupImageA IupImage.htm#IupImageRGB
+IupImageRGB IupImage.htm#IupImageRGB
+IupImageRGBA IupImage.htm#IupImageRGB
+IupImageFromImImage IupLoadImage.htm#IupImageFromImImage
+IupInsert
+IupItem IupMenuItem.htm
+IupLabel
+IupLayoutDialog
+IupLink
+IupList
+IupListDialog
+IupLoadImage
+IupLoopStep
+IupLoopStepWait IupLoopStep.htm
+IupMainLoop
+IupMainLoopLevel
+IupMap
+IupMatGetAttribute IupMatrix.htm#utility
+IupMatGetInt IupMatrix.htm#utility
+IupMatGetFloat IupMatrix.htm#utility
+IupMatrix
+IupMatrixEx
+IupMatrixExInit IupMatrixEx.htm
+IupMatrixExOpen IupMatrixEx.htm
+IupMatSetAttribute IupMatrix.htm#utility
+IupMatSetfAttribute IupMatrix.htm#utility
+IupMatStoreAttribute IupMatrix.htm#utility
+IupMenu
+IupMenuItem
+IupMessage
+IupMessageDlg
+IupMessagef IupMessage.htm
+IupMultiLine IupText.htm#IupMultiLine
+IupNormaliser IupNormalizer.htm
+IupNormalizer
+IupOpen
+IupImageLibOpen
+IupPlayInput
+IupPlot
+IupPlotAdd IupPlot.htm#aux
+IupPlotAddSamples IupPlot.htm#aux
+IupPlotAddSegment IupPlot.htm#aux
+IupPlotAddStr IupPlot.htm#aux
+IupPlotAddStrSamples IupPlot.htm#aux
+IupPlotBegin IupPlot.htm#aux
+IupPlotEnd IupPlot.htm#aux
+IupPlotFindSample IupPlot.htm#aux
+IupPlotGetSample IupPlot.htm#aux
+IupPlotGetSampleStr IupPlot.htm#aux
+IupPlotGetSampleSelection IupPlot.htm#aux
+IupPlotInsert IupPlot.htm#aux
+IupPlotInsertSegment IupPlot.htm#aux
+IupPlotInsertStr IupPlot.htm#aux
+IupPlotInsertSamples IupPlot.htm#aux
+IupPlotInsertStrSamples IupPlot.htm#aux
+IupPlotLoadData IupPlot.htm#aux
+IupPlotPaintTo IupPlot.htm#aux
+IupPlotSetSample IupPlot.htm#aux
+IupPlotSetSampleStr IupPlot.htm#aux
+IupPlotSetSampleSelection IupPlot.htm#aux
+IupPlotTransform IupPlot.htm#aux
+IupPlotTransformTo IupPlot.htm#aux
+IupPopup
+IupProgressBar
+IupRadio
+IupRawStringPtr
+IupRecordInput
+IupRedraw
+IupRefresh
+IupRefreshChildren
+IupReparent
+IupResetAttribute
+IupSaveClassAttributes
+IupSaveImage IupLoadImage.htm#IupSaveImage
+IupSbox
+IupScanf IupGetParam.htm
+IupScrollBox
+IupSeparator
+IupSetAtt IupSetAttributes.htm
+IupSetAttribute
+IupSetAttributeId IupSetAttribute.htm#utility
+IupSetAttributeId2 IupSetAttribute.htm#utility
+IupSetAttributeHandle
+IupSetAttributePtr IupSetAttribute.htm
+IupSetAttributes
+IupSetAttributesf IupSetAttributes.htm
+IupSetCallback
+IupSetCallbackf IupSetCallback.htm
+IupSetCallbacks IupSetCallback.htm
+IupSetClassDefaultAttribute
+IupSetfAttributeId IupSetAttributeId.htm
+IupSetFocus
+IupSetFunction IupSetGlobalFunction.htm
+IupSetGlobal
+IupSetGlobalFunction
+IupSetHandle
+IupSetInt IupSetStrAttribute.htm#utility
+IupSetIntId IupSetStrAttribute.htm#utility
+IupSetIntId2 IupSetStrAttribute.htm#utility
+IupSetDouble IupSetStrAttribute.htm#utility
+IupSetDoubleId IupSetStrAttribute.htm#utility
+IupSetDoubleId2 IupSetStrAttribute.htm#utility
+IupSetfAttribute IupSetStrAttribute.htm#IupSetfAttribute
+IupSetfAttributeId2 IupMatrix.htm#utility
+IupSetFloat IupSetStrAttribute.htm#utility
+IupSetFloatId IupSetStrAttribute.htm#utility
+IupSetFloatId2 IupSetStrAttribute.htm#utility
+IupSetRGB IupSetStrAttribute.htm#utility
+IupSetRGBId IupSetStrAttribute.htm#utility
+IupSetRGBId2 IupSetStrAttribute.htm#utility
+IupSetStrAttribute
+IupSetStrAttributeId IupSetStrAttribute.htm#utility
+IupSetStrAttributeId2 IupSetStrAttribute.htm#utility
+IupSetStrf IupSetStrAttribute.htm#utility
+IupSetStrGlobal IupSetGlobal.htm
+IupShow
+IupShowXY
+IupSpin IupSpinBox.htm
+IupSpinBox
+IupSpinbox IupSpinBox.htm
+IupSplit
+IupStoreAttribute IupSetStrAttribute.htm
+IupStoreAttributeId IupSetStrAttribute.htm
+IupStoreAttributeId2 IupSetStrAttribute.htm
+IupStoreGlobal IupSetGlobal.htm
+IupSubmenu
+IupSubMenu IupSubmenu.htm
+IupTabs
+IupText
+IupTextConvertLinColToPos IupText.htm
+IupTextConvertPosToLinCol IupText.htm
+IupTimer
+IupToggle
+IupTree
+IupTreeAddNodes
+IupTreeGetId IupTree.htm#IupTreeGetId
+IupTreeGetUserId IupTree.htm#IupTreeGetUserId
+IupTreeSetUserId IupTree.htm#IupTreeSetUserId
+IupUnmap
+IupUpdate
+IupUpdateChildren IupUpdate.htm
+IupVal IupValuator.htm
+IupValuator
+IupVbox
+IupVersion IupGetGlobal.htm
+IupVersionDate  IupGetGlobal.htm
+IupVersionNumber  IupGetGlobal.htm
+IupWebBrowser
+IupZbox
+join
+join_by
+join_path
+JSON_ARRAY json.htm
+JSON_INVALID json.htm
+JSON_KEYWORD json.htm
+JSON_OBJECT json.htm
+K_ANY callbacks.htm#K_ANY
+K_BS callbacks.htm#K_ANY
+K_CR callbacks.htm#K_ANY
+K_DEL callbacks.htm#K_ANY
+K_DOWN callbacks.htm#K_ANY
+K_END callbacks.htm#K_ANY
+K_ESC callbacks.htm#K_ANY
+K_F1 callbacks.htm#K_ANY
+K_F2 callbacks.htm#K_ANY
+K_F3 callbacks.htm#K_ANY
+K_F4 callbacks.htm#K_ANY
+K_F5 callbacks.htm#K_ANY
+K_F6 callbacks.htm#K_ANY
+K_F7 callbacks.htm#K_ANY
+K_F8 callbacks.htm#K_ANY
+K_F9 callbacks.htm#K_ANY
+K_F10 callbacks.htm#K_ANY
+K_F11 callbacks.htm#K_ANY
+K_F12 callbacks.htm#K_ANY
+K_HOME callbacks.htm#K_ANY
+K_INS callbacks.htm#K_ANY
+K_LEFT callbacks.htm#K_ANY
+K_LF callbacks.htm#K_ANY
+K_Menu callbacks.htm#K_ANY
+K_MIDDLE callbacks.htm#K_ANY
+K_PAUSE callbacks.htm#K_ANY
+K_PGDN callbacks.htm#K_ANY
+K_PGUP callbacks.htm#K_ANY
+K_Print callbacks.htm#K_ANY
+K_RIGHT callbacks.htm#K_ANY
+K_SP callbacks.htm#K_ANY
+K_TAB callbacks.htm#K_ANY
+K_UP callbacks.htm#K_ANY
+K_LSHIFT callbacks.htm#K_ANY
+K_RSHIFT callbacks.htm#K_ANY
+K_LCTRL callbacks.htm#K_ANY
+K_RCTRL callbacks.htm#K_ANY
+K_LALT callbacks.htm#K_ANY
+K_RALT callbacks.htm#K_ANY
+K_NUM callbacks.htm#K_ANY
+K_SCROLL callbacks.htm#K_ANY
+K_CAPS callbacks.htm#K_ANY
+K_asterisk callbacks.htm#K_ANY
+K_exclam callbacks.htm#K_ANY
+K_quotedbl callbacks.htm#K_ANY
+K_numbersign callbacks.htm#K_ANY
+K_dollar callbacks.htm#K_ANY
+K_percent callbacks.htm#K_ANY
+K_ampersand callbacks.htm#K_ANY
+K_apostrophe callbacks.htm#K_ANY
+K_parentleft callbacks.htm#K_ANY
+K_parentright callbacks.htm#K_ANY
+K_plus callbacks.htm#K_ANY
+K_comma callbacks.htm#K_ANY
+K_minus callbacks.htm#K_ANY
+K_period callbacks.htm#K_ANY
+K_slash callbacks.htm#K_ANY
+K_0 callbacks.htm#K_ANY
+K_1 callbacks.htm#K_ANY
+K_2 callbacks.htm#K_ANY
+K_3 callbacks.htm#K_ANY
+K_4 callbacks.htm#K_ANY
+K_5 callbacks.htm#K_ANY
+K_6 callbacks.htm#K_ANY
+K_7 callbacks.htm#K_ANY
+K_8 callbacks.htm#K_ANY
+K_9 callbacks.htm#K_ANY
+K_colon callbacks.htm#K_ANY
+K_semicolon callbacks.htm#K_ANY
+K_less callbacks.htm#K_ANY
+K_equal callbacks.htm#K_ANY
+K_greater callbacks.htm#K_ANY
+K_question callbacks.htm#K_ANY
+K_at callbacks.htm#K_ANY
+K_A callbacks.htm#K_ANY
+K_B callbacks.htm#K_ANY
+K_C callbacks.htm#K_ANY
+K_D callbacks.htm#K_ANY
+K_E callbacks.htm#K_ANY
+K_F callbacks.htm#K_ANY
+K_G callbacks.htm#K_ANY
+K_H callbacks.htm#K_ANY
+K_I callbacks.htm#K_ANY
+K_J callbacks.htm#K_ANY
+K_K callbacks.htm#K_ANY
+K_L callbacks.htm#K_ANY
+K_M callbacks.htm#K_ANY
+K_N callbacks.htm#K_ANY
+K_O callbacks.htm#K_ANY
+K_P callbacks.htm#K_ANY
+K_Q callbacks.htm#K_ANY
+K_R callbacks.htm#K_ANY
+K_S callbacks.htm#K_ANY
+K_T callbacks.htm#K_ANY
+K_U callbacks.htm#K_ANY
+K_V callbacks.htm#K_ANY
+K_W callbacks.htm#K_ANY
+K_X callbacks.htm#K_ANY
+K_Y callbacks.htm#K_ANY
+K_Z callbacks.htm#K_ANY
+K_cPlus callbacks.htm#K_ANY
+K_cMinus callbacks.htm#K_ANY
+K_cEqual callbacks.htm#K_ANY
+K_cA callbacks.htm#K_ANY
+K_cB callbacks.htm#K_ANY
+K_cC callbacks.htm#K_ANY
+K_cD callbacks.htm#K_ANY
+K_cE callbacks.htm#K_ANY
+K_cF callbacks.htm#K_ANY
+K_cG callbacks.htm#K_ANY
+K_cH callbacks.htm#K_ANY
+K_cI callbacks.htm#K_ANY
+K_cJ callbacks.htm#K_ANY
+K_cK callbacks.htm#K_ANY
+K_cL callbacks.htm#K_ANY
+K_cM callbacks.htm#K_ANY
+K_cN callbacks.htm#K_ANY
+K_cO callbacks.htm#K_ANY
+K_cP callbacks.htm#K_ANY
+K_cQ callbacks.htm#K_ANY
+K_cR callbacks.htm#K_ANY
+K_cS callbacks.htm#K_ANY
+K_cT callbacks.htm#K_ANY
+K_cU callbacks.htm#K_ANY
+K_cV callbacks.htm#K_ANY
+K_cW callbacks.htm#K_ANY
+K_cX callbacks.htm#K_ANY
+K_cY callbacks.htm#K_ANY
+K_cZ callbacks.htm#K_ANY
+K_cPGUP callbacks.htm#K_ANY
+K_cPGDN callbacks.htm#K_ANY
+K_cHOME callbacks.htm#K_ANY
+K_cEND callbacks.htm#K_ANY
+K_cF1 callbacks.htm#K_ANY
+K_cF2 callbacks.htm#K_ANY
+K_cF3 callbacks.htm#K_ANY
+K_cF4 callbacks.htm#K_ANY
+K_cF5 callbacks.htm#K_ANY
+K_cF6 callbacks.htm#K_ANY
+K_cF7 callbacks.htm#K_ANY
+K_cF8 callbacks.htm#K_ANY
+K_cF9 callbacks.htm#K_ANY
+K_cF10 callbacks.htm#K_ANY
+K_cF11 callbacks.htm#K_ANY
+K_cF12 callbacks.htm#K_ANY
+K_csSP callbacks.htm#K_ANY
+K_csA callbacks.htm#K_ANY
+K_csB callbacks.htm#K_ANY
+K_csC callbacks.htm#K_ANY
+K_csD callbacks.htm#K_ANY
+K_csE callbacks.htm#K_ANY
+K_csF callbacks.htm#K_ANY
+K_csG callbacks.htm#K_ANY
+K_csH callbacks.htm#K_ANY
+K_csI callbacks.htm#K_ANY
+K_csJ callbacks.htm#K_ANY
+K_csK callbacks.htm#K_ANY
+K_csL callbacks.htm#K_ANY
+K_csM callbacks.htm#K_ANY
+K_csN callbacks.htm#K_ANY
+K_csO callbacks.htm#K_ANY
+K_csP callbacks.htm#K_ANY
+K_csQ callbacks.htm#K_ANY
+K_csR callbacks.htm#K_ANY
+K_csS callbacks.htm#K_ANY
+K_csT callbacks.htm#K_ANY
+K_csU callbacks.htm#K_ANY
+K_csV callbacks.htm#K_ANY
+K_csW callbacks.htm#K_ANY
+K_csX callbacks.htm#K_ANY
+K_csY callbacks.htm#K_ANY
+K_csZ callbacks.htm#K_ANY
+K_mA callbacks.htm#K_ANY
+K_mB callbacks.htm#K_ANY
+K_mC callbacks.htm#K_ANY
+K_mD callbacks.htm#K_ANY
+K_mE callbacks.htm#K_ANY
+K_mF callbacks.htm#K_ANY
+K_mG callbacks.htm#K_ANY
+K_mH callbacks.htm#K_ANY
+K_mI callbacks.htm#K_ANY
+K_mJ callbacks.htm#K_ANY
+K_mK callbacks.htm#K_ANY
+K_mL callbacks.htm#K_ANY
+K_mM callbacks.htm#K_ANY
+K_mN callbacks.htm#K_ANY
+K_mO callbacks.htm#K_ANY
+K_mP callbacks.htm#K_ANY
+K_mQ callbacks.htm#K_ANY
+K_mR callbacks.htm#K_ANY
+K_mS callbacks.htm#K_ANY
+K_mT callbacks.htm#K_ANY
+K_mU callbacks.htm#K_ANY
+K_mV callbacks.htm#K_ANY
+K_mW callbacks.htm#K_ANY
+K_mX callbacks.htm#K_ANY
+K_mY callbacks.htm#K_ANY
+K_mZ callbacks.htm#K_ANY
+K_msA callbacks.htm#K_ANY
+K_msB callbacks.htm#K_ANY
+K_msC callbacks.htm#K_ANY
+K_msD callbacks.htm#K_ANY
+K_msE callbacks.htm#K_ANY
+K_msF callbacks.htm#K_ANY
+K_msG callbacks.htm#K_ANY
+K_msH callbacks.htm#K_ANY
+K_msI callbacks.htm#K_ANY
+K_msJ callbacks.htm#K_ANY
+K_msK callbacks.htm#K_ANY
+K_msL callbacks.htm#K_ANY
+K_msM callbacks.htm#K_ANY
+K_msN callbacks.htm#K_ANY
+K_msO callbacks.htm#K_ANY
+K_msP callbacks.htm#K_ANY
+K_msQ callbacks.htm#K_ANY
+K_msR callbacks.htm#K_ANY
+K_msS callbacks.htm#K_ANY
+K_msT callbacks.htm#K_ANY
+K_msU callbacks.htm#K_ANY
+K_msV callbacks.htm#K_ANY
+K_msW callbacks.htm#K_ANY
+K_msX callbacks.htm#K_ANY
+K_msY callbacks.htm#K_ANY
+K_msZ callbacks.htm#K_ANY
+K_sSP callbacks.htm#K_ANY
+K_a callbacks.htm#K_ANY
+K_b callbacks.htm#K_ANY
+K_c callbacks.htm#K_ANY
+K_d callbacks.htm#K_ANY
+K_e callbacks.htm#K_ANY
+K_f callbacks.htm#K_ANY
+K_g callbacks.htm#K_ANY
+K_h callbacks.htm#K_ANY
+K_i callbacks.htm#K_ANY
+K_j callbacks.htm#K_ANY
+K_k callbacks.htm#K_ANY
+K_l callbacks.htm#K_ANY
+K_m callbacks.htm#K_ANY
+K_n callbacks.htm#K_ANY
+K_o callbacks.htm#K_ANY
+K_p callbacks.htm#K_ANY
+K_q callbacks.htm#K_ANY
+K_r callbacks.htm#K_ANY
+K_s callbacks.htm#K_ANY
+K_t callbacks.htm#K_ANY
+K_u callbacks.htm#K_ANY
+K_v callbacks.htm#K_ANY
+K_w callbacks.htm#K_ANY
+K_x callbacks.htm#K_ANY
+K_y callbacks.htm#K_ANY
+K_z callbacks.htm#K_ANY
+K_bracketleft callbacks.htm#K_ANY
+K_backslash callbacks.htm#K_ANY
+K_bracketright callbacks.htm#K_ANY
+K_circum callbacks.htm#K_ANY
+K_underscore callbacks.htm#K_ANY
+K_grave callbacks.htm#K_ANY
+K_braceleft callbacks.htm#K_ANY
+K_bar callbacks.htm#K_ANY
+K_braceright callbacks.htm#K_ANY
+K_tilde callbacks.htm#K_ANY
+K_acute callbacks.htm#K_ANY
+K_ccedilla callbacks.htm#K_ANY
+K_diaeresis callbacks.htm#K_ANY
+k_perm factorial.htm
+keys map.htm
+largest smallest.htm
+leave_cs
+length
+LINUX platform.htm
+load_map map.htm
+lock_file
+log
+log10 log.htm
+logb bigatom.htm
+lower
+machine_bits
+machine_func
+machine_proc
+machine_word machine_bits.htm
+map
+match
+match_from match.htm
+match_replace
+max
+maxsq max.htm
+maybe_any_key any_key.htm
+mem_copy
+mem_set
+message_box
+min
+minsq min.htm
+mod
+MODKEYSTATE iupgattr.htm#MODKEYSTATE
+move_file
+new map.htm
+new_dict
+new_ZIPENTRY ZIPENTRY.htm
+nopoll_conn_close
+nopoll_conn_close_ext
+nopoll_conn_complete_pending_write
+nopoll_conn_connect_timeout
+nopoll_conn_flush_writes
+nopoll_conn_get_accepted_protocol
+nopoll_conn_get_connect_timeout
+nopoll_conn_get_msg
+nopoll_conn_is_ok
+nopoll_conn_is_ready
+nopoll_conn_new
+nopoll_conn_pending_write_bytes
+nopoll_conn_read
+nopoll_conn_read_pending
+nopoll_conn_send_text
+nopoll_conn_send_text_fragment
+nopoll_conn_set_on_msg
+nopoll_conn_wait_until_connection_ready
+nopoll_ctx_new
+nopoll_ctx_set_on_msg
+nopoll_loop_stop
+nopoll_loop_wait
+nopoll_msg_get_payload
+nopoll_msg_get_payload_size
+nopoll_msg_opcode
+nopoll_msg_opcode_desc
+nopoll_sleep
+nopoll_thread_handlers
+NOPOLL_UNKNOWN_OP_CODE nopoll_msg_opcode_desc.htm
+NOPOLL_CONTINUATION_FRAME nopoll_msg_opcode_desc.htm
+NOPOLL_TEXT_FRAME nopoll_msg_opcode_desc.htm
+NOPOLL_BINARY_FRAME nopoll_msg_opcode_desc.htm
+NOPOLL_CLOSE_FRAME nopoll_msg_opcode_desc.htm
+NOPOLL_PING_FRAME nopoll_msg_opcode_desc.htm
+NOPOLL_PONG_FRAME nopoll_msg_opcode_desc.htm
+NOPOLL_EWOULDBLOCK nopoll_conn_send_text.htm
+EWOULD_BLOCK nopoll_conn_new.htm
+not logicops.htm
+not_bits
+nullable_string
+object
+open
+open_dll
+or logicops.htm
+or_all
+or_bits
+pad_head
+pad_tail
+pairs map.htm
+parse_date_string
+parse_json
+peek
+peek_string
+peek_wstring peek_string.htm
+peek1s peek.htm
+peek1u peek.htm
+peek2s peek.htm
+peek2u peek.htm
+peek4s peek.htm
+peek4u peek.htm
+peek8s peek.htm
+peek8u peek.htm
+peekNS peek.htm
+permute
+pFreePool
+pGetPool
+PI
+platform
+pLoadFlt
+pLoadMint
+poke
+poke1 poke.htm
+poke2 poke.htm
+poke4 poke.htm
+poke8 poke.htm
+pokeN poke.htm
+poke_string
+poke_wstring poke_string.htm
+position
+power
+pp
+ppEx pp.htm
+ppExf ppf.htm
+ppf
+ppOpt
+prepend
+prime_factors
+print
+printf
+print_json
+procedure procedures.htm
+profile
+prompt_number
+prompt_string
+pStoreFlt
+pStoreMint
+put map.htm
+put_screen_char
+putd setd.htm
+puthex32 printf.htm#SEEALSO
+puts
+puts1 puts.htm
+putsint printf.htm#SEEALSO
+rand
+RASTERSIZE common.htm#RASTERSIZE
+read_bitmap
+read_file
+read_lines
+regex
+regex_compile
+regex_options
+register_block
+remainder
+remove
+remove_all
+remove_directory
+rename_file
+repeat
+repeatch repeat.htm
+replace
+resume_thread
+return
+reverse
+RE_BACKREFERENCES regex_options.htm
+RE_CASEINSENSITIVE regex_options.htm
+RE_DOTMATCHESNL regex_options.htm
+RE_EARLY_EXIT regex_options.htm
+RE_PIKEVM regex_options.htm
+RE_RECURSIVE regex_options.htm
+rfind find.htm
+rgb cdEncodeColor.htm
+rnd
+round
+routine_id
+save_bitmap
+sve_map map.htm
+save_text_image
+scanf
+SCREENPOSITION common.htm#SCREENPOSITION
+SCREENSIZE iupgattr.htm#SCREENSIZE
+scroll
+seek
+sequence
+serialize
+series
+set_mb_hwnd message_box.htm#set_mb_hwnd
+set_rand
+set_struct_field
+set_system_doevents
+set_timedate_formats
+set_timezone
+set_unicode
+setd
+setd_default
+shift_bits
+shuffle
+sign
+sin
+SINGLEINSTANCE iupgattr.htm#SINGLEINSTANCE
+size map.htm
+sleep
+sm_alloc_lpsz
+sm_close
+sm_create
+sm_open
+smallest
+SO sharedlib.htm
+sort
+SORTSIGN IupMatrix.htm#SORTSIGN
+splice
+split
+split_any
+split_path
+sprint
+sprintf
+sq_abs seqops.htm
+sq_add seqops.htm
+sq_and seqops.htm
+sq_and_bits seqops.htm
+sq_arccos seqops.htm
+sq_arcsin seqops.htm
+sq_arctan seqops.htm
+sq_atom seqops.htm
+sq_ceil seqops.htm
+sq_cos seqops.htm
+sq_div seqops.htm
+sq_eq seqops.htm
+sq_floor seqops.htm
+sq_floor_div seqops.htm
+sq_ge seqops.htm
+sq_gt seqops.htm
+sq_int seqops.htm
+sq_le seqops.htm
+sq_log seqops.htm
+sq_log10 seqops.htm
+sq_lower seqops.htm
+sq_lt seqops.htm
+sq_mod seqops.htm
+sq_mul seqops.htm
+sq_ne seqops.htm
+sq_not seqops.htm
+sq_not_bits seqops.htm
+sq_or seqops.htm
+sq_or_bits seqops.htm
+sq_power seqops.htm
+sq_rand seqops.htm
+sq_rmdr seqops.htm
+sq_round seqops.htm
+sq_seq seqops.htm
+sq_sign seqops.htm
+sq_sin seqops.htm
+sq_sqrt seqops.htm
+sq_str seqops.htm
+sq_sub seqops.htm
+sq_tan seqops.htm
+sq_trunc seqops.htm
+sq_uminus seqops.htm
+sq_upper seqops.htm
+sq_xor seqops.htm
+sq_xor_bits seqops.htm
+sqrt
+string
+substitute
+substitute_all
+sum
+suspend_thread
+switch
+system
+system_exec
+system_open
+system_wait
+tagset
+tail
+tan
+task_clock_start
+task_clock_stop
+task_create
+task_delay
+task_list
+task_schedule
+task_self
+task_status
+task_suspend
+task_yield
+TEXTAVAILABLE IupClipboard.htm#TEXTAVAILABLE
+text_color
+text_rows
+thread_safe_string
+throw
+time
+timedate
+timedate_diff
+timedelta
+to_integer
+to_number
+to_string
+trace
+traverse_dict
+traverse_dict_partial_key
+trim
+trim_head trim.htm
+trim_tail trim.htm
+TRUE logicops.htm
+True logicops.htm
+true logicops.htm
+trunc
+try
+try_cs
+type types.htm
+unlock_file
+unregister_block
+UnzipClose
+UnzipFindItem
+UnzipGetFileName
+UnzipGetItem
+UnzipGetItems
+UnzipItemToFile
+UnzipOpenFile
+UnzipSetBaseDir
+upper
+utf8_to_utf32
+utf16_to_utf32
+utf32_to_utf8
+utf32_to_utf16
+utf8_to_utf16 utf32_to_utf16.htm#utf8_to_utf16
+utf16_to_utf8 utf16_to_utf32.htm#utf16_to_utf8
+value
+values map.htm
+VC_COLOR cursor.htm
+VC_COLUMNS cursor.htm
+VC_LINES cursor.htm
+VC_MODE cursor.htm
+VC_NCOLORS cursor.htm
+VC_PAGES cursor.htm
+VC_XPIXELS cursor.htm
+VC_YPIXELS cursor.htm
+VC_SCRNLINES cursor.htm
+VC_SCRNCOLS cursor.htm
+version
+video_config
+VISIBLEITEMS IupList.htm#VISIBLEITEMS
+vlookup
+vslice
+wait_key
+wait_thread
+walk_dir
+wdCanvasFont cdCanvasFont.htm
+wdCanvasGetFont cdCanvasGetFont.htm
+wdCanvasGetFontDim cdCanvasGetFontDim.htm
+wdCanvasGetImageRGB cdCanvasGetImageRGB.htm
+wdCanvasGetTextBounds cdCanvasGetTextBounds.htm
+wdCanvasGetTextBox cdCanvasGetTextBox.htm
+wdCanvasGetTextSize cdCanvasGetTextSize.htm
+wdCanvasGetVectorTextBounds cdCanvasGetVectorTextBounds.htm
+wdCanvasGetVectorTextSize cdCanvasGetVectorTextSize.htm
+wdCanvasGetViewport
+wdCanvasGetWindow
+wdCanvasViewport
+wdCanvasWindow
+wglGetProcAddress
+wglUseFontOutlines
+where
+while
+wildcard_file
+wildcard_match
+WIN32 platform.htm
+WINDOWS platform.htm
+with
+without with.htm
+wrap
+xor_bits
+xor logicops.htm
+ZipAddDir
+ZipAddFile
+ZipAddFolder
+ZipClose
+ZipCreateFile
+ZIPENTRY
+
+>Arwen
+------
+CLIPBOARD   arwen.htm#CLIPBOARD
+IDLE        arwen.htm#IDLE
+--True      arwen.htm#True
+--False     arwen.htm#False
+UNDEFINED   arwen.htm#UNDEFINED
+void        arwen.htm#void
+
+setHandler          arwen.Events.htm
+create              arwen.Create.htm
+Window              arwen.Create.htm#objType
+Button              arwen.Create.htm#objType
+PictureButton       arwen.Create.htm#objType
+ToggleButton        arwen.Create.htm#objType
+TogglePictureButton arwen.Create.htm#objType
+RadioButton         arwen.Create.htm#objType
+CheckBox            arwen.Create.htm#objType
+TriCheckBox         arwen.Create.htm#objType
+Group               arwen.Create.htm#objType
+EditText            arwen.Create.htm#objType
+MultiEditText       arwen.Create.htm#objType
+Label               arwen.Create.htm#objType
+ToolBar             arwen.Create.htm#objType
+ToolSep             arwen.Create.htm#objType
+StatusBar           arwen.Create.htm#objType
+StatusField         arwen.Create.htm#objType
+HScroll             arwen.Create.htm#objType
+VScroll             arwen.Create.htm#objType
+HTrackBar           arwen.Create.htm#objType
+VTrackBar           arwen.Create.htm#objType
+ProgressBar         arwen.Create.htm#objType
+Menu                arwen.Create.htm#objType
+MenuItem            arwen.Create.htm#objType
+Listbox             arwen.Create.htm#objType
+ComboBox            arwen.Create.htm#objType
+ComboDropDownList   arwen.Create.htm#objType
+ComboDropDown       arwen.Create.htm#objType
+TabControl          arwen.Create.htm#objType
+TabItem             arwen.Create.htm#objType
+HyperText           arwen.Create.htm#objType
+destroy             arwen.Destroy.htm
+setAccelerator      arwen.Accelerator.htm
+trackMouseEvent     arwen.Mouse.htm
+findMouse           arwen.Mouse.htm
+captureMouse        arwen.Mouse.htm
+releaseMouse        arwen.Mouse.htm
+getClipboardText        arwen.Clipboard.htm
+setClipboardText        arwen.Clipboard.htm
+!copyDibToClipboard     arwen.Clipboard.htm
+loadDibFromClipboard    arwen.Clipboard.htm
+loadCursor              arwen.Icon_cursor.htm
+getCursor               arwen.Icon_cursor.htm
+setCursor               arwen.Icon_cursor.htm
+loadIcon                arwen.Icon_cursor.htm
+setIcon                 arwen.Icon_cursor.htm
+createTimer             arwen.Timers.htm
+startTimer              arwen.Timers.htm
+stopTimer               arwen.Timers.htm
+messageBox              arwen.Comm_dlg.htm
+getOpenFileName         arwen.Comm_dlg.htm
+getSaveFileName         arwen.Comm_dlg.htm
+browseForFolder         arwen.Comm_dlg.htm
+getChooseColor          arwen.Comm_dlg.htm
+!choosefont             arwen.Comm_dlg.htm
+!pageSetup              arwen.Comm_dlg.htm
+!printDlg               arwen.Comm_dlg.htm
+!findText               arwen.Comm_dlg.htm
+!replaceText            arwen.Comm_dlg.htm
+new_struct              arwen.Structures.htm
+struc                   arwen.Structures.htm
+sizeofstruct            arwen.Structures.htm
+    
+blankDib                arwen.DibSections.htm#blankDib
+!!copyDibToClipboard    arwen.DibSections.htm#copyDibToClipboard
+copyDibToDC             arwen.DibSections.htm#copyDibToDC
+!!copyDibToDib          arwen.DibSections.htm#copyDibToDib
+createDib               arwen.DibSections.htm#createDib
+deleteDib               arwen.DibSections.htm#deleteDib
+!drawDib                arwen.DibSections.htm#drawDib
+drawDibFrame            arwen.DibSections.htm#drawDibFrame
+drawDibHorizontalLine   arwen.DibSections.htm#drawDibHorizontalLine
+drawDibLine             arwen.DibSections.htm#drawDibLine
+drawDibText             arwen.DibSections.htm#drawDibText
+drawDibVerticalLine     arwen.DibSections.htm#drawDibVerticalLine
+flipDib                 arwen.DibSections.htm#flipDib
+getDibPaletteEntries    arwen.DibSections.htm#getDibPaletteEntries
+!!getDibPixel           arwen.DibSections.htm#getDibPixel
+!loadDibFromClipboard   arwen.DibSections.htm#loadDibFromClipboard
+loadDibImage            arwen.DibSections.htm#loadDibImage
+mirrorDib               arwen.DibSections.htm#mirrorDib
+rotateDib90             arwen.DibSections.htm#rotateDib90
+rotateDib180            arwen.DibSections.htm#rotateDib180
+rotateDib270            arwen.DibSections.htm#rotateDib270
+saveDibImage            arwen.DibSections.htm#saveDibImage
+setDibPaletteEntries    arwen.DibSections.htm#setDibPaletteEntries
+setDibPixel             arwen.DibSections.htm#setDibPixel
+stretchDibToDib         arwen.DibSections.htm#stretchDibToDib
+
+>Arwen32dib
+-----------
+a32Colour
+a32Colour0 a32Colour.htm
+a32Dib
+a32Dib0 a32Dib.htm
+dibColor
+newDib
+copyDib
+extractDib
+loadDib
+saveDib
+saveDibGray
+saveDibReduced
+killDib
+putDibPixel
+getDibPixel
+clearDib
+fastGetDibPixel
+fastPutDibPixel
+invertDib
+makeDibGray
+replaceDibColor
+replaceDibColors
+adjustDibColors
+colorizeDib
+adjustDibBrightness
+adjustDibContrast
+adjustDibBrightnessAndContrast
+clipToSource
+copyToDib
+drawDibToDib
+copyDibToDib
+tileDibToDib
+copyDibToClipboard
+getDibFromClipboard
+flipDibHor
+flipDibVert
+scaleDib
+scaleDibPct
+rotateDib
+rotateDibFree
+drawDibTransformedPolygon
+filterDib
+filterDibGray
+filterDib3x3
+filterDibGray3x3
+detectDibEdges
+sharpenDib
+subtleSharpenDib
+blurDib
+subtleBlurDib
+embossDib
+drawShadedPolygonToDib
+drawDib
+

@@ -1,0 +1,49 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">cdCanvasUpdateYAxis</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="atom.htm">atom</a> newy = cdCanvasUpdateYAxis(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> y)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         <td>
+            Invert the given Y coordinate if the native Y axis orientation is different from the CD axis orientation. <br>
+            The CD axis orientation is always bottom-top. It also returns the changed value.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Since the pGUI wrapper function can accept integers and floats in the y parameter, and return an atom or integer,
+            there is no need for a separate cdfCanvasUpdateYAxis wrapper. Internally it only uses the cdfCanvasUpdateYAxis 
+            C function.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

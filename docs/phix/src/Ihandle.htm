@@ -1,0 +1,74 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">Ihandle</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            Ihandle <i>identifier</i>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Type. An <a href="integer.htm">integer</a> > 0.
+            <br>
+            <br>
+            Use this to define interface element variables. It is probably <a href="usingtypes.htm#can">unwise</a> to use this to determine whether an object is an Ihandle,
+            as many things which are clearly not (eg 1, 5000, 'X') will pass.
+            <br>
+            <br>
+            Note that assigning NULL to a variable declared as an Ihandle will trigger a typecheck.<br>
+            Some routines accept or yield an Ihandle or NULL; for such cases the type <b>Ihandln</b> (an integer >= 0) is provided.<br>
+            Some routines can accept an Ihandle or a <a href="sequence.htm">sequence</a> of Ihandle, for which the type <b>Ihandles</b> is provided -
+            with null(s) prohibited and the empty sequence permitted.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include pGUI.e
+
+Ihandle quit_bt = IupButton("Quit")
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> pGUI.e
+
+</font><font color="#5E005E">Ihandle</font><font color="#000000"> quit_bt</font><font color="#0000FF"> =</font><font color="#5E005E"> IupButton</font><font color="#0000FF">(</font><font color="#008000">"Quit"</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupButton.htm">IupButton</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

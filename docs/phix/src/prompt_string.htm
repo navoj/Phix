@@ -1,0 +1,69 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">prompt_string</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="string.htm">string</a> s = prompt_string(<a href="string.htm">string</a> prompt)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Prompt the user to enter a string of text. 
+            The prompt parameter is a string that will be displayed on the screen. 
+            The string that the user types will be returned, minus any new-line character.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td> If the user happens to type control-Z (which indicates end-of-file), "" will be returned.
+            <br>
+            <br>
+            If this routine is too simple for your needs, feel free to copy (and ideally rename) it and make your 
+            own more specialized version. You can find the original in builtins\get.e
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+name = prompt_string("What is your name? ")
+</eucode-->
+<pre>
+<font color="#000000">name</font><font color="#0000FF"> =</font><font color="#5E005E"> prompt_string</font><font color="#0000FF">(</font><font color="#008000">"What is your name? "</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="gets.htm">gets</a>,
+          <a href="prompt_number.htm">prompt_number</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

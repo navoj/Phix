@@ -1,0 +1,69 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">unlock_file</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         unlock_file(<a href="integer.htm">integer</a> fn, <a href="sequence.htm">sequence</a> range)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Unlock an open file fn, or a portion of file fn. You must have previously locked the file using lock_file(). <br>
+            On Windows you can unlock a range of bytes within a file by specifying the range parameter as {first_byte, last_byte}.<br>
+            The same range of bytes must have been locked by a previous call to lock_file(). <br>
+            On Linux you can currently only lock or unlock an entire file. <br>
+            The range parameter should be {} when you want to unlock an entire file. <br>
+            On Linux, range must always be {}.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+          You should unlock a file as soon as possible so other processes can use it.
+          <br>
+          <br>
+          Any files that you have locked will be automatically unlocked when your program terminates.
+          <br>
+          <br>
+          See <a href="lock_file.htm">lock_file</a>() for further comments and an example.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+              via :%opUnLock / flock() in builtins\VM\pfileioN.e (an autoinclude) - be warned however it is low-level complicated stuff that you do not need to know.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="lock_file.htm">lock_file</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

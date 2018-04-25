@@ -1,0 +1,94 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">put_screen_char</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          put_screen_char(<a href="integer.htm">integer</a> line, <a href="integer.htm">integer</a> column, <a href="sequence.htm">sequence</a> s)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+<!--DEV relocate-->
+            <b>Semi-deprecated</b>. Although it is unlikely to be removed anytime soon, new applications 
+            should find little need to use this routine.
+            <br>
+            <br>
+            Write zero or more characters onto the screen along with their attributes.<br>
+            line and column specify where the first character should be written. <br>
+            The <a href="sequence.htm">sequence</a> s looks
+            like: {ascii-code1, attribute1, ascii-code2, attribute2, ...}.<br>
+            Each pair of elements in s describes one character. <br>
+            The ascii-code integer contains eg 'A' (==65), and the attributes atom contains the foreground 
+            and background colors, and possibly other platform-dependent
+            information controlling how the character is displayed on the screen.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>The length of s must be a multiple of 2. If s has 0 length, nothing
+             will be written to the screen.
+          <br>
+          <br>
+             It is faster to write several characters to the screen with a single
+             call to put_screen_char() than it is to write one character at a time.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+-- write AZ to the top left of the screen
+put_screen_char(1, 1, {'A', #97, 'Z', #43}) 
+put_screen_char(2, 1, {'A', BRIGHT_BLUE*#10+WHITE, 'Z', RED*#10+CYAN}) 
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>-- write AZ to the top left of the screen
+</i></font><font color="#5E005E">put_screen_char</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#000000"> 1</font><font color="#0000FF">,</font><font color="#800000"> {</font><font color="#008000">'A'</font><font color="#0000FF">,</font><font color="#000000"> #97</font><font color="#0000FF">,</font><font color="#008000"> 'Z'</font><font color="#0000FF">,</font><font color="#000000"> #43</font><font color="#800000">}</font><font color="#0000FF">) 
+</font><font color="#5E005E">put_screen_char</font><font color="#0000FF">(</font><font color="#000000">2</font><font color="#0000FF">,</font><font color="#000000"> 1</font><font color="#0000FF">,</font><font color="#800000"> {</font><font color="#008000">'A'</font><font color="#0000FF">,</font><font color="#004600"> BRIGHT_BLUE</font><font color="#0000FF">*</font><font color="#000000">#10</font><font color="#0000FF">+</font><font color="#004600">WHITE</font><font color="#0000FF">,</font><font color="#008000"> 'Z'</font><font color="#0000FF">,</font><font color="#004600"> RED</font><font color="#0000FF">*</font><font color="#000000">#10</font><font color="#0000FF">+</font><font color="#004600">CYAN</font><font color="#800000">}</font><font color="#0000FF">) </font>
+</pre>
+            <br>
+            Note that attributes are platform-dependent; the top line best illustrates the values
+            expected, and matches the second perfectly on Windows but disagrees on Linux, whereas
+            the second line should work identically cross-platform. Other platform-specific bits
+            may be present in the attributes part.
+            <br>
+            <br>
+            Since BLACK=0 (on all platforms), omitting the *#10 part equates to a black background.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="get_screen_char.htm">get_screen_char</a>,
+          <a href="display_text_image.htm">display_text_image</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

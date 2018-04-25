@@ -1,0 +1,104 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">traverse_dict</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          traverse_dict(<a href="integer.htm">integer</a> rid, 
+                        <a href="object.htm">object</a> user_data=0, 
+                        <a href="integer.htm">integer</a> tid=1, 
+                        <a href="integer.htm#bool">bool</a> rev=false)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Perform an in-order traversal of the dictionary, invoking the specified routine for each {key,data} pairing.
+            <br>
+            <br>
+            rid: routine_id of a function that accepts three parameters, called for each entry.<br>
+            user_data: any additional data that might be required by rid.<br>
+            tid: a result from <a href="new_dict.htm">new_dict</a>(), or if omitted it uses the one common dictionary.<br>
+            rev: if true, the traversal is made from the highest key to the lowest key.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The specified routine should be a function that accepts three parameters: key, data, and user_data, and 
+            should return 1 to continue the traversal, or 0 to terminate it.
+            <br>
+            <br>
+            The ordering is case-sensitive. If a case-insensitive ordering is required, the key values as passed to
+            <a href="setd.htm">setd</a>() [etc] should be passed through either <a href="upper.htm">upper</a>() or 
+            <a href="lower.htm">lower</a>() and if needs be a copy of the original case included somewhere in data.
+            <br>
+            <br>
+            The use of a <a href="procedures.htm#namedparams">named parameter</a> when setting the rev flag is recommended, 
+            to make the intent clear and the code easier to read.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+function visitor(object key, object data, object /*user_data*/)
+    ?{key,data}
+    return 1
+end function
+
+setd("key","data")
+setd("key2","data2")
+
+traverse_dict(routine_id("visitor"))
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">function</font><font color="#000000"> visitor</font><font color="#0000FF">(</font><font color="#004080">object</font><font color="#000000"> key</font><font color="#0000FF">,</font><font color="#004080"> object</font><font color="#000000"> data</font><font color="#0000FF">,</font><font color="#004080"> object</font><font color="#000080"><i> /*user_data*/</i></font><font color="#0000FF">)
+    ?{</font><font color="#000000">key</font><font color="#0000FF">,</font><font color="#000000">data</font><font color="#0000FF">}
+</font><font color="#008080">    return</font><font color="#000000"> 1
+</font><font color="#008080">end function
+
+</font><font color="#5E005E">setd</font><font color="#0000FF">(</font><font color="#008000">"key"</font><font color="#0000FF">,</font><font color="#008000">"data"</font><font color="#0000FF">)
+</font><font color="#5E005E">setd</font><font color="#0000FF">(</font><font color="#008000">"key2"</font><font color="#0000FF">,</font><font color="#008000">"data2"</font><font color="#0000FF">)
+
+</font><font color="#5E005E">traverse_dict</font><font color="#0000FF">(</font><font color="#5E005E">routine_id</font><font color="#800000">(</font><font color="#008000">"visitor"</font><font color="#800000">)</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="setd.htm">setd</a>,
+          <a href="upper.htm">upper</a>,
+          <a href="lower.htm">lower</a>,
+          <a href="routine_id.htm">routine_id</a>,
+          <a href="traverse_dict_partial_key.htm">traverse_dict_partial_key</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

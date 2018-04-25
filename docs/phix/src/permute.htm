@@ -1,0 +1,195 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">permute</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="sequence.htm">sequence</a> res = permute(<a href="integer.htm">integer</a> n, <a href="sequence.htm">sequence</a> set)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Return the nth permute of the given set.<br>
+            n should be an integer in the range 1 to <a href="factorial.htm">factorial</a>(<a href="length.htm">length</a>(set))
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            This can be used to retrieve all possible permutations, in no particular order. The elements can be any type. 
+            It is just as fast to generate the (n!)th permutation as the first, so some applications may benefit by storing
+            an integer key rather than duplicating all the elements of the given set.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+for i=1 to factorial(3) do
+    ?permute(i,"abc")       -- displays "bca" "cab" "bac" "cba" "acb" "abc"
+end for
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">for</font><font color="#000000"> i</font><font color="#0000FF">=</font><font color="#000000">1</font><font color="#008080"> to</font><font color="#5E005E"> factorial</font><font color="#0000FF">(</font><font color="#000000">3</font><font color="#0000FF">)</font><font color="#008080"> do
+</font><font color="#0000FF">    ?</font><font color="#5E005E">permute</font><font color="#0000FF">(</font><font color="#000000">i</font><font color="#0000FF">,</font><font color="#008000">"abc"</font><font color="#0000FF">)      </font><font color="#000080"><i> -- displays "bca" "cab" "bac" "cba" "acb" "abc"
+</i></font><font color="#008080">end for</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\permute.e (an autoinclude), reproduced in the technicalia dropdown below, for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="factorial.htm">factorial</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+            It is worth reproducing the algorithm here. The implementation in builtins\permute.e also contains
+            some additional commented-out variations that may or may not provide slightly more suitable ordering.
+<!--eucode>
+global function permute(integer n, sequence set)
+--
+-- return the nth permute of the given set.
+-- n should be an integer in the range 1 to factorial(length(set))
+--
+sequence res
+integer w
+    n -= 1
+    res = set   -- so permute(n,string/seq) yields string/seq
+    for i=length(set) to 1 by -1 do 
+        w = remainder(n,i)+1
+        res[i] = set[w]
+        set[w] = set[i]
+        n = floor(n/i)
+    end for
+    return res
+end function
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">global function</font><font color="#5E005E"> permute</font><font color="#0000FF">(</font><font color="#004080">integer</font><font color="#000000"> n</font><font color="#0000FF">,</font><font color="#004080"> sequence</font><font color="#000000"> set</font><font color="#0000FF">)
+</font><font color="#000080"><i>--
+-- return the nth permute of the given set.
+-- n should be an integer in the range 1 to factorial(length(set))
+--
+</i></font><font color="#004080">sequence</font><font color="#000000"> res
+</font><font color="#004080">integer</font><font color="#000000"> w
+    n</font><font color="#0000FF"> -=</font><font color="#000000"> 1
+    res</font><font color="#0000FF"> =</font><font color="#000000"> set  </font><font color="#000080"><i> -- so permute(n,string/seq) yields string/seq
+</i></font><font color="#008080">    for</font><font color="#000000"> i</font><font color="#0000FF">=</font><font color="#7060A8">length</font><font color="#0000FF">(</font><font color="#000000">set</font><font color="#0000FF">)</font><font color="#008080"> to</font><font color="#000000"> 1</font><font color="#008080"> by</font><font color="#0000FF"> -</font><font color="#000000">1</font><font color="#008080"> do 
+</font><font color="#000000">        w</font><font color="#0000FF"> =</font><font color="#7060A8"> remainder</font><font color="#0000FF">(</font><font color="#000000">n</font><font color="#0000FF">,</font><font color="#000000">i</font><font color="#0000FF">)+</font><font color="#000000">1
+        res</font><font color="#0000FF">[</font><font color="#000000">i</font><font color="#0000FF">] =</font><font color="#000000"> set</font><font color="#0000FF">[</font><font color="#000000">w</font><font color="#0000FF">]
+</font><font color="#000000">        set</font><font color="#0000FF">[</font><font color="#000000">w</font><font color="#0000FF">] =</font><font color="#000000"> set</font><font color="#0000FF">[</font><font color="#000000">i</font><font color="#0000FF">]
+</font><font color="#000000">        n</font><font color="#0000FF"> =</font><font color="#7060A8"> floor</font><font color="#0000FF">(</font><font color="#000000">n</font><font color="#0000FF">/</font><font color="#000000">i</font><font color="#0000FF">)
+</font><font color="#008080">    end for
+    return</font><font color="#000000"> res
+</font><font color="#008080">end function</font>
+</pre>
+            <br>
+            There is no corresponding library routine for generating combinations. The following template routine shows one way 
+            to generate combinations of a given set. It is anticipated that you would need to modify this for each specific use.
+<!--eucode>
+procedure comb(integer pool, needed, done=0, sequence chosen={})
+    if needed=0 then    -- got a full set
+        ?chosen         -- or call a routine[id] or whatever
+        return
+    end if
+    if done+needed>pool then return end if -- cannot fulfil
+    -- get all combinations with and without the next item:
+    done += 1
+    comb(pool,needed-1,done,append(chosen,done))
+    comb(pool,needed,done,chosen)
+end procedure           
+
+comb(3,2)   -- outputs {1,2} {1,3} {2,3}
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">procedure</font><font color="#000000"> comb</font><font color="#0000FF">(</font><font color="#004080">integer</font><font color="#000000"> pool</font><font color="#0000FF">,</font><font color="#000000"> needed</font><font color="#0000FF">,</font><font color="#000000"> done</font><font color="#0000FF">=</font><font color="#000000">0</font><font color="#0000FF">,</font><font color="#004080"> sequence</font><font color="#000000"> chosen</font><font color="#0000FF">=</font><font color="#800000">{}</font><font color="#0000FF">)
+</font><font color="#008080">    if</font><font color="#000000"> needed</font><font color="#0000FF">=</font><font color="#000000">0</font><font color="#008080"> then   </font><font color="#000080"><i> -- got a full set
+</i></font><font color="#0000FF">        ?</font><font color="#000000">chosen        </font><font color="#000080"><i> -- or call a routine[id] or whatever
+</i></font><font color="#008080">        return
+    end if
+    if</font><font color="#000000"> done</font><font color="#0000FF">+</font><font color="#000000">needed</font><font color="#0000FF">&gt;</font><font color="#000000">pool</font><font color="#008080"> then return end if</font><font color="#000080"><i> -- cannot fulfil
+    -- get all combinations with and without the next item:
+</i></font><font color="#000000">    done</font><font color="#0000FF"> +=</font><font color="#000000"> 1
+    comb</font><font color="#0000FF">(</font><font color="#000000">pool</font><font color="#0000FF">,</font><font color="#000000">needed</font><font color="#0000FF">-</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#000000">done</font><font color="#0000FF">,</font><font color="#7060A8">append</font><font color="#800000">(</font><font color="#000000">chosen</font><font color="#0000FF">,</font><font color="#000000">done</font><font color="#800000">)</font><font color="#0000FF">)
+</font><font color="#000000">    comb</font><font color="#0000FF">(</font><font color="#000000">pool</font><font color="#0000FF">,</font><font color="#000000">needed</font><font color="#0000FF">,</font><font color="#000000">done</font><font color="#0000FF">,</font><font color="#000000">chosen</font><font color="#0000FF">)
+</font><font color="#008080">end procedure           
+
+</font><font color="#000000">comb</font><font color="#0000FF">(</font><font color="#000000">3</font><font color="#0000FF">,</font><font color="#000000">2</font><font color="#0000FF">)  </font><font color="#000080"><i> -- outputs {1,2} {1,3} {2,3}</i></font>
+</pre>
+            <br>
+            And here is a version that returns all combinations - many other variations are possible <img src="images/ksk-smile.png" />
+<!--eucode>
+function comb(sequence res, pool, integer needed, done=0, sequence chosen={})
+    if needed=0 then    -- got a full set
+        res = append(res,chosen)
+    elsif done+needed<=length(pool) then
+        -- get all combinations with and without the next item:
+        done += 1
+        res = comb(res,pool,needed-1,done,append(chosen,pool[done]))
+        res = comb(res,pool,needed,done,chosen)
+    end if
+    return res
+end function            
+
+?comb({},{4,5,6},2) -- {{4,5},{4,6},{5,6}}
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">function</font><font color="#000000"> comb</font><font color="#0000FF">(</font><font color="#004080">sequence</font><font color="#000000"> res</font><font color="#0000FF">,</font><font color="#000000"> pool</font><font color="#0000FF">,</font><font color="#004080"> integer</font><font color="#000000"> needed</font><font color="#0000FF">,</font><font color="#000000"> done</font><font color="#0000FF">=</font><font color="#000000">0</font><font color="#0000FF">,</font><font color="#004080"> sequence</font><font color="#000000"> chosen</font><font color="#0000FF">=</font><font color="#800000">{}</font><font color="#0000FF">)
+</font><font color="#008080">    if</font><font color="#000000"> needed</font><font color="#0000FF">=</font><font color="#000000">0</font><font color="#008080"> then   </font><font color="#000080"><i> -- got a full set
+</i></font><font color="#000000">        res</font><font color="#0000FF"> =</font><font color="#7060A8"> append</font><font color="#0000FF">(</font><font color="#000000">res</font><font color="#0000FF">,</font><font color="#000000">chosen</font><font color="#0000FF">)
+</font><font color="#008080">    elsif</font><font color="#000000"> done</font><font color="#0000FF">+</font><font color="#000000">needed</font><font color="#0000FF">&lt;=</font><font color="#7060A8">length</font><font color="#0000FF">(</font><font color="#000000">pool</font><font color="#0000FF">)</font><font color="#008080"> then
+</font><font color="#000080"><i>        -- get all combinations with and without the next item:
+</i></font><font color="#000000">        done</font><font color="#0000FF"> +=</font><font color="#000000"> 1
+        res</font><font color="#0000FF"> =</font><font color="#000000"> comb</font><font color="#0000FF">(</font><font color="#000000">res</font><font color="#0000FF">,</font><font color="#000000">pool</font><font color="#0000FF">,</font><font color="#000000">needed</font><font color="#0000FF">-</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#000000">done</font><font color="#0000FF">,</font><font color="#7060A8">append</font><font color="#800000">(</font><font color="#000000">chosen</font><font color="#0000FF">,</font><font color="#000000">pool</font><font color="#800080">[</font><font color="#000000">done</font><font color="#800080">]</font><font color="#800000">)</font><font color="#0000FF">)
+</font><font color="#000000">        res</font><font color="#0000FF"> =</font><font color="#000000"> comb</font><font color="#0000FF">(</font><font color="#000000">res</font><font color="#0000FF">,</font><font color="#000000">pool</font><font color="#0000FF">,</font><font color="#000000">needed</font><font color="#0000FF">,</font><font color="#000000">done</font><font color="#0000FF">,</font><font color="#000000">chosen</font><font color="#0000FF">)
+</font><font color="#008080">    end if
+    return</font><font color="#000000"> res
+</font><font color="#008080">end function            
+
+</font><font color="#0000FF">?</font><font color="#000000">comb</font><font color="#0000FF">(</font><font color="#800000">{}</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#000000">4</font><font color="#0000FF">,</font><font color="#000000">5</font><font color="#0000FF">,</font><font color="#000000">6</font><font color="#800000">}</font><font color="#0000FF">,</font><font color="#000000">2</font><font color="#0000FF">)</font><font color="#000080"><i> -- {{4,5},{4,6},{5,6}}</i></font>
+</pre>
+            <br>
+            A practical application can be seen in demo\rosetta\Sudoku.exw
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

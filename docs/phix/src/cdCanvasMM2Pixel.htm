@@ -1,0 +1,48 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">cdCanvasMM2Pixel</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> {dx,dy} = cdCanvasMM2Pixel(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> mm_dx, mm_dy)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         <td>
+            Converts sizes in millimeters into pixels (canvas coordinates).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Since the pGUI wrapper function can accept integers and floats in the parameters, there is no need for a 
+            separate cdfCanvasMM2Pixel wrapper. Internally it only uses the cdCanvasMM2Pixel C function, 
+            since there seems little point returning fractions of pixels.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

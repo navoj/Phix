@@ -1,0 +1,124 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">timedelta</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include builtins\timedate.e
+            <br>
+            <br>
+            <a href="atom.htm">atom</a> delta = timedelta(<a href="atom.htm">atom</a> weeks=0, days=0, hours=0, minutes=0, seconds=0, milliseconds=0, microseconds=0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Returns a duration of time expressed in seconds and fractions of a second (idea cribbed from python)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The result is intended to be used as a parameter to <a href="adjust_timedate.htm">adjust_timedate</a>().
+            <br>
+            <br>
+            The parameters are expected to be <a href="procedures.htm#namedparams">named</a>: while 7 hours and 30 minutes 
+            <i>could</i> legally be defined using <code>timedelta(0,0,7,30)</code>,
+            it is recommended that the far more readable 
+            <code>timedelta(hours:=7, minutes:=30)</code> or 
+            <code>timedelta(hours:=7.5)</code> be used instead.
+            <br>
+            <br>
+            The parameters are all defined as atoms to allow huge and/or fractional values to be passed.
+            <br>
+            <br>
+            1,000 milliseconds equal 1 second and 1,000 microseconds equal 1 millisecond (and 1,000,000 microseconds equal 1 second)
+            - probably only useful in delta*bignumber cases.
+            <br>
+            <br>
+            Fairly obviously, I should hope, invoking <code>timedelta(seconds:=s)</code> is a rather pointless exercise, as is the
+            perfectly legal but otherwise completely useless <code>timedelta()</code>, as they simply return s unaltered or 0 respectively.
+            <br>
+            <br>
+            timedeltas have no notion of and will account for neither leap years nor leap seconds; an application programmer wishing 
+            to alter dates by more than 4 weeks is advised to take care of any whole months/years separately and manually, perhaps 
+            with a loop to adjust month by 12 and year by 1 until month is between 1 and 12, probably requiring standard/leap fiddles
+            for days near the end of the month, but days and below via a timedelta, and anything like first or last Thursday of the 
+            month should probably not be using this routine at all.
+            <br>
+            <br>
+            timedeltas have no notion of and will account for neither general relativity nor worm holes; passengers travelling near 
+            the speed of light or passing through time portals should avoid attempting to apply timedeltas to incompatible timeframes.
+            For example, if you leave on Friday and arrive last Monday, by Tuesday the time of your departure has not become Saturday,
+            however if last Thursday you jump back to next Sunday then you are two days older than everyone else, despite never having
+            experienced Saturday, which should by rights make you one day younger.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include builtins\timedate.e
+atom fourdays = timedelta(days:=4)
+timedate td = parse_date_string("1/8/2016",{"D/M/YYYY"})
+?format_timedate(td,"Dddd, Mmmm dth, yyyy")                 -- displays "Monday, August 1st, 2016"
+td = adjust_timedate(td,fourdays)
+?format_timedate(td,"Dddd, Mmmm dth, yyyy")                 -- displays "Friday, August 5th, 2016"
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> builtins\timedate.e
+</font><font color="#004080">atom</font><font color="#000000"> fourdays</font><font color="#0000FF"> =</font><font color="#5E005E"> timedelta</font><font color="#0000FF">(</font><font color="#000000">days</font><font color="#0000FF">:=</font><font color="#000000">4</font><font color="#0000FF">)
+</font><font color="#004080">timedate</font><font color="#000000"> td</font><font color="#0000FF"> =</font><font color="#5E005E"> parse_date_string</font><font color="#0000FF">(</font><font color="#008000">"1/8/2016"</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#008000">"D/M/YYYY"</font><font color="#800000">}</font><font color="#0000FF">)
+?</font><font color="#5E005E">format_timedate</font><font color="#0000FF">(</font><font color="#000000">td</font><font color="#0000FF">,</font><font color="#008000">"Dddd, Mmmm dth, yyyy"</font><font color="#0000FF">)                </font><font color="#000080"><i> -- displays "Monday, August 1st, 2016"
+</i></font><font color="#000000">td</font><font color="#0000FF"> =</font><font color="#5E005E"> adjust_timedate</font><font color="#0000FF">(</font><font color="#000000">td</font><font color="#0000FF">,</font><font color="#000000">fourdays</font><font color="#0000FF">)
+?</font><font color="#5E005E">format_timedate</font><font color="#0000FF">(</font><font color="#000000">td</font><font color="#0000FF">,</font><font color="#008000">"Dddd, Mmmm dth, yyyy"</font><font color="#0000FF">)                </font><font color="#000080"><i> -- displays "Friday, August 5th, 2016"</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="timedate.htm">timedate</a>,
+          <a href="adjust_timedate.htm">adjust_timedate</a>,
+          <a href="parse_date_string.htm">parse_date_string</a>,
+          <a href="format_timedate.htm">format_timedate</a>,
+          <a href="elapsed.htm">elapsed</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+            I considered adding a years parameter, but there would be no way to know whether it should be multiplied by 365, 366, 365.25, or something else, 
+            and besides, it is perfectly simple to get timedelta(days:=365) [or whatever] directly and play with that.
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

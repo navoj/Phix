@@ -1,0 +1,116 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">read_bitmap</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="object.htm">object</a> x = read_bitmap(<a href="string.htm">string</a> st)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+          <b>Deprecated</b>. Most graphics are now 24 or 32 bit which this 
+            routine does not support. However, as long as 256 colours (8-bit) 
+            or less is acceptable, this routine remains perfectly useable,
+            and may still be the right choice for simple cross-platform
+            applications.
+          <br>
+          <br>
+            st is the name of a .bmp "bitmap" file. The file should be in
+            the bitmap format. Only low-res uncompressed variations of the 
+            format are supported. If the file is read successfully the result 
+            will be a 2-element <a href="sequence.htm">sequence</a>. 
+            The first element is the palette,
+            containing intensity values in the range 0 to 255. The second 
+            element is a 2-d <a href="sequence.htm">sequence</a> of sequences 
+            containing a pixel-graphics image.
+          <br>
+          <br>
+            Bitmaps of 2, 4, 16 or 256 colors are supported. If the file is
+            not in a good format, an integer error code is returned instead:
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+<!--eucode>
+    global constant BMP_SUCCESS = 0,
+                BMP_OPEN_FAILED = 1,
+             BMP_UNEXPECTED_EOF = 2,
+         BMP_UNSUPPORTED_FORMAT = 3
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">    global constant</font><font color="#004600"> BMP_SUCCESS</font><font color="#0000FF"> =</font><font color="#000000"> 0</font><font color="#0000FF">,
+</font><font color="#004600">                BMP_OPEN_FAILED</font><font color="#0000FF"> =</font><font color="#000000"> 1</font><font color="#0000FF">,
+</font><font color="#004600">             BMP_UNEXPECTED_EOF</font><font color="#0000FF"> =</font><font color="#000000"> 2</font><font color="#0000FF">,
+</font><font color="#004600">         BMP_UNSUPPORTED_FORMAT</font><font color="#0000FF"> =</font><font color="#000000"> 3</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>You can create your own bitmap picture files using Windows
+             Paintbrush and many other graphics programs. You can then
+             incorporate these pictures into your phix programs.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+x = read_bitmap("c:\\windows\\arcade.bmp")
+-- note: double backslash needed to get single backslash in
+-- a string
+</eucode-->
+<pre>
+<font color="#000000">x</font><font color="#0000FF"> =</font><font color="#5E005E"> read_bitmap</font><font color="#0000FF">(</font><font color="#008000">"c:\\windows\\arcade.bmp"</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- note: double backslash needed to get single backslash in
+-- a string</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+<!--DEV (demo\dos32\bitmap.ex)-->
+         <td valign=top>
+          <b>Example Program:</b>
+         </td>
+         <td>
+          <font color="#5500FF">
+           <b>demo\dos32\bitmap.ex</b>
+          </font>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="save_bitmap.htm">save_bitmap</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

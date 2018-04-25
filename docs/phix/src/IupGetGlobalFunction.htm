@@ -1,0 +1,59 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupGetGlobalFunction</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Icallback.htm">cbfunc</a> func = IupGetGlobalFunction(<a href="string.htm">string</a> name)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Returns the function associated to an action only when it was set by <a href="IupSetGlobalFunction.htm">IupSetGlobalFunction</a>.<br>
+            It will not work if <a href="IupSetCallback.htm">IupSetCallback</a> was used.
+            <br>
+            <br>
+            name: name of the action.
+            <br>
+            <br>
+            Returns: the callback or NULL if not found.
+            <br>
+            <br>
+            This function wraps the C function <b>IupGetFunction</b> (there is no C function named IupGetGlobalFunction).
+            The name has been changed by pGUI.e to match <a href="IupSetGlobalFunction.htm">IupSetGlobalFunction</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupSetGlobalFunction.htm">IupSetGlobalFunction</a>,
+          <a href="IupGetCallback.htm">IupGetCallback</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

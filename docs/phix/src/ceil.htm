@@ -1,0 +1,82 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">ceil</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="atom.htm">atom</a> x2 = ceil(<a href="atom.htm">atom</a> x1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Return the smallest integer greater than or equal to x1. (Round up to an integer, towards +infinity.)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            For non-integers, ceil() is one more than <a href=floor.htm>floor</a>(), and for integers ceil() 
+            returns the same result as <a href=floor.htm>floor</a>(), namely the input value unaltered.
+            <br>
+            <br>
+            The result is rounded towards plus infinity. Note that while <a href="trunc.htm">trunc</a>() rounds 
+            towards zero, there is no complimentary builtin function that rounds negative fractions away from zero.
+            <br>
+            <br>
+            This function may be applied to an <a href="atom.htm">atom</a> or sq_ceil() to all elements of a 
+            <a href="sequence.htm">sequence</a>. The rules for <a href="seqops.htm">sequence operations</a> apply.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+r = ceil(1.4)           -- r is 2
+r = ceil(-1.4)          -- r is -1
+</eucode-->
+<pre>
+<font color="#000000">r</font><font color="#0000FF"> =</font><font color="#5E005E"> ceil</font><font color="#0000FF">(</font><font color="#000000">1.4</font><font color="#0000FF">)          </font><font color="#000080"><i> -- r is 2
+</i></font><font color="#000000">r</font><font color="#0000FF"> =</font><font color="#5E005E"> ceil</font><font color="#0000FF">(-</font><font color="#000000">1.4</font><font color="#0000FF">)         </font><font color="#000080"><i> -- r is -1</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\pmaths.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="floor.htm">floor</a>,
+          <a href="trunc.htm">trunc</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,165 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupProgressBar</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandle</a> ih = IupProgressBar(<a href="string.htm">string</a> attributes="", <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates a progress bar control. Shows a percent value that can be updated to simulate a progression.
+            <br>
+            <br>
+            For more information on the attributes and data parameters see <a href="IupSetAttributes.htm">IupSetAttributes</a>.
+            <br>
+            <br>
+            Returns: the identifier of the created element.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            Applications should use IupProgressBar instead of <font color="#FF0000">IupGauge</font>.
+         </td>
+         <td>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#BGCOLOR">BGCOLOR</a>
+         </td>
+         <td>
+            [Windows Classic and Motif only] controls the background color. Default: the global attribute <a href="iupgattr.htm#DLGBGCOLOR">DLGBGCOLOR</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          DASHED
+         </td>
+         <td>
+            (creation only in Windows) [Windows and GTK only] Changes the style of the progress bar for a dashed pattern. Default is "NO".
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#FGCOLOR">FGCOLOR</a>
+         </td>
+         <td>
+            [Windows Classic and Motif only] Controls the bar color. <br>
+            Default: the global attribute <a href="iupgattr.htm#DLGFGCOLOR">DLGFGCOLOR</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MARQUEE
+         </td>
+         <td>
+            (creation) displays an undefined state. Default: NO. You can set the attribute after map but only to start or stop the animation. In Windows it will work only if using Visual Styles.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MAX
+         </td>
+         <td>
+            (non inheritable) Contains the maximum value. Default is "1". The control display is not updated, must set VALUE attribute to update.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MIN
+         </td>
+         <td>
+            (non inheritable) Contains the minimum value. Default is "0". The control display is not updated, must set VALUE attribute to update.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          ORIENTATION
+         </td>
+         <td>
+            (creation only) can be "VERTICAL" or "HORIZONTAL". Default: "HORIZONTAL". Horizontal goes from left to right, and vertical from bottom to top.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#RASTERSIZE">RASTERSIZE</a>
+         </td>
+         <td>
+            The initial size is defined as "200x30". Set to NULL to allow the use of smaller values in the layout computation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VALUE
+         </td>
+         <td>
+            (non inheritable) Contains a number between "MIN" and "MAX", controlling the current position.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="common.htm#ACTIVE">ACTIVE</a>, 
+            <a href="common.htm#EXPAND">EXPAND</a>, 
+            <a href="common.htm#FONT">FONT</a>, 
+            <a href="common.htm#SCREENPOSITION">SCREENPOSITION</a>, 
+            <a href="common.htm#POSITION">POSITION</a>, 
+            <a href="common.htm#MINSIZE">MINSIZE</a>, 
+            <a href="common.htm#MAXSIZE">MAXSIZE</a>,
+            <a href="common.htm#WID">WID</a>,
+            <a href="common.htm#TIP">TIP</a>, 
+            <a href="common.htm#SIZE">SIZE</a>,
+            <a href="common.htm#ZORDER">ZORDER</a>,
+            <a href="common.htm#VISIBLE">VISIBLE</a>: also accepted. 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Callbacks:</b>
+         </td>
+         <td>
+            <a href="callbacks.htm#MAP_CB">MAP_CB</a>,
+            <a href="callbacks.htm#UNMAP_CB">UNMAP_CB</a>,
+            <a href="callbacks.htm#DESTROY_CB">DESTROY_CB</a>: common callbacks are supported.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,147 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">command_line</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="sequence.htm">sequence</a> s = command_line()
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Returns a <a href="sequence.htm">sequence</a> of strings, where each <a href="string.htm">string</a> is a word from the command-line that started your program. <br>
+            The first word will be the path to either the phix executable (p.exe, pw.exe, or phix), or to your executable file. <br>
+            The next word is either the name of your phix main source file, or (again) the path to your executable file. <br>
+            After that will come any extra words typed by the user. You can use these words in your program.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The phix interpreter itself uses very few command-line options, which must occur before the main source file. <br>
+            Options after the main source file can be used by your own program.
+          <br>
+          <br>
+            The user can put quotes around a series of words to make them into a single argument.
+          <br>
+          <br>
+            If you compile your program you will find that all command-line arguments remain the same, except for the first
+             two, even though your user no longer types "p" on the command-line (see examples below).
+          <br>
+          <br>
+            In the special case of "p p test" (and "p p p test" etc) command_line() returns
+            the same results as "p test", since doing otherwise would just hamper testing, cause 
+            general confusion, and gain nothing.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+-- The user types:  p myprog myfile.dat 12345 "the end"
+cmd = command_line()
+-- cmd will be:
+      {"C:\\Program Files (x86)\\Phix\\p.exe",
+       "C:\\Projects\\myprog\\myprog.exw",
+       "myfile.dat",
+       "12345",
+       "the end"}
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>-- The user types:  p myprog myfile.dat 12345 "the end"
+</i></font><font color="#000000">cmd</font><font color="#0000FF"> =</font><font color="#5E005E"> command_line</font><font color="#0000FF">()
+</font><font color="#000080"><i>-- cmd will be:
+</i></font><font color="#0000FF">      {</font><font color="#008000">"C:\\Program Files (x86)\\Phix\\p.exe"</font><font color="#0000FF">,
+</font><font color="#008000">       "C:\\Projects\\myprog\\myprog.exw"</font><font color="#0000FF">,
+</font><font color="#008000">       "myfile.dat"</font><font color="#0000FF">,
+</font><font color="#008000">       "12345"</font><font color="#0000FF">,
+</font><font color="#008000">       "the end"</font><font color="#0000FF">}</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+-- Your program is bound with the name "myprog.exe"
+-- and is stored in the directory c:\myfiles
+-- The user types:  myprog myfile.dat 12345 "the end"
+cmd = command_line()
+-- cmd will be:
+       {"C:\\MYFILES\\MYPROG.EXE",
+        "C:\\MYFILES\\MYPROG.EXE", -- spacer
+        "myfile.dat",
+        "12345",
+        "the end"
+        }
+-- Note that all arguments remain the same as example 1
+-- except for the first two. The second argument is always
+-- the same as the first and is inserted to keep the numbering
+-- of the subsequent arguments the same, whether your program
+-- is bound as a .exe or not.
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>-- Your program is bound with the name "myprog.exe"
+-- and is stored in the directory c:\myfiles
+-- The user types:  myprog myfile.dat 12345 "the end"
+</i></font><font color="#000000">cmd</font><font color="#0000FF"> =</font><font color="#5E005E"> command_line</font><font color="#0000FF">()
+</font><font color="#000080"><i>-- cmd will be:
+</i></font><font color="#0000FF">       {</font><font color="#008000">"C:\\MYFILES\\MYPROG.EXE"</font><font color="#0000FF">,
+</font><font color="#008000">        "C:\\MYFILES\\MYPROG.EXE"</font><font color="#0000FF">,</font><font color="#000080"><i> -- spacer
+</i></font><font color="#008000">        "myfile.dat"</font><font color="#0000FF">,
+</font><font color="#008000">        "12345"</font><font color="#0000FF">,
+</font><font color="#008000">        "the end"
+</font><font color="#0000FF">        }
+</font><font color="#000080"><i>-- Note that all arguments remain the same as example 1
+-- except for the first two. The second argument is always
+-- the same as the first and is inserted to keep the numbering
+-- of the subsequent arguments the same, whether your program
+-- is bound as a .exe or not.</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\VM\pcmdlnN.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="getenv.htm">getenv</a>,
+          <a href="get_interpreter.htm">get_interpreter</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

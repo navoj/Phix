@@ -1,0 +1,238 @@
+--
+-- pdemo.exw
+-- =========
+--
+-- The gui front-end to Phix.
+--
+-- Some other ideas are:
+--  move the testset from p.exw to here
+--  check for updates
+--  command prompt here, directory listing if I can find it, maybe.
+--
+-- Known bugs:
+--  You can drag/resize column 0 [FIXED]
+
+global constant DB_BROKEN = (platform()=LINUX)      --DEV temporary measure
+
+--hitlist:
+-- get popup menus working [DONE]
+-- load directories [DONE]
+-- 
+--SUG add a drop-down on the Filter for common needs, eg pGUI
+--    maybe also allow eg -rosetta or -IupGL as part of the filter?
+
+--with trace
+--#withtype Ihandle
+
+include pGUI.e
+--include builtins\sort.e       -- (not strictly necessary)
+
+global Ihandle dlg, tabs, matrix, ftxt, pt, statusbar, clipboard
+
+global string crun, croot
+
+include pdemo\pdb.e as pdb
+include pdemo\demo.ew as demo
+include pdemo\setup.ew as setup
+
+function key_cb(Ihandle /*ih*/, atom c)
+    if IupGetInt(tabs,"VALUEPOS")=0 then    -- demos
+        if    c=K_F1 then demo:Help()
+        elsif c=K_F2 then demo:Amend()
+        elsif c=K_F5 then demo:Run()
+        elsif IupGetFocus()!=ftxt -- (managed via VALUECHANGED_CB)
+          and (c=K_DEL or 
+               c=K_BS or 
+               iup_isprint(c)) then
+            demo:filterkey(c)
+        end if
+    else                                    -- settings
+    end if
+    return iff(c=K_ESC?IUP_CLOSE:IUP_CONTINUE)
+end function
+constant cb_key = Icallback("key_cb")
+
+function close_cb(Ihandle /*ih*/)
+    return IUP_CLOSE
+end function
+constant cb_close = Icallback("close_cb")
+
+--constant actset = {"create undo.reg",
+--                 "edit undo.reg",
+--                 "reload undo.reg",
+--                 "merge undo.reg",
+--                 "create setup.reg",
+--                 "edit setup.reg",
+--                 "merge setup.reg",
+--                 "apply (default)"}
+
+--function trim_trailing(sequence s, sequence parts)
+--  for i=length(parts) to 1 by -1 do
+--      if parts[i]!=s[$] then exit end if
+--      s = s[1..$-1]
+--  end for
+--  return s
+--end function
+
+function validexe(string s)
+    if find(s,{"p.exe","pw.exe","p64.exe","pw64.exe","p","p32","p64"}) then
+        return 1
+    elsif length(s)=7
+      and s[1..2]="pw"
+      and s[4..7]=".exe"
+      and find(s[2],"123456789") then
+        -- Feel free to ignore this part
+        -- (I use pw1.exe..pw9.exe when developing phix)
+        return 1
+    end if
+    return 0
+end function
+
+--DEV temp:
+include builtins\psplit.e
+
+procedure main()
+Ihandle runBtn, flbl, helpBtn, closeBtn, rlfhc, tab1, tab2, box
+--      lpath, ruser, rmach, radio, lpad1, cpath, path1, path2, path3,
+--      lpert, tpert, lper2, tper2, ldefi, tdefi, icon1, lerri, terri, icon2,
+--      ledix, tedix, edit1, lrun1, trun1, lrunw, trunw, lpad3, lpad4, lpad5,
+--      lpad2, actdd, bOK, bHelp
+
+    sequence cl = command_line()
+if 1 then
+    crun = get_interpreter(1)
+    croot = get_proper_dir(cl[1])
+    sequence cpaths = split_path(croot)
+    cpaths = cpaths[1..find("demo",cpaths)-1]
+    croot = join_path(cpaths,1)
+else
+--DEV/SUG:
+--if 1 then
+-- get_interpreter()??
+    sequence cpaths = split_path(cl[1])
+    crun = cpaths[$]
+--  croot = join_path(trim_trailing(cpaths[1..$-1],{"demo","pGUI"}),1)
+--  croot = join_path(cpaths[1..find("demo",cpaths)-1],1)
+    cpaths = cpaths[1..$-1]
+    cpaths = cpaths[1..find("demo",cpaths)-1]
+    croot = join_path(cpaths,1)
+    if not validexe(crun) then
+        crun = "pw.exe"
+    end if
+--crun = "pth.exe"
+    crun = join_path({croot,crun})
+--else  
+--  crun = cl[1]
+--  for i=length(crun) to 0 by -1 do
+--      if find(crun[i],"\\/") then
+--          croot = crun[1..i]
+--          crun = lower(crun[i+1..length(crun)])
+----            if not find(crun,{"p7.exe","pw.exe","p.exe"}) then
+--          if not validexe(crun) then
+--              crun = "pw.exe"
+--          end if
+--          crun = croot&crun
+--          exit
+--      end if
+--  end for
+--end if
+    if find(' ',crun) then
+        crun = '\"' & crun & '\"'
+    end if
+end if
+
+    string dll_path = get_proper_dir(cl[2])
+    if lower(dll_path[-5..-2])="phix" then
+        -- if we ran pdemo.exw in C:\Program Files[ (x86)]\Phix\, then
+        --  pretend it was in C:\Program Files[ (x86)]\Phix\demo\pGUI\
+        dll_path = join_path({dll_path,"demo","pGUI"},1)
+    end if
+--DEV tryme:
+--  dll_path = join_path({get_proper_dir(cl[1]),"demo","pGUI"},1)
+--  dll_path = join_path({croot,"demo","pGUI"},1)
+    IupOpen(dll_path)
+
+    IupSetGlobal("UTF8MODE","YES")
+
+    matrix = IupMatrix()    -- (columns/widths now set in demo.ew)
+    --IMPORTANT: HEIGHT0 tells IupMatrix that we are gonna have column titles at line 0
+    IupSetInt(matrix, "HEIGHT0", 10);
+    IupSetAttribute(matrix, "RESIZEMATRIX", "YES");
+    IupSetAttribute(matrix, "MARKMODE", "LIN");
+    IupSetAttribute(matrix, "MARKAREA", "CONTINUOUS");
+--  IupSetAttribute(matrix, "READONLY", "YES"); -- with VALUE_CB set, non-setting of VALUE_EDIT_CB (also) makes it read-only
+    IupSetAttribute(matrix, "HIDEFOCUS", "YES");
+    IupSetAttribute(matrix, "FRAMECOLOR", "220 220 220");
+--  IupSetAttribute(matrix, "FRAMEVERTCOLOR*:1", "255 255 255")
+    IupSetAttribute(matrix, "BORDER", "NO");
+    IupSetAttribute(matrix, "CURSOR", "ARROW");
+
+    IupSetCallback(matrix, "VALUE_CB",      demo:cb_value)
+    IupSetCallback(matrix, "ENTERITEM_CB",  demo:cb_enteritem)
+    IupSetCallback(matrix, "CLICK_CB",      demo:cb_click)
+    IupSetCallback(matrix, "COLRESIZE_CB",  demo:cb_colresize)
+    IupSetCallback(matrix, "RELEASE_CB",    demo:cb_release)
+--  IupSetCallback(matrix, "K_ANY",         cb_key)
+
+    runBtn = IupButton("&Run",demo:cb_run,"PADDING=10x0")
+    flbl = IupLabel("Fil&ter","PADDING=0x4")
+    ftxt = IupText("EXPAND=HORIZONTAL")
+    IupSetCallback(ftxt,"VALUECHANGED_CB",demo:cb_valuechanged)
+    helpBtn = IupButton("&Help",demo:cb_help,"PADDING=10x0")
+    closeBtn = IupButton("&Close",cb_close,"PADDING=10x0")
+    rlfhc = IupHbox({runBtn,flbl,ftxt,helpBtn,closeBtn})
+    pt = IupMultiLine("EXPAND=YES")
+--?IupGetAttribute(pt,"FONT")
+    IupSetAttribute(pt,"FONT","Courier, 9")
+
+    tab1 = IupVbox({matrix, rlfhc, pt},"TABTITLE=Demos")
+    tab2 = setup:create_settings_tab()
+
+    tabs = IupTabs({tab1, tab2})
+
+    box = IupHbox({tabs})
+    IupSetAttribute(box, "MARGIN", "1x2")
+    IupSetAttribute(box, "GAP", "10")
+
+    statusbar = IupLabel(demo:Init())
+    IupSetAttribute(statusbar, "EXPAND", "HORIZONTAL");
+    IupSetAttribute(statusbar, "PADDING", "10x5");
+
+    Ihandle vbox = IupVbox({box,
+                            statusbar});
+
+    dlg = IupDialog(vbox)
+    IupSetAttribute(dlg, "TITLE", "pdemo")
+    IupSetAttribute(dlg, "SIZE", "600x350")
+    IupSetAttribute(dlg, "MINSIZE", "417x264")  -- (may want tweaking)
+    IupSetAttribute(dlg, "SHRINK", "YES")
+    IupSetCallback(dlg, "RESIZE_CB", demo:cb_resize)
+
+    IupSetCallback(dlg, "K_ANY", cb_key);
+
+    clipboard = IupClipboard()
+
+    IupShow(dlg)
+
+    if length(cl)>=3 then
+        string cl3 = cl[3]
+        if cl3="-demo" then     -- (the default anyway)
+--          IupSetInt(tabs,"VALUEPOS",0)
+        elsif cl3="-settings" then
+            IupSetInt(tabs,"VALUEPOS",1)
+        else
+            puts(1,"unrecognised command line option :"&cl3)
+            ?9/0
+        end if
+    end if
+
+    IupSetFocus(matrix)
+    IupMainLoop()
+    IupClose()
+    pdb:DBclose()
+
+end procedure
+
+main()
+
+

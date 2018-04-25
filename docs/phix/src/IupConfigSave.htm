@@ -1,0 +1,59 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupConfigSave</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="integer.htm">integer</a> errcode = IupConfigSave(<a href="Ihandle.htm">Ihandle</a> config)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Saves the configuration file. Usually called when the application closes.
+            <br>
+            <br>
+            config: Identifier of the configuration database (see <a href="IupConfig.htm">IupConfig</a>)
+            <br>
+            <br>
+            Returns an error code:<br>
+            &nbsp;0 = no error;<br>
+            -1 = error opening the file;<br>
+            -2 = error accessing the file;<br>
+            -3 = error during filename construction
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupConfig.htm">IupConfig</a>,
+          <a href="IupConfigLoad.htm">IupConfigLoad</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

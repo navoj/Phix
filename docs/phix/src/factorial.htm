@@ -1,0 +1,81 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">factorial</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="atom.htm">atom</a> a = factorial(<a href="integer.htm">integer</a> n)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Standard recursive factorial function, with memoisation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Returns inf for n>170.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Ancilliary functions:</b>
+         </td>
+         <td>
+            <a href="atom.htm">atom</a> res = k_perm(<a href="integer.htm">integer</a> n, k)    -- standard partial permutations calculation (sequences without repetition)
+            <br>
+            <a href="atom.htm">atom</a> res = choose(<a href="integer.htm">integer</a> n, k)    -- standard combinations calculation - choose k from n aka "n choose k"
+            <br>
+            <br>
+            The k_perm routine calculates the result directly, rather than via the slightly less efficient (/limit-exceeding) way of using the complete factorials, 
+            ie n(n-1)..(n-k-1) rather than n!/(n-k)! and the choose routine simply divides that by factorial(k).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\factorial.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+--            n : 0 1 2 3 4  5   6   7    8
+--  factorial(n): 1 1 2 6 24 120 720 5040 40320 
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>--            n : 0 1 2 3 4  5   6   7    8
+--  factorial(n): 1 1 2 6 24 120 720 5040 40320 </i></font>
+</pre>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

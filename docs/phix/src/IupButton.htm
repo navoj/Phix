@@ -1,0 +1,302 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupButton</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandle</a> ih = IupButton(<a href="nullable_string.htm">nullable_string</a> title=NULL, 
+            [[<a href="nullable_string.htm">nullable_string</a> action=NULL,] <a href="Icallback.htm">cbfunc</a> func=NULL,] 
+            <a href="string.htm">string</a> attributes="", <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates an interface element that is a button. <br>
+            When selected, this element activates a function in the application. <br>
+            The visual presentation can contain text and/or an image.
+            <br>
+            <br>
+            title: Text to be shown to the user. It can be NULL. It will set the <a href="IupButton.htm#TITLE">TITLE</a> attribute.<br>
+            action: Name of the action generated when the button is selected. It can be NULL.<br>
+            func: a callback address, usually specified as <a href="Icallback.htm">Icallback</a>(<i>"name"</i>).<br>
+            For more information on the attributes and data parameters see <a href="IupSetAttributes.htm">IupSetAttributes</a>.<br>
+            This is a <a href="paranormal.htm">paranormalised function</a>.
+            <br>
+            <br>
+            Returns the identifier of the created element.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            Buttons with images and/or texts can not change their behavior after being mapped. This is a creation dependency. 
+            But after creation the image can be changed for another image, and the text for other text.
+            <br>
+            <br>
+            Buttons are activated using Enter or Space keys.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          ALIGNMENT
+         </td>
+         <td>
+            (non inheritable): horizontal and vertical alignment. <br>
+            Possible values: "ALEFT", "ACENTER" and "ARIGHT",  combined to "ATOP", "ACENTER" and "ABOTTOM". Default: "ACENTER:ACENTER". <br>
+            Partial values are also accepted, like "ARIGHT" or ":ATOP", the other value will be used from the current alignment. <br>
+            In Motif, vertical alignment is restricted to "ACENTER". <br>
+            In GTK, horizontal alignment for multiple lines will align only the text block.
+            <br>
+              <a name=BGCOLOR></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#BGCOLOR">BGCOLOR</a>
+         </td>
+         <td>
+            Background color. <br>
+            If text and image are not defined, the button is configured to simply show a color, in this case set the button size because the natural size will be very small. <br>
+            In Windows, the BGCOLOR attribute is ignored if text or image is defined. <br>
+            Default: the global attribute <a href="iupgattr.htm#DLGBGCOLOR">DLGBGCOLOR</a>. <br>
+            BGCOLOR is ignored when FLAT=YES because it will be used the background from the native parent. 
+            <br>
+              <a name=CANFOCUS></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          CANFOCUS
+         </td>
+         <td>
+            (creation only) (non inheritable) enables the focus traversal of the control. <br>
+            In Windows the button will respect CANFOCUS in opposite to the other controls. <br>
+            Default: YES.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          FLAT
+         </td>
+         <td>
+            (creation only) Hides the button borders until the mouse enter the button area. Can be YES or NO. Default: NO.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#FGCOLOR">FGCOLOR</a>
+         </td>
+         <td>
+            Text color. Default: the global attribute <a href="iupgattr.htm#DLGFGCOLOR">DLGFGCOLOR</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGE
+         </td>
+         <td>
+            (non inheritable) Image name. <br>
+            If set before map defines the behavior of the button to contain an image. <br>
+            The natural size will be size of the image in pixels, plus the button borders. <br>
+            Use <a href="IupSetHandle.htm">IupSetHandle</a> or <a href="IupSetAttributeHandle.htm">IupSetAttributeHandle</a> to associate an image to a name. <br>
+            See also <a href="IupImage.htm">IupImage</a>. <br>
+            If <a href="IupButton.htm#TITLE">TITLE</a> is also defined and not empty both will be shown (except in Motif). (GTK 2.6)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMINACTIVE
+         </td>
+         <td>
+            (non inheritable) Image name of the element when inactive. <br>
+            If it is not defined then the IMAGE is used and the colors will be replaced by a modified version of the background color creating the disabled effect. <br>
+            GTK will also change the inactive image to look like other inactive objects. (GTK 2.6)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMPRESS
+         </td>
+         <td>
+            (non inheritable) Image name of the pressed button. <br>
+            If IMPRESS and IMAGE are defined, the button borders are not shown and not computed in natural size. <br>
+            When the button is clicked the pressed image does not offset. <br>
+            In Motif the button will lose its focus feedback also. (GTK 2.6)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMPRESSBORDER
+         </td>
+         <td>
+            (non inheritable) if enabled the button borders will be shown and computed even if IMPRESS is defined. Can be "YES" or "NO". Default: "NO". 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGEPOSITION
+         </td>
+         <td>
+            (non inheritable) Position of the image relative to the text when both are displayed. <br>
+            Can be: LEFT, RIGHT, TOP, BOTTOM. Default: LEFT.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          MARKUP
+         </td>
+         <td>
+            [GTK only] allows the title string to contains pango markup commands. Works only if a mnemonic is NOT defined in the title. Can be "YES" or "NO". Default: "NO". 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          PADDING
+         </td>
+         <td>
+            internal margin. Works just like the MARGIN attribute of the <a href="IupHbox.htm">IupHbox</a> and <a href="IupVbox.htm">IupVbox</a> containers, 
+            but uses a different name to avoid inheritance problems. Default value: "0x0".
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          SPACING
+         </td>
+         <td>
+            (creation only) defines the spacing between the image associated and the button&rsquo;s text. Default: "2".
+            <br>
+              <a name=TITLE></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#TITLE">TITLE</a>
+         </td>
+         <td>
+            (non inheritable) Button&rsquo;s text. <br>
+            If IMAGE is not defined before map, then the default behavior is to contain only a text. <br>
+            The button behavior can not be changed after map. <br>
+            The natural size will be larger enough to include all the text in the selected font, even using multiple lines, plus the button borders. <br>
+            The '\n' character is accepted for line change. <br>
+            The "&" character can be used to define a mnemonic, the next character will be used as key. <br>
+            Use "&&" to show the "&" character instead on defining a mnemonic. <br>
+            The button can be activated from any control in the dialog using the "Alt+key" combination. <br>
+            In old Motif versions (2.1) using a '\n' causes an invalid memory access inside Motif. (mnemonic support since 3.0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="common.htm#ACTIVE">ACTIVE</a>, 
+            <a href="common.htm#FONT">FONT</a>, 
+            <a href="common.htm#EXPAND">EXPAND</a>, 
+            <a href="common.htm#SCREENPOSITION">SCREENPOSITION</a>, 
+            <a href="common.htm#POSITION">POSITION</a>, 
+            <a href="common.htm#MINSIZE">MINSIZE</a>, 
+            <a href="common.htm#MAXSIZE">MAXSIZE</a>,
+            <a href="common.htm#WID">WID</a>,
+            <a href="common.htm#TIP">TIP</a>, 
+            <a href="common.htm#SIZE">SIZE</a>,
+            <a href="common.htm#RASTERSIZE">RASTERSIZE</a>,
+            <a href="common.htm#ZORDER">ZORDER</a>,
+            <a href="common.htm#VISIBLE">VISIBLE</a>: also accepted.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Callbacks:</b>
+         </td>
+         <td>
+            <br>
+              <a name=ACTION></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          ACTION
+         </td>
+         <td>
+            Action generated when the button is selected. This callback is called only after the mouse is released and when it is released inside the button area.
+            <br>
+            <br>
+            function action_cb(<a href="Ihandle.htm">Ihandle</a> ih)<br>
+            ih: identifier of the element that activated the event.
+            <br>
+            <br>
+            Returns: <a href="callbacks.htm#IUP_CLOSE">IUP_CLOSE</a> will be processed. 
+            Note that <a href="callbacks.htm#IUP_IGNORE">IUP_IGNORE</a> removes the callback, and hence effectively disables the button.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="callbacks.htm#BUTTON_CB">BUTTON_CB</a>
+         </td>
+         <td>
+            Action generated when any mouse button is pressed and when it is released. <br>
+            Both calls occur before the <a href="#ACTION">ACTION</a> callback when button 1 (left mouse) is being used.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="callbacks.htm#MAP_CB">MAP_CB</a>,
+            <a href="callbacks.htm#UNMAP_CB">UNMAP_CB</a>,
+            <a href="callbacks.htm#DESTROY_CB">DESTROY_CB</a>,
+            <a href="callbacks.htm#GETFOCUS_CB">GETFOCUS_CB</a>, 
+            <a href="callbacks.htm#KILLFOCUS_CB">KILLFOCUS_CB</a>, 
+            <a href="callbacks.htm#ENTERWINDOW_CB">ENTERWINDOW_CB</a>,
+            <a href="callbacks.htm#LEAVEWINDOW_CB">LEAVEWINDOW_CB</a>, 
+            <a href="callbacks.htm#K_ANY">K_ANY</a>, 
+            <a href="callbacks.htm#HELP_CB">HELP_CB</a>: All common callbacks are supported.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupImage.htm">IupImage</a>,
+          <a href="IupToggle.htm">IupToggle</a>,
+          <a href="IupLabel.htm">IupLabel</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

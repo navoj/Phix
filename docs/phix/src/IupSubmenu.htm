@@ -1,0 +1,153 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupSubmenu</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandle</a> ih = IupSubmenu(<a href="nullable_string.htm">nullable_string</a> title=NULL, <a href="Ihandle.htm">Ihandln</a> menu=NULL, 
+            <a href="string.htm">string</a> attributes="", <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates a menu item that, when selected, opens another menu.
+            <br>
+            <br>
+            title: String containing the text to be shown on the item. It can be NULL. It will set the <a href="IupSubmenu.htm#TITLE">TITLE</a> attribute.<br>
+            menu: optional child menu identifier.<br>
+            For more information on the attributes and data parameters see <a href="IupSetAttributes.htm">IupSetAttributes</a>.
+            <br>
+            <br>
+            Returns: the identifier of the created element.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            In Motif and GTK, the text font will be affected by the dialog font when the menu is mapped.
+            <br>
+            <br>
+            IupSubMenu (with an uppercase 'M') is a simple alias of IupSubmenu and behaves identically.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          IMAGE
+         </td>
+         <td>
+            [Windows and GTK Only] (non inheritable) Image name of the submenu image. <br>
+            In Windows, an item in a menu bar cannot have a check mark. <br>
+            Ignored if submenu in a menu bar. <br>
+            A recommended size would be 16x16 to fit the image in the menu item. <br>
+            In Windows, if larger than the check mark area it will be cropped. (since 3.0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          KEY
+         </td>
+         <td>
+            (non inheritable) Underlines a key character in the submenu title. <br>
+            It is updated only when <a href="IupSubmenu.htm#TITLE">TITLE</a> is updated. <br>
+            Deprecated, use the mnemonic support directly in the <a href="IupSubmenu.htm#TITLE">TITLE</a> attribute.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#TITLE">TITLE</a>
+         </td>
+         <td>
+            (non inheritable) Submenu Text. <br>
+            The "&" character can be used to define a mnemonic, the next character will be used as key. <br>
+            Use "&&" to show the "&" character (instead of defining a mnemonic). 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#WID">WID</a>
+         </td>
+         <td>
+            (non inheritable) In Windows, returns the HMENU of the parent menu and it is actually created only when its child menu is mapped.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="common.htm#ACTIVE">ACTIVE</a>: also accepted.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Callbacks:</b>
+         </td>
+         <td>
+
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          HIGHLIGHT_CB
+         </td>
+         <td>
+            Action generated when the submenu is highlighted.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="callbacks.htm#MAP_CB">MAP_CB</a>,
+            <a href="callbacks.htm#UNMAP_CB">UNMAP_CB</a>,
+            <a href="callbacks.htm#DESTROY_CB">DESTROY_CB</a>: common callbacks are supported.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupMenuItem.htm">IupMenuItem</a>,
+          <a href="IupSeparator.htm">IupSeparator</a>,
+          <a href="IupMenu.htm">IupMenu</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

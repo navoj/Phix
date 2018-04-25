@@ -1,0 +1,164 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">get</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          include get.e
+          <br>
+          <a href="sequence.htm">sequence</a> s = get(<a href="integer.htm">integer</a> fn)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Input, from file fn, a human-readable string of characters representing a phix <a href="object.htm">object</a>, 
+            and convert the string into the numeric value of that object. s will be a 2-element <a href="sequence.htm">sequence</a>:
+          <b>{error status, value}</b>. Error status codes are:
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+<!--eucode>
+    GET_SUCCESS -- object was read successfully
+    GET_EOF     -- end of file before object was read
+    GET_FAIL    -- object is not syntactically correct
+</eucode-->
+<pre>
+<font color="#000000">    GET_SUCCESS</font><font color="#000080"><i> -- object was read successfully
+</i></font><font color="#000000">    GET_EOF    </font><font color="#000080"><i> -- end of file before object was read
+</i></font><font color="#000000">    GET_FAIL   </font><font color="#000080"><i> -- object is not syntactically correct</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b></b>
+         </td>
+         <td>
+            get() can read arbitrarily complicated phix <a href="object.htm">objects</a>. <br>
+            You could have a long <a href="sequence.htm">sequence</a> of values in braces and separated by commas, e.g. {23, {49, 57}, 0.5, -1, 99, 'A', "john"}.<br>
+            A single call to get() will read in this entire <a href="sequence.htm">sequence</a> and return its value as a result.
+          <br>
+          <br>
+            Each call to get() picks up where the previous call left off. For instance, a series of 5 calls to get() would be needed to read:
+          <br>
+          <br>
+                99 5.2 {1,2,3} "Hello" -1
+          <br>
+          <br>
+            On the sixth and any subsequent call to get() you would see a GET_EOF status. If you had something like:
+          <br>
+          <br>
+            {1, 2, xxx}
+          <br>
+          <br>
+            in the input stream you would see a GET_FAIL error status because xxx is not a phix object.
+          <br>
+          <br>
+            Multiple "top-level" objects in the input stream must be separated from each other with one or more "whitespace"
+             characters (blank, tab, \r or \n). Whitespace is not necessary
+           <b>
+            <i>within</i>
+           </b> a top-level object. A call to get() will 
+             read one entire top-level object, plus one additional 
+             (whitespace) character.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>The combination of print() and get() can be used to save a
+             phix object to disk and later read it back. This technique
+             could be used to implement a database as one or more large
+             Euphoria <a href="sequence.htm">sequences</a> stored in disk files. 
+             The <a href="sequence.htm">sequences</a> could be
+             read into memory, updated and then written back to disk after
+             each series of transactions is complete. Remember to write out
+             a whitespace character (using puts()) after each call to print().
+          <br>
+          <br>
+            The value returned is not meaningful unless you have a
+             GET_SUCCESS status.
+          <br>
+          <br>
+            Note this is an "inherited" routine, that I don&rsquo;t much like.
+            Whenever I try to use it, I tend to get stuck, give up, and roll 
+            my own. However if it works for you, then fine.
+          <br>
+          <br>
+            There is also a <a href="map.htm">map:get</a>() routine, which is quite different.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>Suppose your program asks the user to enter a number from the keyboard.
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+<!--eucode>
+-- If they type 77.5, get(0) would return:
+{GET_SUCCESS, 77.5}
+-- whereas gets(0) would return:
+"77.5\n"
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>-- If they type 77.5, get(0) would return:
+</i></font><font color="#0000FF">{</font><font color="#000000">GET_SUCCESS</font><font color="#0000FF">,</font><font color="#000000"> 77.5</font><font color="#0000FF">}
+</font><font color="#000080"><i>-- whereas gets(0) would return:
+</i></font><font color="#008000">"77.5\n"</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example Program:</b>
+         </td>
+<!--DEV (demo/mydata.ex) -->
+         <td>
+          <font color="#5500FF">
+           <b>demo\mydata.ex</b>
+          </font>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="print.htm">print</a>,
+          <a href="value.htm">value</a>,
+          <a href="gets.htm">gets</a>,
+          <a href="getc.htm">getc</a>,
+          <a href="prompt_number.htm">prompt_number</a>,
+          <a href="prompt_string.htm">prompt_string</a>,
+          <a href="map.htm">map:get</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

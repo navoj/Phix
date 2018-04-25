@@ -1,0 +1,109 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">copy_file</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="integer.htm#bool">bool</a> res = copy_file(<a href="string.htm">string</a> src, <a href="string.htm">string</a> dest, <a href="integer.htm#bool">bool</a> overwrite=false)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Copy a file.
+            <br>
+            <br>
+            src: the name of the file to copy. It must exist and cannot be a directory.<br>
+            dest: the new name or location of the file.<br>
+            overwrite: false (0/the default) prevents an existing destination file from being overwritten. 
+                       true (non-zero) permits the overwriting of any existing destination file.
+            <br>
+            <br>
+            Returns: 0 (false) on failure, 1 (true) on success.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            If overwrite is true, and if dest file already exists, the function overwrites the existing file and succeeds.
+            <br>
+            <br>
+            If dest is a directory, a file of the same name as source is created therein.
+            <br>
+            <br>
+            Unlike some other routines here, any path separators should be appropriate for the operating
+            system, namely backslash ('\\') on Windows and forwardslash ('/') on Linux.
+            <br>
+            <br>
+            For best results, use fully qualified absolute pathnames. You should not rely on relative
+            paths in dest any more than you do in src; for instance copy_file("demo\\test","demo\\test2")
+            is fine, whereas copy_file("demo\\test","test2") is likely to copy to the parent directory, and
+            copy_file("C:\\Program Files (x86)\\Phix\\demo\\test","test2") is likely to copy it to the
+            current directory. The precise behaviour of path-less operations is operating system dependent.
+            <br>
+            <br>
+            If overwrite was requested but the copy fails, there is no guarantee that any 
+            existing destination file is preserved, deleted, corrupted, or all three.
+            <br>
+            <br>
+            The use of a <a href="procedures.htm#namedparams">named parameter</a> when setting the overwrite parameter recommended, 
+            to make the intent clear and the code easier to read.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+if not copy_file("blank.bmp",new_bmp,overwrite:=true) then
+    fatal("cannot create "&newname)
+end if
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">if not</font><font color="#5E005E"> copy_file</font><font color="#0000FF">(</font><font color="#008000">"blank.bmp"</font><font color="#0000FF">,</font><font color="#000000">new_bmp</font><font color="#0000FF">,</font><font color="#000000">overwrite</font><font color="#0000FF">:=</font><font color="#004600">true</font><font color="#0000FF">)</font><font color="#008080"> then
+</font><font color="#000000">    fatal</font><font color="#0000FF">(</font><font color="#008000">"cannot create "</font><font color="#0000FF">&amp;</font><font color="#000000">newname</font><font color="#0000FF">)
+</font><font color="#008080">end if</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\pfile.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="move_file.htm">move_file</a>,
+          <a href="rename_file.htm">rename_file</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

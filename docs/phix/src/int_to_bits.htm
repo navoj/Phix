@@ -1,0 +1,93 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">int_to_bits</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="sequence.htm">sequence</a> s = int_to_bits(<a href="atom.htm">atom</a> a, <a href="integer.htm">integer</a> nbits)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Return the low-order nbits bits of a, as a <a href="sequence.htm">sequence</a> of 1s and 0s.
+            <br>
+            <br>
+             The least significant bits come first.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>You can use
+          <a href="subscripts.htm">subscripting</a>,
+          <a href="slices.htm">slicing</a>,
+          <a href="logicops.htm">and/or/xor/not</a> of entire
+             sequences etc. to manipulate sequences of bits.
+            <br>
+            <br>
+             Shifting of bits and rotating of bits are easy to perform.
+            <br>
+            <br>
+             For negative numbers the twos complement bit pattern is returned.
+            <br>
+            <br>
+             While positive numbers could, in theory, yield only as many bits as are set, in contrast negative numbers left 
+             to the same device would produce an infinite stream of trailing 1s. It is for this reason that you must always 
+             specify the required number of bits, typically a multiple of 8, but anything from 1 to 53 (on 32-bit, or 64 on 
+             64-bit) is perfectly fine - of course for bit-fields you probably want the exact number of flags it holds.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+s = int_to_bits(177, 8) -- (177==0b10110001, ie 128+[0*64]+32+16+[0*8,4,2]+1)
+-- s is {1,0,0,0,1,1,0,1} -- note the "reverse" order, lsb first
+s = int_to_bits(19, 8)  -- (19==0b00010011, ie 16+[0*8+0*4]+2+1)
+-- s is {1,1,0,0,1,0,0,0} -- note the "reverse" order, lsb first
+</eucode-->
+<pre>
+<font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> int_to_bits</font><font color="#0000FF">(</font><font color="#000000">177</font><font color="#0000FF">,</font><font color="#000000"> 8</font><font color="#0000FF">)</font><font color="#000080"><i> -- (177==0b10110001, ie 128+[0*64]+32+16+[0*8,4,2]+1)
+-- s is {1,0,0,0,1,1,0,1} -- note the "reverse" order, lsb first
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> int_to_bits</font><font color="#0000FF">(</font><font color="#000000">19</font><font color="#0000FF">,</font><font color="#000000"> 8</font><font color="#0000FF">) </font><font color="#000080"><i> -- (19==0b00010011, ie 16+[0*8+0*4]+2+1)
+-- s is {1,1,0,0,1,0,0,0} -- note the "reverse" order, lsb first</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="bits_to_int.htm">bits_to_int</a>,
+          <a href="and_bits.htm">and_bits</a>,
+          <a href="or_bits.htm">or_bits</a>,
+          <a href="xor_bits.htm">xor_bits</a>,
+          <a href="not_bits.htm">not_bits</a>,
+          <a href="seqops.htm">sequence operations</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

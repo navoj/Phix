@@ -1,0 +1,519 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">Compatibility with OpenEuphoria</h1>
+      <div id="mainSection">
+        Obviously true 100% compatibility is a nonsense idea - you would be forced to reproduce all the bugs, warts,
+        and glitches of the original, and to top that prohibit any improvement.
+        <br>
+        <br>
+        Instead, 99.9% is more reasonable, but  you should bear in mind that means you will have to alter, on average, 
+        one line of code in a thousand, and in practice that is roughly what I get when testing code written for 
+        RDS Eu and OpenEuphoria on Phix. To be fair, sometimes it may be more like 1 line in every 100, which equates 
+        to a mere 99.0% compatibility. More recently written code using the very latest 4.1+ features tends to fare 
+        less well, but still typically much easier than say migrating from win32lib to arwen or pGUI.
+       <br>
+       <br>
+        In fact, the phix compiler tries very hard to give appropriate error and warning messages to ease the 
+        translation of legacy code, such as that found in 
+        <a id="ext167" style="color:#9B5565" href="javascript:ExternalLink('ext167','http://phix.x10.mx/pmwiki/pmwiki.php?n=Main.HomePage');">
+        PCAN</a>. When something does not work you should assume the error is actually a helpful clue, and
+        you should ignore warnings at your peril. I have even crippled "without warning" by default in the more
+        recent builds (see pmain.e/DoWithOptions() to restore handling) in the name of legacy code support.
+       <br>
+       <br>
+        While RDS Eu and OpenEuphoria support (/encourage/tout) implicit sequence operations, Phix expects
+        the programmer to use explicit routines, for example sq_add(x,y) instead of x+y, as detailed in
+        <a href="seqops.htm">sequence operations</a>. The compiler issues warnings and performs an automatic 
+        substitution of the equivalent function-style routine when doing do is <i>irrefutably</i> the correct thing to 
+        do, but terminates in error at runtime if the atom-only primitives are passed a sequence. In my experience so
+        far this has not been a significant difficulty, and trivial to fix once detected.
+       <br>
+       <br>
+        The ",," style optional parameters are not supported by phix. While, for example, both Phix and OpenEuphoria 
+        support myfunc(file), only OpenEuphoria allows myfunc(file,,1) whereas Phix requires the second parameter to 
+        be present - and of course it is usually a trivial matter to determine what that should be. In phix all 
+        non-optional parameters must be grouped together on the left hand side of routine parameter declarations.
+       <br>
+       <br>
+        OpenEuphoria does not support named parameters, for example in Phix both message_box("there", "hi", MB_OK) 
+        and message_box(style:=MB_OK,title:="hi",msg:="there") are equivalent. Note that once you start explicitly
+        naming parameters in a call statement you cannot revert to a positional-based method, and there is as yet
+        no way to use named parameters on any of the builtins implemented via #ilASM. See psym.e/symint() and the
+        AutoAsm() calls for a full list of the latter, apart from the sheer number I doubt it would be particularly 
+        difficult to figure something out - passing a list of parameter names to AutoAsm should get you started.
+       <br>
+       <br>
+        Phix does not support forward referencing of variables and constants, though routines are fine. I maintain that
+        forward data references add wholly unnecessary complexity, and evidently cause quite noticable performance loss 
+        in the compile phase, in OpenEuphoria, and besides are very easily fixed whenever they cause a problem.
+       <br>
+       <br>
+        A particular thorn is wxEuphoria which depends on the internal implementation details of OpenEuphoria and it is
+        highly unlikely that a compatibile version of that will become available any time soon.<br>
+        Wee proved particularly difficult, but I eventually managed to get something working (not yet in the distro).
+       <br>
+       <br>
+        Many routines in phix, eg open(), puts(), etc already accept both "fred" and {'f','r','e','d'} but some may have 
+        slipped though for reasons of expediency. Feel free to log a bug for that when it seems appropriate.
+       <br>
+       <br>
+        The routines listed below have been copied from OpenEuphoria for compatibility reasons. They are only granted 
+        the lightest of support and any grief may lead to an offending routine simply being removed rather than fixed. 
+        Obviously if I thought these routines were really any good I would adopt them whole-heartedly; the fact they 
+        are documented in this section means I have certain reservations about their design or implementation or both.
+       <br>
+       <br>
+        Of course I would happily accept improved versions of these routines for incorporation into the next release.
+        &nbsp;
+       <br>
+       <br>
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <a href="cpath.htm">
+           <b>canonical_path</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>create a full path to the specified file</td>
+        </tr>
+         <tr>
+          <td valign=top>
+           <a href="prompt_number.htm">
+            <b>prompt_number</b>
+           </a>
+          </td>
+          <td width=10 align=center valign=top>-</td>
+          <td>prompt the user to enter a number</td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <a href="prompt_string.htm">
+            <b>prompt_string</b>
+           </a>
+          </td>
+          <td width=10 align=center valign=top>-</td>
+          <td>prompt the user to enter a string</td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <a href="get.htm">
+            <b>get</b>
+           </a>
+          </td>
+          <td width=10 align=center valign=top>-</td>
+          <td>read the representation of any phix <a href="object.htm">object</a> from a file</td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <a href="value.htm">
+            <b>value</b>
+           </a>
+          </td>
+          <td width=10 align=center valign=top>-</td>
+          <td>read the representation of any phix <a href="object.htm">object</a> from a <a href="string.htm">string</a>
+          </td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <a href="get_bytes.htm">
+            <b>get_bytes</b>
+           </a>
+          </td>
+          <td width=10 align=center valign=top>-</td>
+          <td>read the next n bytes from a file or device</td>
+         </tr>
+        <tr>
+         <td valign=top>
+          <a href="read_lines.htm">
+           <b>read_lines</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>read a file as a sequence of lines</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="read_file.htm">
+           <b>read_file</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>read a file as a single <a href="sequence.htm">sequence</a> of bytes</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="any_key.htm">
+           <b>any_key</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>display a prompt to the user and wait for any key</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="series.htm">
+           <b>series</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Create a <a href="sequence.htm">sequence</a> as a series starting from a given object.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="head.htm">
+           <b>head</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>
+            Return the first n elements of a <a href="sequence.htm">sequence</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="tail.htm">
+           <b>tail</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>
+            Return the last n elements of a <a href="sequence.htm">sequence</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="insert.htm">
+           <b>insert</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Insert an object into a <a href="sequence.htm">sequence</a> as a new element at a given location.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="splice.htm">
+           <b>splice</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Inserts an object as a new slice in a <a href="sequence.htm">sequence</a> at a given position.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="remove.htm">
+           <b>remove</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Remove an item, or a range of items from a <a href="sequence.htm">sequence</a>.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="remove_all.htm">
+           <b>remove_all</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Removes all occurrences of some object from a <a href="sequence.htm">sequence</a>.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="replace.htm">
+           <b>replace</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Replace a slice in a <a href="sequence.htm">sequence</a>.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="find_replace.htm">
+           <b>find_replace</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Find and replace occurences in a <a href="sequence.htm">sequence</a>.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="match_replace.htm">
+           <b>match_replace</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Match and replace occurences in a <a href="sequence.htm">sequence</a>.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="to_string.htm">
+           <b>to_string</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Converts an object into a text <a href="string.htm">string</a>.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="find_any.htm">
+           <b>find_any</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Find any element from a list inside a <a href="sequence.htm">sequence</a>.</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="vlookup.htm">
+           <b>vlookup</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>column search</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="machine_func.htm">
+           <b>machine_func</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Perform a machine-specific operation (not needed in phix)</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="machine_proc.htm">
+           <b>machine_proc</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Perform a machine-specific operation (not needed in phix)</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="map.htm">
+           <b>map</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Phix includes a simple shim for partial compatibility</td>
+        </tr>
+       </table>
+        &nbsp;
+       <br>
+       <br>
+        The routines listed below are Phix-specific and do not have RDS Eu or OpenEuphoria equivalents of that name.
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <a href="factorial.htm">
+           <b>factorial</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>the factorial of a number</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="factors.htm">
+           <b>factors</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>the factors of a number</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="prime_factors.htm">
+           <b>prime_factors</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>the prime factors of a number</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="get_proc_address.htm">
+           <b>get_proc_address</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>low-level common code for define_c_func/proc/var, also used for run-time interpretation of inline assembly</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="get_proper_dir.htm">
+           <b>get_proper_dir</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>obtain the full path of a file or directory</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="get_proper_path.htm">
+           <b>get_proper_path</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>obtain the actual longname and full path of a file or directory</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="get_text.htm">
+           <b>get_text</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>read a whole text file as a <a href="string.htm">string</a> or <a href="sequence.htm">sequence</a> of lines</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="machine_bits.htm">
+           <b>machine_bits</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>determine 32 or 64 bit operation. (likewise machine_word, as documented on the same page)</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="scanf.htm">
+           <b>scanf</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>construct (all) the possible param sequence(s) such that printf could produce the given string</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="message_box.htm#set_mb_hwnd">
+           <b>set_mb_hwnd</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>specify a default hwnd for message_box (windows only)</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="string.htm">
+           <b>string</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>note that neither RDS Eu not OpenEuphoria have an 8-bit string type</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="substitute.htm">
+           <b>substitute</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>replace all instances of a substring</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="tagset.htm">
+           <b>tagset</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>return a <a href="sequence.htm">sequence</a> of integers 1..n</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          See also
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>
+          <a href="mthread.htm">multithreading</a>,
+          <a href="seqops.htm">sequence ops</a>
+         </td>
+        </tr>
+        &nbsp;
+       <br>
+       <br>
+       </table>
+        &nbsp;
+       <br>
+       <br>
+        &nbsp;
+       <br>
+       <br>
+        The routines listed below have important differences between Phix and RDS Eu/OpenEuphoria.
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <a href="flatten.htm">
+           <b>flatten</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>Phix does not support (the broken) delimiter parameter, use <a href="join.htm">join</a>() instead</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="min.htm">
+           <b>min</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>in phix min(s) is an alias for minsq(s) &nbsp; [nb: not achievable using optional parameters]</td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="max.htm">
+           <b>max</b>
+          </a>
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>in phix max(s) is an alias for maxsq(s) &nbsp; [nb: not achievable using optional parameters]</td>
+        </tr>
+        &nbsp;
+       <br>
+       <br>
+       </table>
+        &nbsp;
+       <br>
+       <br>
+        &nbsp;
+       <br>
+       <a name=allocate_pointer_array></a>
+       <br>
+        The routines listed below are deliberately omitted from phix.
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+           allocate_pointer_array<br>
+           free_pointer_array
+         </td>
+         <td width=10 align=center valign=top>-</td>
+         <td>trailing null, allocate/free contents, and similar questions make these ambiguous, and better off being application specific.
+<!--DEV/SUG: builtins\templates.e contains sample versions of these routines for you to copy and modify. -->
+        </tr>
+        &nbsp;
+       <br>
+       <br>
+       </table>
+        &nbsp;
+       <br>
+       <br>
+        &nbsp;
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

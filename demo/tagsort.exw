@@ -1,0 +1,69 @@
+--
+-- tagsort.exw
+-- ===========
+--
+--  A tag sort is where you sort an array of indexes rather than the data itself.
+--
+--  Often it is very useful to leave the data completely unaltered, either because
+--  more than one thing might be referencing that data, or (as shown below) where
+--  the sort could otherwise be tricky as it would involve moving/swapping elements
+--  from multiple independent arrays in tandem.
+--
+--  Despite the apparent simplicity, or indeed precisely because it is so simple, 
+--  the humble tag sort can be extremely powerful once fully mastered, and you
+--  should not underestimate that.
+--
+
+sequence Names = {"C. C. Catch", "Army of Lovers", "Boney M.", "Dschinghis Khan"}
+sequence Years = { 1985,          1987,             1975,       1979            }
+
+function by_year(integer i, integer j)
+integer res
+    res = compare(Years[i],Years[j])
+    if res=0 then
+        res = compare(Names[i],Names[j])
+    end if
+    return res
+end function
+sequence yeartags = custom_sort(routine_id("by_year"),tagset(length(Years)))
+
+function by_name(integer i, integer j)
+integer res
+    res = compare(Names[i],Names[j])
+    if res=0 then
+        res = compare(Years[i],Years[j])
+    end if
+    return res
+end function
+sequence nametags = custom_sort(routine_id("by_name"),tagset(length(Names)))
+
+integer ti
+    for i=1 to length(yeartags) do
+        ti = yeartags[i]
+        printf(1,"Year: %d, Name: %s\n",{Years[ti],Names[ti]})
+    end for
+    for i=1 to length(nametags) do
+        ti = nametags[i]
+        printf(1,"Name: %s, Year: %d\n",{Names[ti],Years[ti]})
+    end for
+
+--Another Example:
+-- Obviously significantly faster than lower(twice) on each comparison.
+
+sequence Cases = {"Case 3", "caSe 1", "cAse 4", "casE 2"}
+
+sequence cases
+function case_insensitive(integer i, integer j)
+    return compare(cases[i],cases[j])
+end function
+
+cases = lower(Cases) -- take a modified copy, may warrant loop/string tests.
+--cases = Cases      -- result is 3412, as expected with 'Z' < 'a'.
+--cases = upper(Cases) -- same result (1234) as using lower, obviously.
+sequence casetags = custom_sort(routine_id("case_insensitive"),tagset(length(cases)))
+
+for i=1 to length(casetags) do
+    printf(1,"%s\n",{Cases[casetags[i]]})
+end for
+
+if getc(0) then end if

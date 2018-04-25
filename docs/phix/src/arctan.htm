@@ -1,0 +1,83 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">arctan</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="atom.htm">atom</a> x2 = arctan(<a href="atom.htm">atom</a> x1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>  Return an angle with tangent equal to x1.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td> A value between -PI/2 and PI/2 (radians) will be returned.
+          <br>
+          <br>
+            This function may be applied to an <a href="atom.htm">atom</a> or sq_arctan() to all elements
+             of a <a href="sequence.htm">sequence</a>. The rules for
+          <a href="seqops.htm">sequence operations</a> apply.
+          <br>
+          <br>
+            arctan() is faster than arcsin() or arccos().
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+s = arctan(2)
+-- s is 1.10715
+</eucode-->
+<pre>
+<font color="#000000">s</font><font color="#0000FF"> =</font><font color="#7060A8"> arctan</font><font color="#0000FF">(</font><font color="#000000">2</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- s is 1.10715</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            via :%opArcTan in builtins\VM\pTrig.e (an autoinclude)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="tan.htm">tan</a>,
+          <a href="arcsin.htm">arcsin</a>,
+          <a href="arccos.htm">arccos</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

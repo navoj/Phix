@@ -1,0 +1,74 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">task_suspend</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          task_suspend(<a href="integer.htm">integer</a> task_id)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Suspend execution of the specified task.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            This causes the specified task to be suspended. <br>
+            It will not be executed again unless there is a subsequent call to task_schedule() for it.<br>
+            task_id is a value returned from task_create().
+            <br>
+            <br>
+            Any task can suspend any other task. If a task suspends itself, the suspension will start as soon as the task calls task_yield(). 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+-- suspend current task
+task_suspend(task_self())
+task_yield()
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#000080"><i>-- suspend current task
+</i></font><font color="#5E005E">task_suspend</font><font color="#0000FF">(</font><font color="#5E005E">task_self</font><font color="#800000">()</font><font color="#0000FF">)
+</font><font color="#5E005E">task_yield</font><font color="#0000FF">()</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="task_create.htm">task_create</a>,
+          <a href="task_schedule.htm">task_schedule</a>,
+          <a href="task_self.htm">task_self</a>,
+          <a href="task_yield.htm">task_yield</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

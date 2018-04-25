@@ -1,0 +1,71 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">factors</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="sequence.htm">sequence</a> s = factors(<a href="atom.htm">atom</a> n, <a href="integer.htm">integer</a> include1=0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Returns a list of all integer factors of n. If the optional include1 parameter 
+            is 1, the result includes 1 and n, if -1 the result includes 1 but not n, and 
+            if it is 0 (the default), the result includes neither 1 nor n.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+s = factors(6) -- s is {2,3}
+s = factors(6,1) -- s is {1,2,3,6}
+s = factors(6,-1) -- s is {1,2,3}
+</eucode-->
+<pre>
+<font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> factors</font><font color="#0000FF">(</font><font color="#000000">6</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {2,3}
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> factors</font><font color="#0000FF">(</font><font color="#000000">6</font><font color="#0000FF">,</font><font color="#000000">1</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {1,2,3,6}
+</i></font><font color="#000000">s</font><font color="#0000FF"> =</font><font color="#5E005E"> factors</font><font color="#0000FF">(</font><font color="#000000">6</font><font color="#0000FF">,-</font><font color="#000000">1</font><font color="#0000FF">)</font><font color="#000080"><i> -- s is {1,2,3}</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\pfactors.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="prime_factors.htm">prime_factors</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

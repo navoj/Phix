@@ -1,0 +1,50 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">cdCanvasText</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            cdCanvasText(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> x, y, <a href="string.htm">string</a> text)
+            <br>
+            <i>-- or --</i>
+            <br>
+            cdText(<a href="atom.htm">atom</a> x, y, <a href="string.htm">string</a> text)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         <td>
+<!-- DEV (cdf/wd)
+void cdCanvasText(cdCanvas* canvas, int x, int y, const char* text); [in C]
+void cdfCanvasText(cdCanvas* canvas, double x, double y, const char* text); [in C]
+void wdCanvasText(cdCanvas* canvas, double x, double y, const char* text); (WC) [in C]
+-->
+            Draws a text in the position (x,y) according to the current font and text alignment. It expects an ANSI string. Can have line breaks.
+            <br>
+            <br>
+            cdText(x,y,t) is equivalent to cdCanvasText(cdActiveCanvas(),x,y,t). Calls to cd<b>f</b>CanvasText should be replaced with cdCanvasText.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

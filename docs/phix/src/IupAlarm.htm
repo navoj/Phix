@@ -1,0 +1,102 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupAlarm</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+           <br>
+           <br>
+            <a href="integer.htm">integer</a> res = IupAlarm(<a href="string.htm">string</a> title, 
+                                                             <a href="string.htm">string</a> msg, 
+                                                             <a href="string.htm">string</a> b1, 
+                                                             <a href="nullable_string.htm">nullable_string</a> b2=NULL, 
+                                                             <a href="nullable_string.htm">nullable_string</a> b3=NULL)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Shows a modal dialog containing a message with at least one and up to three buttons (b1, b2, and b3).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            b1 is set as the "DEFAULTENTER". The "DEFAULTESC" is set to the last non-NULL of b1, b2, and b3.
+          <br>
+          <br>
+            Returns 1, 2 or 3 to indicate which button was selected.
+          <br>
+          <br>
+            Uses global attributes "PARENTDIALOG" and "ICON" if defined.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include pGUI.e
+
+    IupOpen()
+
+    switch IupAlarm("Warning: file already esists","Overwrite file?","Yes","No")
+        case 1: ?1 --(Yes clicked or return keyed) <code to overwite the file>
+        case 2: ?2 --(No clicked or esc keyed)
+        case 3: ?3 --(could happen if 3rd button specified (would also be esc))
+        case 0: ?0 --(window closed (X clicked or Alt-F4 keyed))
+        default: ?9/0 -- does not happen
+    end switch
+
+    IupClose()
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> pGUI.e
+
+</font><font color="#5E005E">    IupOpen</font><font color="#0000FF">()
+
+</font><font color="#008080">    switch</font><font color="#5E005E"> IupAlarm</font><font color="#0000FF">(</font><font color="#008000">"Warning: file already esists"</font><font color="#0000FF">,</font><font color="#008000">"Overwrite file?"</font><font color="#0000FF">,</font><font color="#008000">"Yes"</font><font color="#0000FF">,</font><font color="#008000">"No"</font><font color="#0000FF">)
+</font><font color="#008080">        case</font><font color="#000000"> 1</font><font color="#0000FF">: ?</font><font color="#000000">1</font><font color="#000080"><i> --(Yes clicked or return keyed) &lt;code to overwite the file&gt;
+</i></font><font color="#008080">        case</font><font color="#000000"> 2</font><font color="#0000FF">: ?</font><font color="#000000">2</font><font color="#000080"><i> --(No clicked or esc keyed)
+</i></font><font color="#008080">        case</font><font color="#000000"> 3</font><font color="#0000FF">: ?</font><font color="#000000">3</font><font color="#000080"><i> --(could happen if 3rd button specified (would also be esc))
+</i></font><font color="#008080">        case</font><font color="#000000"> 0</font><font color="#0000FF">: ?</font><font color="#000000">0</font><font color="#000080"><i> --(window closed (X clicked or Alt-F4 keyed))
+</i></font><font color="#008080">        default</font><font color="#0000FF">: ?</font><font color="#000000">9</font><font color="#0000FF">/</font><font color="#000000">0</font><font color="#000080"><i> -- does not happen
+</i></font><font color="#008080">    end switch
+
+</font><font color="#5E005E">    IupClose</font><font color="#0000FF">()</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupClose.htm">IupClose</a>,
+          <a href="IupMainLoop.htm">IupMainLoop</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

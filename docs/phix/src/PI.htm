@@ -1,0 +1,68 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">PI</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         constant PI = 3.14159265358979323846...
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>The mathematic constant PI has been defined as a global constant in phix.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Enough digits have been used to attain the maximum accuracy possible for a phix <a href="atom.htm">atom</a>.
+            (At the time of writing this is probably not true for 64-bit, especially for any 64-bit app created using a 32-bit version 
+            of the phix compiler. When things settle down, I may look into using the floating point hardware (fldpi) to establish this 
+            value rather than specifying it via a decimal text string - which is likely to be a pretty trivial chunk of #ilASM, little 
+            more than just fldpi; lea e/rdi,[PI]; call:%pStoreFlt.)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+x = PI  -- x is 3.1415926...
+</eucode-->
+<pre>
+<font color="#000000">x</font><font color="#0000FF"> =</font><font color="#004600"> PI </font><font color="#000080"><i> -- x is 3.1415926...</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="sin.htm">sin</a>,
+          <a href="cos.htm">cos</a>,
+          <a href="tan.htm">tan</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

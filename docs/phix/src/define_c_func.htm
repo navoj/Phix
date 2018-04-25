@@ -1,0 +1,243 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">define_c_func</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+             <a href="integer.htm">integer</a> rid = define_c_func(<a href="object.htm">object</a> lib, 
+                                                                   <a href="object.htm">object</a> fname,
+                                                                   <a href="sequence.htm">sequence</a> args,
+                                                                   <a href="atom.htm">atom</a> return_type)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Define the characteristics of a C function that you wish to
+             call from your Phix program. A small <a href="integer.htm">integer</a>, known as a
+          <font color="#030303">
+           <b>routine id</b>
+          </font>, is
+            returned, or -1 if the function cannot be found.
+            <br>
+            <br>
+            The <a href="define_cffi_func.htm">define_cffi_func</a> routine is a string-based wrapper of this routine, 
+            which you may find easier to use.
+            <br>
+            <br>
+            lib is either an (atom) address returned by open_dll(), or {}.
+            <br>
+            if lib is an atom, fname is the (string) name of a function within that dll, optionally
+            as either {'+',"name"} or "+name" to specify the CDECL calling convention.
+            <br>
+            if lib is {}, fname is the (atom) address of a machine code function, optionally
+            as {'+',addr} to specify the CDECL calling convention.
+            <br>
+            <br>
+            CDECL is the default/only calling convention on a Linux system.
+            <br>
+            STDCALL is the default in a Windows system.
+            <br>
+            The CDECL convention requires the callee to clean up the stack, and is 
+            therefore more suited to variable numbers of arguments, whereas with 
+            STDCALL the routine cleans up the stack before returning.
+            <br>
+            <br>
+            args is a list of the parameter types for the function. 
+            <br>
+            return_type should be self explanatory. The following C types are predefined (in psym.e/syminit):
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+<!--eucode>
+                    C_BYTE = #01000001,     -- an 8 bit signed integer
+                    C_CHAR = C_BYTE,
+                   C_UCHAR = #02000001,     -- an 8 bit unsigned integer
+                   C_UBYTE = C_UCHAR,
+                   C_SHORT = #01000002,     -- a 16 bit signed integer
+                    C_WORD = C_SHORT,
+                  C_USHORT = #02000002,     -- a 16 bit unsigned integer
+                     C_INT = #01000004,     -- a 32 bit signed integer
+                    C_BOOL = C_INT,
+                    C_UINT = #02000004,     -- a 32 bit unsigned integer
+                   C_INT64 = #01000008,     -- a 64 bit signed integer
+                   C_QWORD = #02000008,     -- a 64 bit unsigned integer
+                    C_LONG = C_INT,
+DEV: -- also C_WPARAM, C_LPARAM, C_HRESULT
+                   C_ULONG = C_UINT,
+                   C_DWORD = C_UINT,
+                 C_POINTER = iff(machine_bits()=32?#02000004    -- a 32 bit (unsigned) pointer
+                                                  :#01000008)   -- a 64-bit (signed) pointer
+                     C_PTR = C_POINTER,
+                  C_HANDLE = C_PTR,
+                    C_HWND = C_PTR,
+                   C_FLOAT = #03000004,     -- a 32-bit float
+                  C_DOUBLE = #03000008      -- a 64-bit float
+</eucode-->
+<pre>
+<font color="#000000">                    C_BYTE</font><font color="#0000FF"> =</font><font color="#000000"> #01000001</font><font color="#0000FF">,    </font><font color="#000080"><i> -- an 8 bit signed integer
+</i></font><font color="#004600">                    C_CHAR</font><font color="#0000FF"> =</font><font color="#000000"> C_BYTE</font><font color="#0000FF">,
+</font><font color="#004600">                   C_UCHAR</font><font color="#0000FF"> =</font><font color="#000000"> #02000001</font><font color="#0000FF">,    </font><font color="#000080"><i> -- an 8 bit unsigned integer
+</i></font><font color="#000000">                   C_UBYTE</font><font color="#0000FF"> =</font><font color="#004600"> C_UCHAR</font><font color="#0000FF">,
+</font><font color="#004600">                   C_SHORT</font><font color="#0000FF"> =</font><font color="#000000"> #01000002</font><font color="#0000FF">,    </font><font color="#000080"><i> -- a 16 bit signed integer
+</i></font><font color="#000000">                    C_WORD</font><font color="#0000FF"> =</font><font color="#004600"> C_SHORT</font><font color="#0000FF">,
+</font><font color="#004600">                  C_USHORT</font><font color="#0000FF"> =</font><font color="#000000"> #02000002</font><font color="#0000FF">,    </font><font color="#000080"><i> -- a 16 bit unsigned integer
+</i></font><font color="#004600">                     C_INT</font><font color="#0000FF"> =</font><font color="#000000"> #01000004</font><font color="#0000FF">,    </font><font color="#000080"><i> -- a 32 bit signed integer
+</i></font><font color="#000000">                    C_BOOL</font><font color="#0000FF"> =</font><font color="#004600"> C_INT</font><font color="#0000FF">,
+</font><font color="#004600">                    C_UINT</font><font color="#0000FF"> =</font><font color="#000000"> #02000004</font><font color="#0000FF">,    </font><font color="#000080"><i> -- a 32 bit unsigned integer
+</i></font><font color="#000000">                   C_INT64</font><font color="#0000FF"> =</font><font color="#000000"> #01000008</font><font color="#0000FF">,    </font><font color="#000080"><i> -- a 64 bit signed integer
+</i></font><font color="#000000">                   C_QWORD</font><font color="#0000FF"> =</font><font color="#000000"> #02000008</font><font color="#0000FF">,    </font><font color="#000080"><i> -- a 64 bit unsigned integer
+</i></font><font color="#004600">                    C_LONG</font><font color="#0000FF"> =</font><font color="#004600"> C_INT</font><font color="#0000FF">,
+</font><font color="#000000">DEV</font><font color="#0000FF">:</font><font color="#000080"><i> -- also C_WPARAM, C_LPARAM, C_HRESULT
+</i></font><font color="#004600">                   C_ULONG</font><font color="#0000FF"> =</font><font color="#004600"> C_UINT</font><font color="#0000FF">,
+</font><font color="#000000">                   C_DWORD</font><font color="#0000FF"> =</font><font color="#004600"> C_UINT</font><font color="#0000FF">,
+</font><font color="#004600">                 C_POINTER</font><font color="#0000FF"> =</font><font color="#7060A8"> iff</font><font color="#0000FF">(</font><font color="#7060A8">machine_bits</font><font color="#800000">()</font><font color="#0000FF">=</font><font color="#000000">32</font><font color="#0000FF">?</font><font color="#000000">#02000004   </font><font color="#000080"><i> -- a 32 bit (unsigned) pointer
+</i></font><font color="#0000FF">                                                  :</font><font color="#000000">#01000008</font><font color="#0000FF">)  </font><font color="#000080"><i> -- a 64-bit (signed) pointer
+</i></font><font color="#004600">                     C_PTR</font><font color="#0000FF"> =</font><font color="#004600"> C_POINTER</font><font color="#0000FF">,
+</font><font color="#004600">                  C_HANDLE</font><font color="#0000FF"> =</font><font color="#004600"> C_PTR</font><font color="#0000FF">,
+</font><font color="#000000">                    C_HWND</font><font color="#0000FF"> =</font><font color="#004600"> C_PTR</font><font color="#0000FF">,
+</font><font color="#004600">                   C_FLOAT</font><font color="#0000FF"> =</font><font color="#000000"> #03000004</font><font color="#0000FF">,    </font><font color="#000080"><i> -- a 32-bit float
+</i></font><font color="#004600">                  C_DOUBLE</font><font color="#0000FF"> =</font><font color="#000000"> #03000008     </font><font color="#000080"><i> -- a 64-bit float</i></font>
+</pre>
+         </td>
+        </tr>
+<!--
+        <tr>
+         <td valign=top>
+          <b></b>
+         </td>
+         <td>
+DEV not yet (ever??) supported [Eu types<->c_func]:
+<br>
+        The C function that you define could be one created by the
+            Euphoria To C Translator, in which case you can pass Euphoria data
+            to it, and receive Euphoria data back.
+            A list of Euphoria types is contained in
+          <font color="#5500FF">
+           <b>dll.e</b>
+          </font>:
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+< ! --eucode>
+    global constant
+           E_INTEGER = #06000004,
+           E_ATOM    = #07000004,
+           E_SEQUENCE= #08000004,
+           E_OBJECT  = #09000004
+</eucode-- >
+<pre>
+<font color="#000000"></font><font color="#008080">    global constant
+</font><font color="#004600">           E_INTEGER</font><font color="#0000FF"> =</font><font color="#000000"> #06000004</font><font color="#0000FF">,
+</font><font color="#004600">           E_ATOM   </font><font color="#0000FF"> =</font><font color="#000000"> #07000004</font><font color="#0000FF">,
+</font><font color="#004600">           E_SEQUENCE</font><font color="#0000FF">=</font><font color="#000000"> #08000004</font><font color="#0000FF">,
+</font><font color="#004600">           E_OBJECT </font><font color="#0000FF"> =</font><font color="#000000"> #09000004</font>
+</pre>
+         </td>
+        </tr>
+-->
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>The resulting 
+          <font color="#030303">
+           <b>routine id</b>
+          </font>, rid, can be
+             passed to c_func() when you want to call the C function.
+          <br>
+          <br>
+            You can pass or return any C integer type or pointer type.
+             You can also pass a phix atom as a C double or float, and get
+             a C double or float returned to you as a phix atom.
+          <br>
+          <br>
+            In C (on Windows and Linux), parameter types which use 4 bytes or less are all passed the
+             same way, so it is not necessary to be exact. However the
+             distinction between signed and unsigned may be important when
+             you specify the return type of a function.
+          <br>
+          <br>
+            Currently, there is no way to pass a C structure by value or
+             get a C structure as a return result. You can only pass a pointer
+             to a structure and get a pointer to a structure as a result.
+          <br>
+          <br>
+            If you are not interested in using the value returned by the C function, you should instead define it with 
+            <a href="define_c_proc.htm">define_c_proc</a>() and call it with c_proc().
+          <br>
+          <br>
+            The C type "long double" should be avoided at all costs - it is highly compiler-dependent
+            and can be 10/8/12/16 bytes aligned to an 8/2/4/16 byte boundary.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+atom user32
+integer LoadIcon
+-- open user32.dll - it contains the LoadIconA C function
+user32 = open_dll("user32.dll")
+-- It takes a C pointer and a C int as parameters.
+-- It returns a C int as a result.
+LoadIcon = define_c_func(user32, "LoadIconA",
+                         {C_POINTER, C_INT}, C_INT)
+if LoadIcon=-1 then
+    puts(1, "LoadIconA could not be found!\n")
+end if
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">atom</font><font color="#000000"> user32
+</font><font color="#004080">integer</font><font color="#000000"> LoadIcon
+</font><font color="#000080"><i>-- open user32.dll - it contains the LoadIconA C function
+</i></font><font color="#000000">user32</font><font color="#0000FF"> =</font><font color="#7060A8"> open_dll</font><font color="#0000FF">(</font><font color="#008000">"user32.dll"</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- It takes a C pointer and a C int as parameters.
+-- It returns a C int as a result.
+</i></font><font color="#000000">LoadIcon</font><font color="#0000FF"> =</font><font color="#7060A8"> define_c_func</font><font color="#0000FF">(</font><font color="#000000">user32</font><font color="#0000FF">,</font><font color="#008000"> "LoadIconA"</font><font color="#0000FF">,
+</font><font color="#800000">                         {</font><font color="#004600">C_POINTER</font><font color="#0000FF">,</font><font color="#004600"> C_INT</font><font color="#800000">}</font><font color="#0000FF">,</font><font color="#004600"> C_INT</font><font color="#0000FF">)
+</font><font color="#008080">if</font><font color="#000000"> LoadIcon</font><font color="#0000FF">=-</font><font color="#000000">1</font><font color="#008080"> then
+</font><font color="#7060A8">    puts</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#008000"> "LoadIconA could not be found!\n"</font><font color="#0000FF">)
+</font><font color="#008080">end if</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="c_func.htm">c_func</a>,
+          <a href="define_cffi_func.htm">define_cffi_func</a>,
+          <a href="define_c_proc.htm">define_c_proc</a>,
+          <a href="c_proc.htm">c_proc</a>,
+          <a href="open_dll.htm">open_dll</a>,
+          <a href="ccall.htm">Calling C Functions</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

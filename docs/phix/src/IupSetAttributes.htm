@@ -1,0 +1,168 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupSetAttributes</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+           <br>
+           <br>
+            IupSetAttributes(<a href="Ihandle.htm">Ihandles</a> ih, <a href="string.htm">string</a> attributes, <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Sets several attributes of an interface element or elements.
+          <br>
+          <br>
+            ih: Identifier(s) of the interface element.
+          <br>
+            attributes: string with the attributes in the format "v1=a1, v2=a2,..." where v<sub><small>i</small></sub> is the name of an attribute and a<sub><small>i</small></sub> is its value.
+          <br>
+            data: if a non-empty <a href="sequence.htm">sequence</a> is passed, it performs attributes = sprintf(attributes,data) first.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Most interface elements can be created with an optional inline invocation of IupSetAttributes, which can make code much cleaner 
+            than invoking this function, as example 2 below shows.
+            <br>
+            <br>
+            There are cases such as a title of "the string is \"X\" [SIZE=%d]" which are difficult if not impossible to achieve via 
+            IupSetAttributes, because of the obvious mis-parsing of commas, spaces, quotes, and equal signs. Bear this in mind, especially 
+            when the data originates from file or user input, as a similar potential error might not be so readily apparent. 
+            While quotation marks <i>are</i> parsed, so eg IupSetAttributes(ih,"TITLE=\"Address Book\", SIZE=500x300") works fine, there 
+            is however no way to include literal quotation marks in a value when using IupSetAttributes. Any such fields must be set 
+            individually using <a href="IupSetAttribute.htm">IupSetAttribute</a>() or 
+            (perhaps better) <a href="IupSetStrAttribute.htm">IupSetStrAttribute</a>(). 
+            If there is any doubt, especially with settings that are not fixed constants, just do them one at a time.
+            <br>
+            <br>
+            Note also that hex values require quotes, eg IupSetAttributes(ih,"FGCOLOR=#008000") does not work but 
+            IupSetAttributes(ih,"FGCOLOR=\"#008000\"") does.
+            <br>
+            <br>
+            While the most common use is to set several attributes on a single element, it is also possible to set the same attribute(s) on
+            several elements, as example 3 below shows.
+            <br>
+            <br>
+            The function IupSetAttributesf has been removed, since that functionality is now provided by the optional 
+            <code>string attributes="", sequence data={}</code> parameters on all relevant element creation routines (with non-default
+            values triggering an internal invocation of this very routine).<br>
+            Likewise the IupSetAtt function has been removed, see example 2 below, though admittedly when a non-null name has
+            been provided that may require extra <a href="IupSetHandle.htm">IupSetHandle</a>() calls (which, btw, is equivalent
+            to making the handle global, and therefore a recipe for disaster in my book).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+            Select the appropriate file dialog type and title.
+         </td>
+        </tr>
+        <tr>
+         <td>
+         </td>
+         <td>
+<!--eucode>
+if bOpen then
+    IupSetAttributes(filedlg, "DIALOGTYPE=OPEN, TITLE=Open")
+else
+    IupSetAttributes(filedlg, "DIALOGTYPE=SAVE, TITLE=Save")
+end if
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">if</font><font color="#000000"> bOpen</font><font color="#008080"> then
+</font><font color="#5E005E">    IupSetAttributes</font><font color="#0000FF">(</font><font color="#000000">filedlg</font><font color="#0000FF">,</font><font color="#008000"> "DIALOGTYPE=OPEN, TITLE=Open"</font><font color="#0000FF">)
+</font><font color="#008080">else
+</font><font color="#5E005E">    IupSetAttributes</font><font color="#0000FF">(</font><font color="#000000">filedlg</font><font color="#0000FF">,</font><font color="#008000"> "DIALOGTYPE=SAVE, TITLE=Save"</font><font color="#0000FF">)
+</font><font color="#008080">end if</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+            Creates a list with country names and defines Japan as the selected option.
+         </td>
+        </tr>
+        <tr>
+         <td>
+         </td>
+         <td>
+            Translate C code such as <code>list = IupList(); IupSetAtt(NULL, list, "VALUE", "3", "1", "Brazil", "2", "USA", "3", "Japan", "4", "France", NULL);</code> to
+<!--eucode>
+Ihandle list = IupList("VALUE=3, 1=Brazil, 2=USA, 3=Japan, 4=France")
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#5E005E">Ihandle</font><font color="#000000"> list</font><font color="#0000FF"> =</font><font color="#5E005E"> IupList</font><font color="#0000FF">(</font><font color="#008000">"VALUE=3, 1=Brazil, 2=USA, 3=Japan, 4=France"</font><font color="#0000FF">)</font>
+</pre>
+            <br>
+            Admittedly this is more of an example of when <i>not</i> to use IupsetAttributes, or more accurately inline it.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 3:</b>
+         </td>
+         <td>
+            Enable or disable several buttons and menu entries simultaneously.
+         </td>
+        </tr>
+        <tr>
+         <td>
+         </td>
+         <td>
+<!--eucode>
+string active = iff(selected_text={}?"NO":"YES")
+IupSetAttributes({b_cut,b_copy,b_delete,m_cut,m_copy,m_delete}, "ACTIVE", active)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">string</font><font color="#000000"> active</font><font color="#0000FF"> =</font><font color="#7060A8"> iff</font><font color="#0000FF">(</font><font color="#000000">selected_text</font><font color="#0000FF">=</font><font color="#800000">{}</font><font color="#0000FF">?</font><font color="#008000">"NO"</font><font color="#0000FF">:</font><font color="#008000">"YES"</font><font color="#0000FF">)
+</font><font color="#5E005E">IupSetAttributes</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#000000">b_cut</font><font color="#0000FF">,</font><font color="#000000">b_copy</font><font color="#0000FF">,</font><font color="#000000">b_delete</font><font color="#0000FF">,</font><font color="#000000">m_cut</font><font color="#0000FF">,</font><font color="#000000">m_copy</font><font color="#0000FF">,</font><font color="#000000">m_delete</font><font color="#800000">}</font><font color="#0000FF">,</font><font color="#008000"> "ACTIVE"</font><font color="#0000FF">,</font><font color="#000000"> active</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupGetAttribute.htm">IupGetAttribute</a>,
+          <a href="IupSetAttribute.htm">IupSetAttribute</a>,
+          <a href="IupSetStrAttribute.htm">IupSetStrAttribute</a>,
+          <a href="IupCanvas.htm">IupCanvas</a>,
+          <a href="IupDialog.htm">IupDialog</a>,
+          <a href="IupHBox.htm">IupHBox</a>,
+          <a href="IupList.htm">IupList</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

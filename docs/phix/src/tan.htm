@@ -1,0 +1,81 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">tan</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="atom.htm">atom</a> x2 = tan(<a href="atom.htm">atom</a> x1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Return the tangent of x1, where x1 is in radians.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>This function may be applied to an <a href="atom.htm">atom</a> or sq_tan() to all elements
+             of a <a href="sequence.htm">sequence</a>. The rules for
+          <a href="seqops.htm">sequence operations</a> apply.
+            <br>
+            <br>
+            Note that the following diagram uses degrees, ie tan(30*CD_DEG2RAD) = 0.577, where CD_DEG2RAD is defined in pGUI as PI/180.
+            <br>
+            <br>
+            <img src="images/tan.png"/>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+t = tan(1.0)
+-- t is 1.55741
+</eucode-->
+<pre>
+<font color="#000000">t</font><font color="#0000FF"> =</font><font color="#7060A8"> tan</font><font color="#0000FF">(</font><font color="#000000">1.0</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- t is 1.55741</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            via :%opTan in builtins\VM\pTrig.e (an autoinclude)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="sin.htm">sin</a>,
+          <a href="cos.htm">cos</a>,
+          <a href="arctan.htm">arctan</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,167 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">prepend</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="sequence.htm">sequence</a> s2 = prepend(<a href="object.htm">object</a> s1, <a href="object.htm">object</a> x)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Prepend x to the start of <a href="sequence.htm">sequence</a> s1. <br>
+            The <a href="length.htm">length</a> of s2 will be <b>always be one more than</b> length(s1), 
+            unless s1 is an <a href="atom.htm">atom</a>, in which case the length of s2 will be 2.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            If x is an <a href="atom.htm">atom</a> this is the same as <code>s2 = x & s1</code>.
+            <b>&nbsp;If x is a <a href="sequence.htm">sequence</a> it is definitely not the same.</b>
+          <br>
+          <br>
+            Although s1 is typically a <a href="sequence.htm">sequence</a>, and historically it had to be, 
+            it can now also be an atom, which can simplify certain algorithms.
+          <br>
+          <br>
+            The extra storage is allocated automatically and very efficiently with phix&rsquo;s dynamic storage allocation.<br>
+            The case where s1 and s2 are the same variable (as in Example 1 below) is handled very efficiently.
+          <br>
+          <br>
+            Avoid using string = prepend(string,char) on very long strings in performance 
+            critical code, if at all possible rework the code logic to use append. <br>
+            When working with a <a href="html/glossary.htm#dwordseq">dword-sequence</a>, prepend is just as fast as append.
+          <br>
+          <br>
+            TIP: prepend() is ideally suited to adding an element (and always exactly one element) to a (sequence which represents a) 
+            list or table. When constructing strings, <a href="concatenation.htm">concatenation ('&')</a> should be used instead - 
+            even though prepend() is technically valid in some character-by-character cases, concatenation makes the intent clearer.
+            Also note that concatenation must be used when the intent is to add "zero, one, or more" elements (or characters) to a 
+            list or table (or string), in a single operation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td> You can use prepend() to dynamically grow a sequence, e.g.
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+<!--eucode>
+sequence x
+x = {}
+for i=1 to 10 do
+    x = prepend(x, i)
+end for
+-- x is now {10,9,8,7,6,5,4,3,2,1} (or use reverse(tagset(10)))
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">sequence</font><font color="#000000"> x
+x</font><font color="#0000FF"> = {}
+</font><font color="#008080">for</font><font color="#000000"> i</font><font color="#0000FF">=</font><font color="#000000">1</font><font color="#008080"> to</font><font color="#000000"> 10</font><font color="#008080"> do
+</font><font color="#000000">    x</font><font color="#0000FF"> =</font><font color="#7060A8"> prepend</font><font color="#0000FF">(</font><font color="#000000">x</font><font color="#0000FF">,</font><font color="#000000"> i</font><font color="#0000FF">)
+</font><font color="#008080">end for
+</font><font color="#000080"><i>-- x is now {10,9,8,7,6,5,4,3,2,1} (or use reverse(tagset(10)))</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td> Any kind of phix object can be prepended to a sequence, e.g.
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+<!--eucode>
+sequence x, y, z
+x = {"fred", "barney"}
+y = prepend(x, "wilma")
+-- y is now {"wilma", "fred", "barney"}
+z = prepend(prepend(y, "betty"), {"bam", "bam"})
+-- z is now {{"bam", "bam"}, "betty", "wilma", "fred", "barney"}
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">sequence</font><font color="#000000"> x</font><font color="#0000FF">,</font><font color="#000000"> y</font><font color="#0000FF">,</font><font color="#000000"> z
+x</font><font color="#0000FF"> = {</font><font color="#008000">"fred"</font><font color="#0000FF">,</font><font color="#008000"> "barney"</font><font color="#0000FF">}
+</font><font color="#000000">y</font><font color="#0000FF"> =</font><font color="#7060A8"> prepend</font><font color="#0000FF">(</font><font color="#000000">x</font><font color="#0000FF">,</font><font color="#008000"> "wilma"</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- y is now {"wilma", "fred", "barney"}
+</i></font><font color="#000000">z</font><font color="#0000FF"> =</font><font color="#7060A8"> prepend</font><font color="#0000FF">(</font><font color="#7060A8">prepend</font><font color="#800000">(</font><font color="#000000">y</font><font color="#0000FF">,</font><font color="#008000"> "betty"</font><font color="#800000">)</font><font color="#0000FF">,</font><font color="#800000"> {</font><font color="#008000">"bam"</font><font color="#0000FF">,</font><font color="#008000"> "bam"</font><font color="#800000">}</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- z is now {{"bam", "bam"}, "betty", "wilma", "fred", "barney"}</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 3:</b>
+         </td>
+         <td> Watch out for this common mistake:
+         </td>
+        </tr>
+        <tr>
+         <td></td>
+         <td>
+<!--eucode>
+prepend({3,4,5}, {1,2})  -- {{1,2}, 3, 4, 5}
+prepend("cde", "ab")     -- {"ab",'c','d','e'}
+-- Compare with concatenation:
+{1,2} & {3,4,5}          -- {1, 2, 3, 4, 5}
+"ab" & "cde"             -- "abcde"
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#7060A8">prepend</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#000000">3</font><font color="#0000FF">,</font><font color="#000000">4</font><font color="#0000FF">,</font><font color="#000000">5</font><font color="#800000">}</font><font color="#0000FF">,</font><font color="#800000"> {</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#000000">2</font><font color="#800000">}</font><font color="#0000FF">) </font><font color="#000080"><i> -- {{1,2}, 3, 4, 5}
+</i></font><font color="#7060A8">prepend</font><font color="#0000FF">(</font><font color="#008000">"cde"</font><font color="#0000FF">,</font><font color="#008000"> "ab"</font><font color="#0000FF">)    </font><font color="#000080"><i> -- {"ab",'c','d','e'}
+-- Compare with concatenation:
+</i></font><font color="#0000FF">{</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#000000">2</font><font color="#0000FF">} &amp; {</font><font color="#000000">3</font><font color="#0000FF">,</font><font color="#000000">4</font><font color="#0000FF">,</font><font color="#000000">5</font><font color="#0000FF">}         </font><font color="#000080"><i> -- {1, 2, 3, 4, 5}
+</i></font><font color="#008000">"ab"</font><font color="#0000FF"> &amp;</font><font color="#008000"> "cde"            </font><font color="#000080"><i> -- "abcde"</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+              via :%opApnd (used for both append and prepend) in builtins\VM\pApnd.e (an autoinclude) - be warned however it is low-level complicated stuff that you do not need to know.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="append.htm">append</a>,
+          <a href="concatenation.htm">concatenation operator &</a>,
+          <a href="seqformation.htm">sequence-formation operator</a>,
+          <a href="tagset.htm">tagset</a>,
+          <a href="reverse.htm">reverse</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

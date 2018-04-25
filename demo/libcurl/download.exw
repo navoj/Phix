@@ -1,0 +1,47 @@
+--
+-- download.exw
+--
+constant url = "http://example.com",
+--constant url = "http://phix.x10.mx/bleurgh",  -- (test CURLOPT_FAILONERROR)
+         out = "example.html"
+    
+printf(1, "\nDownloading remote file %s to local file %s\n\n", {url,out})
+
+include libcurl.e
+
+curl_global_init()
+
+atom curl = curl_easy_init()
+
+function write_callback(atom pData, integer size, integer nmemb, integer fn)
+    integer bytes_written = size * nmemb
+    puts(fn,peek({pData,bytes_written}))
+    return bytes_written
+end function
+constant write_cb = call_back({'+', routine_id("write_callback")})
+
+atom pErrorBuffer = allocate(CURL_ERROR_SIZE)
+curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, pErrorBuffer)
+curl_easy_setopt(curl, CURLOPT_URL, url)
+curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_cb)
+integer fn = open(out,"wb")
+curl_easy_setopt(curl, CURLOPT_WRITEDATA, fn)
+-- example.com is redirected[?], so we tell libcurl to follow redirection
+curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1)
+--curl_easy_setopt(curl, CURLOPT_FAILONERROR, true)
+--curl_easy_setopt(curl, CURLOPT_VERBOSE, true)
+
+integer ret = curl_easy_perform(curl)
+if ret!=CURLE_OK then
+   printf(1, "Error %d(%s) downloading file\n", {ret,peek_string(pErrorBuffer)})
+else
+   printf(1, "File %s saved\n", {out})
+end if
+
+close(fn)
+curl_easy_cleanup(curl)
+free(pErrorBuffer)
+
+puts(1, "Press any key to continue.\n")
+ret = getc(0)
+

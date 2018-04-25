@@ -1,0 +1,123 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">call_back</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="atom.htm">atom</a> a = call_back(<a href="integer.htm">integer</a> rid)
+         <br>
+         <i>-- or --</i>
+         <br>
+         <a href="atom.htm">atom</a> a = call_back({'+',<a href="integer.htm">integer</a> rid})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Get a machine address for the phix routine with the <a href="routine_id.htm">routine id</a> rid.
+            <br>
+            <br>
+            The resulting address can be used by Windows, or an external C routine in a Windows .dll or 
+            Linux shared library (.so), as a "call-back" address for calling your phix routine.
+            <br>
+            <br>
+            The second form, {'+',rid}, can/should be used on Windows if the routine will be called using 
+            the CDECL calling convention, instead of STDCALL. <br>
+            It has no effect when used on Linux, since that is always CDECL anyway.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>You can set up as many call-back functions as you like.
+          <br>
+          <br>
+            When your routine is called, the argument values will all be machine-sized unsigned (positive) values. <br>
+            You should declare each parameter of your routine as <a href="atom.htm">atom</a>, unless you want to impose tighter checking. <br>
+            Your routine must return a machine-sized integer value.
+          <br>
+          <br>
+            Note that sign effects can come into play. The value -1 can, especially if it has been on a fairly colourful journey,
+            arrive (on 32-bit) as #FFFFFFFF aka 4,294,967,295 and that will typecheck if you try and store it in an integer.
+            Or it could occur the other way around completely, with some MAXUINT value in fact turning up as a -1.<br>
+            Code within the callback should be robust and, if at all possible, automatically map such (parameter) values.
+          <br>
+          <br>
+            Theoretically call-backs are not thread safe, see Technicalia for details.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example Program:</b>
+         </td>
+         <td>
+          <font color="#5500FF">
+           <b>demo\win32\window.exw,
+              demo\linux\qsort.exu
+           </b>
+          </font>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="routine_id.htm">routine_id</a>,
+          <a href="ccall.htm">Calling C Functions</a>,
+          <a href="Icallback.htm">Icallback</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+          There is a theoretical thread-safety issue with hll call_backs, although #ilASM may offer a workable alternative.
+          <br>
+          <br>
+          The phix <a href="create_thread.htm">create_thread</a>() function (see builtins\VM\pThreadN.e) is responsible 
+          for creating the virtual stack (see builtins\VM\pStack.e) in which the phix hll code of that thread will run. Should
+          the c_func() code invoke CreateThread() or sys_fork() or whatever, there will be no virtual stack in which to run the 
+          phix hll code. One example I read of is socket.connect(callback), which the article pointed out was asynchronous. In 
+          such cases you may have to resort to using a low-level #ilASM{} label/code rather than a hll call_back(), and 
+          obviously avoid attempting to make any hll calls, even indirectly, from that low-level callback code.
+          <br>
+          <br>
+          I suppose it <i>might</i> be possible to create a special stack/context for the call-back if pSetSaveEBP/pGetTCB in
+          pHeap.e fail, as per pGetPool, or perhaps just pGetPool/pFreePool at the start of cbhandler, but I cannot think of
+          any way to release the orphans that would create. It might even be possible for the call back handler to create
+          and destroy a virtual stack every time it is called, but that seems rather excessive. Also, either solution would 
+          almost certainly make some error reports much shorter in a less than helpful way (ie no call stack).
+          <br>
+          <br>
+          As far as I know, there are no genuinely asynchronous call_backs in OS-level calls, such as Windows API and Linux 
+          syscalls, for instance the Windows API ReadFile in OVERLAPPED mode expects you to call GetOverlappedResult at your 
+          convenience, rather than rudely interrupt you, and it is probably done that way for somewhat similar reasons.
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

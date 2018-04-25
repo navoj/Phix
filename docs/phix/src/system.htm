@@ -1,0 +1,109 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">system</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          system(<a href="string.htm">string</a> st, <a href="integer.htm">integer</a> mode=2)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+          Pass a command string st to the operating system command interpreter.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The system() routine is in fact a simple wrapper for <a href="system_exec.htm">system_exec</a>(st,12), 
+            the mode of 12 starting a new shell (#04) and <i>not</i> waiting for a return value (#08), as explained
+            in more detail in that documentation.
+            <br>
+            <br>
+            The input mode parameter is completely ignored, as fullscreen DOS video modes have not been officially
+            supported since the release (in Jan 2007) of Windows Vista.
+          <br>
+          <br>
+          NOTE: Specifying a windows GUI app can sometimes appear to hang the console. Typically what has actually 
+          happened is that the shell has finished, but remains visible and unresponsive until the app terminates. 
+          In such cases, try using <code>{} = <a href="system_exec.htm">system_exec</a>(st,8)</code> instead.
+<!--DEV allow system(st,16) to prevent console handles being inherited??-->
+          <br>
+          <br>
+          You can use phix as a sophisticated batch language by making calls to system() and system_exec().
+          <br>
+          <br>
+          system() will start a new DOS or Linux shell.
+          <br>
+          <br>
+          system() allows you to use command-line redirection of standard input and output in the command string st.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+system("copy temp.txt a:\\temp.bak", 2)
+-- note use of double backslash in literal string to get a single backslash
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#5E005E">system</font><font color="#0000FF">(</font><font color="#008000">"copy temp.txt a:\\temp.bak"</font><font color="#0000FF">,</font><font color="#000000"> 2</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- note use of double backslash in literal string to get a single backslash</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+system("p.exe \\test\\myprog.ex < indata > outdata", 2)
+-- executes myprog by redirecting standard input and output
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#5E005E">system</font><font color="#0000FF">(</font><font color="#008000">"p.exe \\test\\myprog.ex &lt; indata &gt; outdata"</font><font color="#0000FF">,</font><font color="#000000"> 2</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- executes myprog by redirecting standard input and output</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="system_open.htm">system_open</a>,
+          <a href="system_exec.htm">system_exec</a>,
+          <a href="dir.htm">dir</a>,
+          <a href="current_dir.htm">current_dir</a>,
+          <a href="getenv.htm">getenv</a>,
+          <a href="command_line.htm">command_line</a>,
+          <a href="get_interpreter.htm">get_interpreter</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

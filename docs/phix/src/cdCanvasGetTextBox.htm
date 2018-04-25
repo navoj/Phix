@@ -1,0 +1,54 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">cdCanvasGetTextBox</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="atom.htm">atom</a> {xmin, xmax, ymin, ymax} = cdCanvasGetTextBox(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> x, y, <a href="string.htm">string</a> text)<br>
+            <i>-- or --</i><br>
+            <a href="atom.htm">atom</a> {xmin, xmax, ymin, ymax} = wdCanvasGetTextBox(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> x, y, <a href="string.htm">string</a> text)<br>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         <td>
+            Returns the horizontal bounding rectangle occupied by a text at a given position.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            If orientation is not 0 then its area is always larger than the area of the rectangle returned by cdCanvasGetTextBounds.
+            <br>
+            <br>
+            Since the pGUI wrapper functions can accept integers and floats in the parameters, and return atoms or integers,
+            there is no need for a separate cdfCanvasGetTextBox wrapper. <br>
+            Internally cdCanvasGetTextBox uses the cdfCanvasGetTextBox C function.<br>
+            [CORRECTION: well, that was the plan, but (the C) cdfCanvasGetTextBox gave me jip on 64-bit while cdCanvasGetTextBox did not.] 
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

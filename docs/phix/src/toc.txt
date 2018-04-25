@@ -1,0 +1,3635 @@
+--
+-- toc.txt
+-- =======
+--
+--  This is the master "table of contents" file for phix.chm, and populates both the
+--  traditional contents tab and the fancy new "middle" contents auto-tree thing (for
+--  want of anything better to call it, the idea being cribbed from the MSDN site).
+--  Obviously comments and blank lines are allowed, and are ignored.
+--  See also index.txt
+--
+--  Indentation is critical. It is illegal to increase indentation by >1 in any one line.
+--  Each line (eg "example") means read from /src (eg "docs/phix/src/example.htm") and
+--  write to /html (eg "docs/phix/html/example.htm") with the exception of the very first
+--  line ("phix") which does not go into /html but to docs/phix/phix.htm. Descriptions 
+--  are taken from the <h1 class="title"> which should be in line 7 of the src file.
+--  Copy mt.htm to any new file as the starting point. Edita\Tools\Htmlise eucode and
+--  Edita\Tools\Re-indent source can/should be used liberally on any content files.
+--
+--  Run makephix.exw to process this file, index.txt, and everything in docs/phix/src, 
+--                              and then create phix.hhc, phix.hhk, and finally phix.chm.
+--
+phix
+ example
+-- quicksort
+ installation
+ licence
+--? command line switches
+language
+ atoms
+  numberbases
+  accuracy
+ sequences
+  strings
+ phixvscl
+  phixvsfl
+ comments
+  perrec
+ expressions
+  relops
+  logicops
+  arithops
+  seqops
+  iff
+  subscripts
+  slices
+  concatenation
+  seqformation
+  otherseqops
+  precedence
+ declarations
+  procedures
+  functions
+  types
+  variables
+  constants
+   enum
+  scope
+  usingtypes
+ statements
+  assignment
+   assignop
+   explicitdiscard
+   multiassign
+  callproc
+  if
+   switch
+--ifdef!
+  while
+  shortcircuit
+  for
+  exit
+  return
+  try
+   compjava
+   throw
+  specialtop
+   include
+   with
+   format
+    sharedlib
+  debugging
+--===
+--  semicolons
+-- directives
+--  format statement (see below) {format}
+--  include (and relative directory support) {include}
+--  autoincludes
+--  with {with,without}
+--  preprocessing
+--  inlineassembly
+-- debugging
+--  trace screen {trace}
+--  trace file
+--  profiling {profile,profile_time}
+--
+--===
+library
+ predeftypes
+  atom
+  integer
+  sequence
+  string
+  object
+ seqmanip
+  length
+  repeat
+  reverse
+  append
+  prepend
+  flatten
+  join
+   join_by
+  split
+   split_any
+   split_path
+  trim
+  columnize
+  vslice
+  tagset
+  substitute
+   substitute_all
+  shuffle
+  permute
+ srchsort
+  compare
+  equal
+  min
+  max
+  smallest
+  find
+  match
+  bsearch
+  sort
+  custom_sort
+ patmat
+  lower
+  upper
+  scanf
+   to_integer
+   to_number
+  wildcard_match
+  wildcard_file
+ math
+  abs
+  sin
+   arcsin
+  cos
+   arccos
+  tan
+   arctan
+   atan2
+  log
+  floor
+   round
+   ceil
+   trunc
+  remainder
+   mod
+  sign
+  sqrt
+  power
+  PI
+  rand
+   set_rand
+   rnd
+  sum
+  gcd
+  factorial
+  factors
+   prime_factors
+ bitlog
+  and_bits
+  or_bits
+  xor_bits
+  not_bits
+  or_all
+  decode_flags
+ fileio
+  open
+   close
+   flush
+  puts
+   printf
+   sprintf
+   print
+   sprint
+   qu
+  getc
+   gets
+   get_text
+  seek
+  where
+  lock_file
+   unlock_file
+  get_key
+  wait_key
+  dir
+   walk_dir
+   current_dir
+   chdir
+  allow_break
+   check_break
+  fileutils
+   file_exists
+   get_proper_path
+   get_proper_dir
+   get_file_name
+   get_file_base
+   get_file_extension
+   get_file_path
+   get_file_type
+   get_file_size
+   get_logical_drives
+   rename_file
+   copy_file
+   move_file
+   delete_file
+   create_directory
+   clear_directory
+   remove_directory
+   join_path
+ opsystem
+  time
+  date
+   is_leap_year
+   day_of_year
+   day_of_week
+  command_line
+   get_interpreter
+  getenv
+  system
+   system_open
+  system_exec
+   system_wait
+   set_system_doevents
+  abort
+  sleep
+  platform
+  machine_bits
+  version
+  include_paths
+ debug
+  trace
+  profile
+ cgraphics
+  clear_screen
+  position
+  get_position
+  video_config
+  scroll
+  wrap
+  text_color
+  bk_color
+  read_bitmap
+  save_bitmap
+  cursor
+  text_rows
+  get_screen_char
+  put_screen_char
+  save_text_image
+  display_text_image
+  free_console
+ machine
+  allocate
+  allocate_string
+  call
+  crash
+   crash_file
+   crash_message
+   crash_routine
+  delete_routine
+   delete
+  free
+  peek
+  peek_string
+  poke
+  poke_string
+  mem_copy
+  mem_set
+  register_block
+  unregister_block
+  int_to_bytes
+  bytes_to_int
+  int_to_bits
+  bits_to_int
+  atom_to_floatNN
+  floatNN_to_atom
+ dcall
+  routine_id
+  call_proc
+  call_func
+ ccall
+  open_dll
+  get_proc_address
+  define_c_func
+  define_c_proc
+  define_c_var
+  c_proc
+  c_func
+  call_back
+  message_box
+  instance
+ mtask
+  task_create
+  task_schedule
+  task_yield
+  task_self
+  task_suspend
+  task_status
+  task_clock_start
+  task_clock_stop
+  task_delay
+  task_list
+ mthread
+  init_cs
+  delete_cs
+  enter_cs
+  try_cs
+  leave_cs
+  create_thread
+  suspend_thread
+  resume_thread
+  exit_thread
+  get_thread_exitcode
+  get_thread_id
+  thread_safe_string
+  wait_thread
+ eucompat
+  cpath
+  prompt_number
+  prompt_string
+  get
+  value
+  get_bytes
+  read_lines
+  read_file
+  any_key
+  head
+   pad_head
+  tail
+   pad_tail
+  insert
+  series
+  splice
+  remove
+  remove_all
+  replace
+  find_replace
+  match_replace
+  shift_bits
+  to_string
+  find_any
+  vlookup
+  machine_func
+  machine_proc
+otherlibs
+ bigatom
+  bigatom_type
+  ba_new
+  ba_scale
+  ba_sprintf
+  ba_round
+ cffi
+  define_struct
+  allocate_struct
+  set_struct_field
+  get_struct_field
+  get_field_details
+  get_struct_size
+  set_unicode
+  define_cffi_func
+  define_cffi_proc
+ database
+  db_create
+  db_open
+  db_select
+  db_close
+  db_create_table
+  db_select_table
+  db_delete_table
+  db_rename_table
+  db_table_list
+  db_table_size
+  db_find_key
+  db_record_key
+  db_record_data
+  db_insert
+  db_delete_record
+  db_replace_data
+  db_compress
+  db_dump
+  db_fatal_id
+  check_free_list
+ dict
+  new_dict
+   dict_name
+   is_dict
+   destroy_dict
+  setd
+  getd
+   setd_default
+   getd_index
+   getd_by_index
+   getd_partial_key
+  deld
+  dict_size
+  traverse_dict
+   traverse_dict_partial_key
+  map
+ ipc
+  sm_create
+  sm_open
+  sm_alloc_lpsz
+  sm_close
+ json
+  parse_json
+  print_json
+  extract_json_field
+ libcurl
+  CURLcode
+  CURLoption
+  curl_loadlib
+  curl_global_init
+   curl_global_cleanup
+  curl_version
+   curl_version_info
+  curl_easy_init
+   curl_easy_cleanup
+   curl_easy_duphandle
+   curl_easy_reset
+  curl_easy_setopt
+  curl_easy_perform
+  curl_easy_getinfo
+  curl_slist_append
+  curl_slist_free_all
+  curl_easy_send
+  curl_easy_recv
+  curl_multi_init
+   curl_multi_add_handle
+   curl_multi_setopt
+   curl_multi_perform
+   curl_multi_wait
+   curl_multi_timeout
+   curl_multi_info_read
+   curl_multi_remove_handle
+   curl_multi_cleanup
+  curl_share_init
+   curl_share_setopt
+   curl_share_cleanup
+ LiteZip
+  UnzipOpenFile
+   ZIPENTRY
+   UnzipSetBaseDir
+   UnzipGetItems
+   UnzipGetItem
+   UnzipGetFileName
+   UnzipFindItem
+   UnzipItemToFile
+   UnzipClose
+  ZipCreateFile
+   ZipAddFile
+   ZipAddDir
+   ZipAddFolder
+   ZipClose
+ pGUI
+  iupcred
+  iuptypes
+   Icallback
+   Ihandle
+   cdCanvas
+   nullable_string
+   IupRawStringPtr
+  iupattr
+   common
+   dragndrop
+   iupgattr
+   callbacks
+   IupSetAttribute
+    IupSetStrAttribute
+    IupSetAttributeHandle
+   IupSetAttributes
+   IupResetAttribute
+   IupGetAttribute
+    IupGetAttributeHandle
+     IupGetHandle
+    IupGetAllAttributes
+   IupSetGlobal
+    IupSetHandle
+    IupGetName
+    IupGetAllNames
+    IupGetAllDialogs
+   IupGetGlobal
+   IupSetCallback
+    IupSetGlobalFunction
+    IupGetCallback
+    IupGetGlobalFunction
+   IupGetClassName
+    IupClassMatch
+    IupGetAllClasses
+    IupGetClassType
+    IupGetClassAttributes
+    IupGetClassCallbacks
+    IupSaveClassAttributes
+    IupCopyClassAttributes
+    IupSetClassDefaultAttribute
+  iupelements
+   paranormal
+   IupButton
+   IupCanvas
+    IupGLCanvas
+    IupGLControls
+     IupGLCanvasBox
+     IupGLSubCanvas
+     IupGLButton
+     IupGLExpander
+     IupGLFrame
+     IupGLLabel
+     IupGLLink
+     IupGLProgressBar
+     IupGLScrollBox
+     IupGLSeparator
+     IupGLSizeBox
+     IupGLToggle
+     IupGLValuator
+   IupFlatButton
+   IupImage
+    IupLoadImage
+    IupImageLibOpen
+    imFileImageLoadBitmap
+   IupLabel
+   IupLink
+   IupList
+   IupMenu
+    IupMenuItem
+    IupSeparator
+    IupSubmenu
+   IupProgressBar
+   IupText
+   IupToggle
+   IupTree
+    IupTreeAddNodes
+   IupValuator
+   IupControls
+    IupCells
+    IupMatrix
+    IupMatrixEx
+    IupPlot
+    IupWebBrowser
+  iupcontainers
+   iuplayout
+   IupHbox
+   IupVbox
+   IupFill
+   IupDialog
+    IupAlarm
+    IupMessage
+    IupCalendar
+    IupColorDlg
+    IupDatePick
+    IupFileDlg
+    IupGetFile
+    IupFontDlg
+    IupGetColor
+    IupGetParam
+    IupGetText
+    IupListDialog
+    IupMessageDlg
+    IupLayoutDialog
+    IupElementPropertiesDialog
+   IupAppend
+    IupDetach
+    IupInsert
+    IupReparent
+   IupBackgroundBox
+   IupCbox
+   IupDetachBox
+   IupExpander
+   IupFrame
+   IupGridBox
+   IupNormalizer
+   IupRadio
+   IupSbox
+   IupScrollBox
+   IupSpinBox
+   IupSplit
+   IupTabs
+   IupZbox
+   IupGetDialog
+    IupGetBrother
+    IupGetChild
+    IupGetChildCount
+    IupGetChildPos
+    IupGetNextChild
+    IupGetDialogChild
+    IupGetParent
+  iupctrl
+   IupOpen
+    IupClose
+   IupShow
+    IupShowXY
+    IupPopup
+    IupRedraw
+     IupUpdate
+    IupRefresh
+     IupRefreshChildren
+    IupSetFocus
+     IupGetFocus
+    IupHide
+    IupConvertXYToPos
+   IupMap
+    IupUnmap
+   IupMainLoop
+    IupMainLoopLevel
+    IupLoopStep
+    IupExitLoop
+    IupFlush
+   IupDestroy
+    IupCreate
+   IupClipboard
+   IupHelp
+   IupTimer
+   IupRecordInput
+    IupPlayInput
+   IupConfig
+    IupConfigLoad
+    IupConfigSave
+    IupConfigRecentInit
+    IupConfigRecentUpdate
+    IupConfigSetVariableInt
+    IupConfigSetVariableStr
+    IupConfigGetVariableInt
+    IupConfigGetVariableStr
+    IupConfigDialogClosed
+    IupConfigDialogShow
+  iupcd
+   cdCreateCanvas
+   cdCanvasActivate
+   cdCanvasClear
+   cdCanvasFlush
+   cdCanvasArc
+   cdCanvasBegin
+   cdCanvasVertex
+   cdCanvasEnd
+   cdCanvasBox
+    cdCanvasRoundedBox
+   cdCanvasFont
+   cdCanvasGetFont
+   cdCanvasGetFontDim
+   cdCanvasGetAttribute
+   cdCanvasSetAttribute
+   cdCanvasGetColorPlanes
+   cdCanvasGetContext
+   cdCanvasGetImageRGB
+   cdCanvasOrigin
+   cdCanvasGetOrigin
+   cdCanvasGetSize
+   cdCanvasGetTextBounds
+   cdCanvasGetTextBox
+   cdCanvasGetTextSize
+   cdCanvasGetVectorTextBounds
+   cdCanvasGetVectorTextSize
+   cdCanvasLine
+   cdCanvasLineWidth
+   cdCanvasLineStyle
+   cdCanvasMM2Pixel
+   cdCanvasPixel2MM
+   cdCanvasMultiLineVectorText
+   cdCanvasPixel
+   cdCanvasPutImageRectRGB
+   cdCanvasPutImImage
+   cdCanvasRect
+    cdCanvasRoundedRect
+   cdCanvasSector
+   cdCanvasSetForeground
+   cdCanvasSetNativeFont
+   cdCanvasText
+   cdCanvasTextAlignment
+   cdCanvasTransform
+   cdCanvasUpdateYAxis
+   cdCanvasInvertYAxis
+   cdCanvasVectorTextDirection
+   cdContextCaps
+   cdEncodeColor
+   cdGetScreenColorPlanes
+   cdGetScreenSize
+   cdVersion
+   cdVersionDate
+   wdCanvasWindow
+   wdCanvasGetWindow
+   wdCanvasViewport
+   wdCanvasGetViewport
+   cdKillCanvas
+  opengl
+   glBegin
+   glBindTexture
+   glCallList
+   glClear
+    glClearColor
+    glClearDepth
+   glColor
+   glEnable
+   glFrustum
+   glGet
+   glGetError
+   glGetString
+   glLight
+   glLoadIdentity
+   glMatrixMode
+   glNormal
+   glOrtho
+   glPushMatrix
+   glRotate
+   glScale
+   glShadeModel
+   glTexCoord
+   glTranslate
+   glVertex
+   glViewport
+   gluLookAt
+   gluPerspective
+   gluProject
+   gluUnProject
+   wglGetProcAddress
+   wglUseFontOutlines
+ ppp
+  ppOpt
+  pp
+  ppf
+ regex.e
+  regex_syntax
+  regex_options
+  regex_compile
+  regex
+  gsub
+  gmatch
+ serialize.e
+  serialize
+  deserialize
+ timedate
+  tdformats
+  timedatetype
+  timedelta
+  timedate_diff
+  set_timezone
+  change_timezone
+  adjust_timedate
+  set_timedate_formats
+  parse_date_string
+  format_timedate
+  override_timezone
+  get_tzid
+  elapsed
+ utfconv
+  utf8_to_utf32
+  utf32_to_utf8
+  utf16_to_utf32
+  utf32_to_utf16
+ deprecated
+  arwen
+   arwen.Introduction
+   arwen.Events
+   arwen.Create
+    arwen.Windows
+    arwen.Buttons
+    arwen.Markboxes
+    arwen.Groups
+    arwen.Editable
+    arwen.Labels
+    arwen.Toolbars
+    arwen.Statusbars
+    arwen.Scrollbars
+    arwen.Trackbars
+    arwen.Progressbars
+    arwen.Menus
+    arwen.Listcontrols
+    arwen.Tabcontrols
+    arwen.Hypertext
+   arwen.Destroy
+   arwen.Tabbing
+   arwen.Accelerator
+   arwen.Mouse
+   arwen.Clipboard
+   arwen.Dib_bitmap
+    arwen.DibSections
+   arwen.Icon_cursor
+   arwen.Timers
+   arwen.Comm_dlg
+   arwen.Window_msg
+   arwen.Structures
+  arwen32dib
+   a32dtypes
+    a32Dib
+    a32Colour
+    dibColor
+   a32dcreate
+    newDib
+    copyDib
+    extractDib
+    loadDib
+    saveDib
+    saveDibGray
+    saveDibReduced
+    killDib
+   a32dmanip
+    a32dpixel
+    putDibPixel
+    fastPutDibPixel
+    getDibPixel
+    fastGetDibPixel
+    clearDib
+    a32dcolour
+    invertDib
+    makeDibGray
+    replaceDibColor
+    replaceDibColors
+    adjustDibColors
+    colorizeDib
+    applyDibBrightnessToDib
+    adjustDibBrightness
+    adjustDibContrast
+    adjustDibBrightnessAndContrast
+    a32dcopy
+    clipToSource
+    copyToDib
+    drawDibToDib
+    copyDibToDib
+    tileDibToDib
+    copyDibToClipboard
+    getDibFromClipboard
+    a32dgeom
+    flipDibHor
+    flipDibVert
+    scaleDib
+    scaleDibPct
+    rotateDib
+    rotateDibFree
+    drawDibTransformedPolygon
+    a32dfilters
+    filterDib
+    filterDibGray
+    filterDib3x3
+    filterDibGray3x3
+    detectDibEdges
+    sharpenDib
+    subtleSharpenDib
+    blurDib
+    subtleBlurDib
+    embossDib
+   a32drawing
+    drawShadedPolygonToDib
+    drawDib
+   a32dversion
+    win32dib
+  nopoll
+   nopoll_ctx_new
+   nopoll_conn_new
+    nopoll_conn_connect_timeout
+    nopoll_conn_get_connect_timeout
+    nopoll_conn_is_ok
+    nopoll_conn_is_ready
+    nopoll_conn_wait_until_connection_ready
+    nopoll_conn_get_accepted_protocol
+   nopoll_conn_read
+    nopoll_conn_read_pending
+   nopoll_loop_wait
+    nopoll_loop_stop
+   nopoll_ctx_set_on_msg
+    nopoll_conn_set_on_msg
+   nopoll_conn_get_msg
+   nopoll_conn_send_text
+    nopoll_conn_send_text_fragment
+   nopoll_conn_pending_write_bytes
+   nopoll_conn_complete_pending_write
+   nopoll_conn_flush_writes
+   nopoll_conn_close
+    nopoll_conn_close_ext
+   nopoll_msg_opcode
+    nopoll_msg_opcode_desc
+   nopoll_msg_get_payload
+    nopoll_msg_get_payload_size
+   nopoll_sleep
+   nopoll_thread_handlers
+ utilities
+  Edix
+   pGUI-IDE
+--===
+--  filedump
+--  hd
+--  pdemo
+--===
+rectools
+ wrectools
+internals
+ lowlevel
+ pGetPool
+ pFreePool
+ pLoadFlt
+ pStoreFlt
+ pLoadMint
+ pStoreMint
+glossary
+ glossary
+<EOF>
+
+slice
+splice [see pseqc.e]
+>walk_dir, optional 4th parameter
+wildcard_file removed/deprecated?
+sort_columns
+create_directory, remove_directory
+create_file, delete_file
+curdir, optional parameter
+file_exists
+copy_file, rename_file, move_file, file_length
+checksum
+STDIN/STDOUT/STDERR/SCREEN/EOF
+large_of, smaller_of
+mod (as remainder but round away from 0)
+trunc, frac, ceil, round
+atan2, rad2deg, deg2rad, exp, fib, cosh, sinh, tanh, arcsinh, arccosh, arctanh
+sum, product, 
+>or_all
+shift_bits, rotate_bits, gcd, approx, powof2, is_even, is_even_obj, 
+QUARTPI, HALFPI, TWOPI, PISQR, INVSQ2PI, PHI, E, LN2, INVLN2, LN10, INVLN10, SQRT2, HALFSQRT2, SQRT3, 
+DEGREES_TO_RADIANS, RADIANS_TO_DEGREES, EULER_GAMMA, SQRTE, PINF, MINF, SQRT5, 
+rand_range, rnd, rnd_1, chance, roll, sample, 
+get_pid, uname, 
+>setenv, unsetenv, 
+ifdef, elsedef
+include_paths
+>ppp
+>smallest, largest, 
+small?, range, stdev, avedev, sum, count, average, geomean, harmean, movarg, emovarg, median, 
+raw_frequency, mode, central_moment, sum_central_moments, skewness, kurtosis,
+task_*,
+>TRUE, FALSE, boolean
+>to_number (note that unlike the OpenEphoria routine, numbers in any base can be converted. @<octal> and !<binary> are supported for compatibility)
+>set_decimal_mark()
+>to_integer
+match_any, match_all, rmatch, find_each, find_all, find_any, find_nested, find_replace, match_replace, begins, ends, 
+>lookup, vlookup [done?]
+fetch, store
+valid_index, rotate, 
+>columnize [done]
+apply, mapping, shuffle, linear, repeat_pattern, pad_head, pad_tail, add_item, remove_item, mid, patch, remove_all, retain_all, 
+>filter (nice quiksort example) [should work as-is..]
+>head, tail, slice, (am I not repeating myself here?), remove, replace, replace_all(erm, deprecated/match_replace), 
+binary_search, 
+extract, project, breakup, pivot, 
+>(ish) build_list, transform, transmute
+sim_index, remove_subseq, remove_dups, combine, minsize, 
+sort_columns, merge, insertion_sort, 
+set_lang_path, get_lang_path, lang_load, set_def_lang, get_def_lang, translate, trsprintf, 
+set/get_encoding_properties (for upper/lower)
+proper, 
+keyvalues, 
+escape, quote, dequote, format
+is_match (wildcard.e)
+db_get_recid, db_replace_recid, db_fetch_record, db_record_recid, db_cache_clear, db_set_caching
+calc_primes, next_prime, primt_list, 
+flags_to_string (see also my routine)
+hash, map, calc_hash, threshold?, type_of?, rehash, new[map], new_extra?, compare[map], has, get, nested_get, put, nested_put, 
+remove, clear, size, statistics, keys, values, pairs, optimise, load_map, save_map, SM_TEXT/SM_RAW, copy[map], new_from_kvpairs,
+new_from_string, for_each, 
+stack, new[stack], is_empty, size, at, push, top, pop, last, peek_top, peek_end, swap, dup, set, clear,
+set, map, operation, sequence_to_set, cardinal, belongs_to, add_to, remove_from, is_subset, embedding, embed_union, subsets, intersection, union, delta, difference, product, 
+define_map, sequences_to_map, image, range, direct_map, restrict, change_target, combine_maps, compose_map, diagram_commutes, is_injective, is_surjective, is_bijective,
+fiber_over, reverse_map, section, product_map, amalgamated_sum, fiber_product, define_operation, is_symmetric, is_associative, all_left_units, all_right_units, has_unit,
+is_unit, has_inverse, distributes_over, 
+socket, create, close, shutdown, select, send, receive, get_option, set_option, connect, bind, listen, accept, send_to, receive_from, service_by_name, service_by_port,
+is_inetaddr, parse_ip_address, parse_url, host_by_name, host_by_addr, get_sendheader, set_sendheader_default, set_sendheader, set_sendheader_useragent_msie,
+parse_recvheader, get_recvheader, get_http, get_http_use_cookie, get_url, parse_querystring, parse, encode, decode, 
+C_HANDLE, C_HWND, C_WPARAM, C_LPARAM, C_HRESULT
+crash, crash_message, crash_file, warning_file, warning, crash_routine,
+ram_space, malloc, free[p], valid,
+allocate_data, allocate_pointer_array, free_pointer_array, allocate_string_pointer_array, 
+valid_memory_protection_constant, page_aligned_address, is_DEP_supported, is_using_DEP, DEP_on, allocate_code, std_library_address, allocate_protect,
+poke_string, poke_wstring, allocate_wstring, peek_wstring, free_code, deallocate, 
+>peek2s, peek2u, poke2
+check_calls, safe_address, check_all_blocks, prepare_block, BORDER_SPACE, trailer, bordered_address,
+dep_works, show_block, info, memory_used, allocations, PAGE_EXECUTE etctest_read, test_write, test_exec,
+mmap, munmap, [unix only?]
+platform_name, version, version_major, version_minor, version_patch, version_revision, version_type, version_string, version_string_short, version_string_long
+euphoria_copyright, pcre_copyright?, all_copyrights, 
+SyntaxColor,
+sound
+poke_long, peek_longu, peek_longs, sizeof, poke8m, poke8u, poke8s, poke_pointer, peek_pointer, 
+
+<   negativeindexes
+<   varlensliceasgn
+----  parameterdefaults
+--  enum {enum}
+-- values
+----  numberbases
+--  strings
+<library routines (done, ish)
+  by application area
+   predefined types
+   sequence manipulation
+   searching and sorting
+   pattern matching
+   math
+   bitwise {and_bits,or_bits,xor_bits,not_bits}
+   fileio {open,getc,puts,close}
+   os {system,system_exec}
+   debugging
+   machinelevel
+   dynamiccalls
+   callingCfunctions {open_dll,c_func,c_proc,define_c_func,define_c_func,define_c_var}
+  alphabetical (see index?)
+  database
+  arwen
+  edita?
+ glossary
+ omerrata
+ recommended tools and add-ons (HTML Help Workshop, Greenfish, virustotal, mini.chm, agent ransack, process monitor, dependency walker, OllyDbg, FDBG, FASM, 7-zip, CCleaner ..)
+
+Incompatibilites with RDS Eu/OpenEuphoria
+
+Attempting to acheive 100% compatibility is a fool&rsquo;s errand. It would mean that no new features could be added to Phix, 
+and slavish reproduction of every wart, gotcha, and bug in OpenEuphoria. It is somewhere in the high 99% area, and
+that is good enough for me. Obviously the compiler generates warning messages wherever possible, do not ignore them.
+
+1.  Phix permits direct comparison, for example
+        if name="pete" then
+    is legal, whereas on RDS Eu/OpenEuphoria you must code
+        if equal(name,"pete") then
+    and the same goes for <,<=,... needing to be compare(,)<0, <=0, ...
+2.  Phix does NOT support implicit sequence operations, for example instead of:
+        s += {1,2,3}
+    you must code
+        s = sq_add(s,{1,2,3})
+    You simply cannot have both direct comparison and implicit seqence ops in a
+    viable/unambiguous language, and it is quite abundantly clear that comparison 
+    occurs far more often than sequence maths. One day, perhaps, Phix will have 
+    explicit infix sequence ops, eg s @+= {1,2,3}, but it does not have them yet.
+    In some cases the Phix compiler will automatically assume an sq_xxx operation,
+    when it knows with absolute certainty that such is needed, and issue a warning
+    to that effect, If you get 
+        s += {1,2,3}
+          ^ warning: sq_add() assumed
+    You should replace it with
+--/**/  s = sq_add(s,{1,2,3})   --/* -- Phix
+        s += {1,2,3}            --*/ -- RDS
+    that is, if you are gunning for source code compatible with both compilers.
+3.  Variable length slice substitution, for example
+        s = "food"
+        s[2..3] = "e"
+    sets s to "fed", whereas on RDS Eu/OpenEuphoria you must code
+        s = s[1..1]&"e"&s[4..4]
+    to achieve the same effect. 
+    Note there can be significant performance issues if this is used thousands of times 
+    on very long strings/sequences, see below, but certainly for a single substitution 
+    it is not only rather neat and concise, but also significantly faster.
+    (Instead of performing thousands of in-situ variable length slice replacements,
+     create thousands of pieces and reassemble them just once at the end, which means 
+     that elements towards the end are moved just twice rather than thousands of times, 
+     and therefore you can sometimes achieve the same result much more quickly. That
+     general rule applies both to s[i..j]=z and even more to s=s[1..i-1]&z&s[j+1..$].)
+4.  Negative indexes, for example if s is "file.exw"
+        ext = s[-4..-1]
+    sets ext to ".exw". Admittedly not a significant gain over the RDS Eu/OpenEuphoria
+        ext = s[$-3..$]
+    which also works just fine on Phix, but I know which I prefer.
+5.  Nested $ do not always work as you might perhaps hope on Phix, eg
+        lines[rand($)]
+    is simply equivalent to
+        lines[rand(-1)]
+    (because Phix trivially implements "$" as "-1", and it crashes) rather than
+        lines[rand(length(lines))]
+    which is the way such code behaves on RDS Eu/OpenEuphoria (the latter works in the
+    way you probably wanted on both Phix and RDS/Open Eu). In practice this has not yet
+    been observed in any real-world code (flw).
+5.  Multiple [nested/subscripted] assignments are fully supported in Phix, for example
+        {this,{that,theother[j]}} = table[i]
+    I understand work on a similar feature in OpenEuphoria is in progress, however I personally
+    doubt that full support for nested, subscripted, or @= forms of multiple assignments will 
+    be available any time soon. Meanwhile, if you want compatibility, use longhand.
+6.  Phix does not support "with label" on if/for/while/switch constructs or the goto statement. 
+    For the extremely rare cases where a jump is genuinely needed, I suggest using #ilASM{jmp :label}.
+7.  Phix does not support the loop construct, or the continue and retry statements.
+8.  Phix only implements the bare basic preprocessor directives (see ptok.e), preferring instead
+    to rely on hll tests on platform() and machine_bits() being intelligently optimised away by
+    the compiler. Which leads us directly to (point 8):
+9.  Phix supports neither RDS Eu nor OpenEuphoria std\ includes. Like-for-like replacements are
+    installed as part of the standard distribution, however there are inevitably some omisions 
+    and in the compatibility sense they should be considered a work-in-progress. This is really
+    no different from OpenEuphoria not liking RDS Eu includes (which is why the std\ directory
+    was created in the first place) or RDS Eu throwing errors when fed OpenEuphoria files.
+10. Automatic includes. If you want to use sort() you no longer have to remember to "include
+    sort.e" somewhere earlier in the file, instead the compiler knows (see psym.e/syminit())
+    where to find such things.
+11. Limited parameter defaults. Currently Phix only supports literal constants, plain constant
+    and variable names, and length() and command_line(). It does not support general expressions,
+    no maths, comparisons, subscripting/slicing, concatenation, non-entirely-constant-literal
+    sequence creation (such as {1,0,v}), or any other function call other than the two mentioned 
+    above. See pmain.e/getOneDefault() for more details - with 20/20 hindsight I would have made
+    it call increaseScope(), add parameter symtab entries, and emit opTchk code earlier, but as
+    things stand it covers all my needs, and I have no immediate plans to remodel that code.
+12. Unicode (UTF8) source files are properly supported by the Phix compiler. By the time you
+    read this, the same may or may not be true for the lastest version of OpenEuphoria.
+13. sprintf("%016x",-1) produces "FFFFFFFFFFFFFFFF" not "00000000FFFFFFFF".
+14. printf(1,"%s\n","Pete") displays "Pete", not "P" (via a simple mini-fudge).
+15. 32-bit integer callback parameters are signed, so -1 is -1 not 4294967295 (#FFFFFFFF).
+16. Phix does not support a preprocessor. One of Euphoria&rsquo;s (sic) purported strengths is that
+    it can be used as a sophisticated batch file, so quite why a preprocessor is somehow better
+    that that has always eluded me. In particular the Euphoria approach mandates that only the
+    top level file can be suject to preprocessing, and that irks me. Perhaps if any required 
+    preprocessing was specified in the source file much like a !# line, I might be a little 
+    less derisory, but probably no more enthusiastic.
+17. Phix is properly self-hosted, requiring no other tools to be installed, and rebuilds itself
+    in a matter of seconds - 12 at the last count, although if I add the Phix directory to the 
+    exclusion list of my AntiVirus (temporarily, of course) it completes in less than 6 seconds.
+    Oh, I should qualify that is just the executable that I can run, not the full installer that 
+    I can upload, because takes another 5 seconds, and building a linux version as well might
+    well double all of that.
+18: Regular expressions. Personally I detest them. Maybe one day I&rsquo;ll wrap pcre.dll and see how
+    far that gets me. Maybe.
+19: Overriding builtins. I have noticed a few things which seem to be a bit off with this, maybe that
+    is more of a concern when playing around in builtins\VM, but I have some suspicions there are a
+    few glitches that deserve a more thorough investigation when time warrants. For now, I am just
+    going to say if you write, for example, your own open() routine, don&rsquo;t blame me if it goes wrong.
+    If two sub-libraries have their own init(), the name clash is resolved quite well, but I am not
+    entirely convinced that all is well when a name clash crosses the builtin/user defined divide.
+    Like I said, some further experimention and testing is due, and btw volunteers are welcome.
+    Update: if you define your own equal(), I believe pmain.e tries to stuff it into symtab[T_equal],
+    where T_equal is as per psym.e (the newEmit/AutoAsm one). It should create a brand new entry, or
+    all the tests of <=T_Asm need to be replaced with and_bits(symtabN[S_State],??) or somesuch. It
+    seems to go even "more wrong" in the absence of "global", contrary to my expectations.
+==:> I have decided: I **//AM//** going to ban overrides once and for all!!!
+
+favourites
+===========
+The features of Phix I am proudest of, in order, are:
+1) multiple assignment, eg {type,size,{scale,idx,base,offset}} = get_operand(P_MEM)
+2) improved include system, eg include ..\arwen\arwen.ew -- just works, w/o EUINC|eu.cfg etc
+3) additional compile-time type checking 
+4) mixed "and/or" require explicit parenthesis
+5) use of =,< etc instead of equal,compare
+6) short circuit in all expressions
+7) variable length slice assignment, eg s[i..j] = "", instead of s = s[1..i-1]&s[j+1..$]
+8) optional and named parameters
+9) inline assembly (x86) 
+10) passing strings directly to c_func
+11) nested block comments
+12) negative subscripts
+13) forward calls, with pukka error messages are fine, but end up fairly low down on this list
+14) sleep for a fraction of a second
+
+The biggest flaws of OpenEuphoria are forward variable references, ifdef, implicit discard of
+function results, some error messages have gone right cryptic, and preprocessing, but that is 
+just my opinion and I am sure others will leap to their defence.
+
+The biggest challenge is to make debugging, and to that end understanding what is really going 
+on in a complex program, simpler, simpler, and simpler still.
+
+Overall state:
+p.exw       -- bit messy, but ok
+p2asm.e     -- fine, quite straightforward to modify/maintain
+pdebug.e    -- being rewritten...
+pdiag.e     -- being rewritten...
+pemit.e     -- being rewritten, very very very messy right now...
+perror.ew   -- fine
+pglobals.e  -- fine
+pilx86.e    -- bit messy but generally ok. proper register allocation needed.
+plist.e     -- fine
+pltype.e    -- deeply scary, but it works
+pmain.e     -- fine, needs the odd restructure here and there (default params mainly)
+pmsgs.e     -- fine, I think
+pops.e      -- fine
+profile.e   -- fine
+psched.e    -- dead, should probably be removed and pilx86.e cleaned up
+psym.e      -- bit messy, mainly fine except for increase/dropScope non-intuitive
+ptok.e      -- fine
+pttree.e    -- fine
+
+>
+Native 8-bit strings 
+Named parameters, eg message_box(title:="title", text:="text", style:=MB_OK) works the same as message_box("text","title",MB_OK) 
+No implicit sequence ops 
+include file handling is a bit more intuitive, has relative directory handling, and it also does automatic includes, eg if you forget to include msgbox.e before using it, it will find it for you. 
+Direct comparison (eg if name="pete" then) 
+Negative indexes (as well as $) 
+Variable length slice assignment (eg s="food" s[2..3]="e"; s is now "fed") 
+Short circuit evaluation of all expressions (4.0 may now be the same?) 
+Automatic pass by reference optimisations (for an example see bench.exw) 
+inline assembly (x86) 
+Additional compile-time type checking 
+Automatic internal memory leak checking 
+Self-hosted, no need for Watcon/Borland/gcc. 
+No DOS or Linux versions. 
+peekNo floating point for loops 
+There are plenty of things in 4.0 that have not made it into Phix. 
+<
+
+printfs third argument is now optional. printf(1, "Hello\n", {}) is no longer needed, 
+it can be shortened to printf(1, "Hello\n")
+
+DONE: (needs documenting)
+
+DEV/SUG: code before data/data before code
+format []   -- specifies per/multi-target settings
+[PE32]
+[PE64]
+-- allows you to specify per-target settings, different icons, version strings [+?], manifest,
+--  while still being true cross-platform single source. ?A format[] can legally follow after
+--  a specific format statement ie/as intended for explicit cross compilation. A multi-target
+--  format statement can occur anywhere in the code, unlike a specific target format, which
+--  must occur at the very start of the main source (or match existing settings?). An error 
+--  occurs if more than one multi-target statement is encountered?. (??over-complicated??)
+
+
+
+deal with top-level namespace: [DOC] [REWRITE THIS!]
+====================================
+  namespace <identifier>
+    if "namespace" is the very first token in the file (after skipping any whitespace and comments) then
+    it applies to any include statement targetting this file. For example an "include myfile.e" statement
+    behaves as "include myfile.e as myfile" when myfile.e starts with "namespace myfile". Within the file 
+    itself, it introduces a local namespace allowing explicit local references, with a big fat gotcha.
+    
+    Local namespaces cannot safely be used on implicit forward calls.
+(surely to god we can make the compiler issue an error!!):
+Note that attempts to use a local namespace qualifier on an implicit forward call trigger a compilation error,
+which can be resolved by adding an explicit forward declaration for the routine earlier on.
+
+    Technical note: Namespace resolution of implicit forward calls is, at best, somewhat patchy. The very
+    nature of "implicit" can transform a fully qualified reference from a binding contract with the compiler,
+    to do exactly what you mean, into a (not entirely without merit) rather more wooly statement of intent.
+    In other words, the compiler is /NOT/ obliged to honor an explicit qualifier on an implicit statement.
+    When running your evil empire you demand a "blue thingymabob", and one of your minions returns with a 
+    blue clothes peg, you don&rsquo;t really have the moral right to complain that it isn&rsquo;t one of those spikes
+    for removing stones from a horse&rsquo;s hoof with a blue handle. Of course we are only talking about using
+    a <b>local namespace</b> to explicitly resolve a forward call: it does not work as you might hope.
+
+    A reference such as local:close(fn) might, not entirely unreasonably, since namespaces apply equally to
+    (auto)includes as well as the target file, resolve to the standard builtin global, <i>before</i> the 
+    compiler encounters a local redefinition. No error or warning will be issued, except (perhaps) for an 
+    unused warning if the latter is not referenced again. Obviously, you /do/ get an error if "local" has
+    not been defined or it applies to a different file and there is/was no "close" therein. In some cases 
+    an explicit forward definition of the routine is required/can help. The use of implicit forward calls, 
+    especially in library or utility routines, should really be considered an accident waiting to happen, 
+    whether (locally) namespace-qualified or not.
+    
+    Another, perhaps simpler, way to view this is that namespaces only work properly after the routine has
+    actually been defined (or after an explicit forward definition), but not before, "locally", that is.
+    The use of external (legacy) namespaces is in no way affected by any of this.
+
+    In the following example, I shall use "open" and "close", however in general I would strongly discourage 
+    overriding builtin names (as it potentially leads to confusion during subsequent maintenance); a better 
+    example might be a library component writer wanting to be absolutely explicit that their local routines 
+    are being (or should be) invoked.
+    
+        namespace local
+        
+        --forward procedure close(integer fn) -- (see notes below)
+
+        function open(string name, string mode)
+        integer k = length(name&mode)
+            local:close(k)
+            ?name
+            return 0
+        end function
+
+        procedure close(integer fn)
+            if fn>1 then
+                {} = local:open(repeat('x',fn-1),"")
+            end if
+            ?fn
+        end procedure
+
+        {} = local:open("123","")
+
+    Without the explicit forward definition of close, an auto-include occurs between the two routine 
+    definitions, [fileio:close quietly does nothing] and the output is:
+
+        123
+
+    rather than the expected (trace it if you are unsure):
+
+        1
+        x
+        2
+        xx
+        3
+        123
+
+    which is what you get once the explicit forward definition is uncommented. In fact, with the latter
+    the "local:" qualifier is no longer necessary, but does show the intent more clearly. Note that such
+    local namespaces can refer to all global and non-global file-level identifiers in the current file, 
+    (but not parameters or local variables) whereas namespaces for other files can only refer to globals.
+    Of course, you can easily make the above code go wrong in exactly the same way without any namespaces,
+    it really is the implicit call that is dodgy, and not made any better or worse by using a namespace.
+    
+    Use p -lint to get warnings for implicit forward calls and auto-included builtins.
+
+    Technically speaking, "namespace local" acts identically to an "include <thisfile> as local" statement, 
+    except for the effect on external include statements when it is the first statement in the source file.
+
+Performance Considerations: Variable Length Slice Assignment
+=============================================================
+The last thing I want is to leave you with the impression there is something 
+wrong with variable length slice assignment: let me assure you that if you are
+performing a single substitution, it <b><i>is</i></b> the very fastest method
+possible. However, if you are performing thousands of substitutions on the same
+piece of text (or whatever), there may be a much faster way. The statement
+
+    s[j..k] = rep
+
+is certainly easier to type, will never be slower, and (if enough space exists for 
+an insitu replacement) can even exhibit exponentially better performance than:
+
+    s = s[1..j-1]&rep&s[k+1..$]
+
+However, if you are performing many thousands of substitutions on a single string, 
+there may be even faster ways. Consider the following code:
+    
+    for i=length(tags) to 1 by -1 do
+        {openidx,closeidx,rep} = tags[i]
+        text[openidx..closeidx] = rep           -- <-- profile says 99.97%!!
+    end for
+    return text
+
+vs:
+
+    chunks = {}
+    endtxt = length(text)
+    for i=length(tags) to 1 by -1 do
+        {openidx,closeidx,rep} = tags[i]
+        chunks = append(chunks,rep&text[closeidx+1..endtxt])
+        endtxt = openidx-1
+    end for
+    res = text[1..endtxt]
+    for i=length(chunks) to 1 by -1 do
+        res &= chunks[i]
+    end for
+    return res
+
+Suppose there are thousands of tags (any kind of search/replace) and in most cases 
+the replacement is a different length to whatever it is overwriting. In the first
+code fragment, the last character of text will be moved thousands of times, whereas
+in the second, each character is moved just twice. To put it another way, if you get
+a high cost on a variable length slice assignment, the problem is unlikely to be the
+way the builtin feature is implemented, but more probably the algorithm being used.
+The above change came from a real program, and made it run about 20 times faster.
+
+Of course if the performance hit is marginal, then by all means stick with the much 
+clearer but ever-so-slightly-slower code, and obviously never bother with this kind
+of optimisation until you actually see a big fat ugly percentage in a profile report.
+
+Note that OpenEuphoria does not support variable length slice assignment, so if you
+want code that runs on both you have to stick with the s[1..j-1]&rep&s[k+1..$] form,
+other than that, the benefits of the second algorithm apply equally to both.
+
+Optional semicolons
+===================
+All statements in Phix can optionally be terminated with a semicolon (;).
+It is entirely a matter of personal choice, however in one case I had
+
+            frealposn -= fend
+>           frealposn = c_func(xSetFilePointer,{...}) -- known error here
+
+where I had put the '>' in as a marker for something that needed fixing, as it 
+could quickly be located in Edita by pressing F4, but then forgot all about it. 
+The net result was a tricky bug that took me over 3 days to track down, not 
+least because every time I wandered past that bit of code the "oh yeah, must 
+do something about that (problem with files over 4GB) sometime - but I know 
+that is not relevant right now since the file is nowhere near 4GB and besides 
+that same (wrong setFilePointer) code [albeit without the '>'] works just fine 
+in version-1 of this program" totally overwhelmed my puny human brain for some 
+reason. A-A-A-Anyways, if only I had coded:
+
+            frealposn -= fend;
+>           frealposn = c_func(xSetFilePointer,{...})
+
+Then a straightforward compilation error would have saved me those 3 days.
+
+25/06/2010  Finally finished defaulted and named parameters.
+[DEV][DOC]: Defaulted Parameters
+            ====================
+            
+            Specifying a default for a parameter makes it optional, eg:
+            
+                procedure p(integer i=37)
+
+            which can be called using p() or p(5). Any non-defaulted parameters
+            must be grouped together first (/on the left) and must always be 
+            present on every call statement to the routine.
+            
+            The following default expressions are permitted:
+            
+                * (signed) literal integers
+                * (signed) literal floats
+                * literal strings
+                * entirely-constant-only sequences
+                * any single variable or constant name, including earlier params
+                * length(<ditto>)
+                * command_line()
+            
+            No operators of any kind are currently permitted, and the length()
+            and command_line() are the only functions currently supported. While
+            that may seem a bit harsh, there are sound reasons for keeping it as
+            simple <sound of me choking here> and hence as bug-free as possible.
+
+            That list was devised from analysing the std\ directory, and will
+            be extended only when necessary. There was just the one case that is
+            not supported, though easily worked round: regex.e uses the function 
+            get_ovector_size() as a default - it is probably more readable and 
+            debuggable after a simple and fairly obvious change.
+
+        <aside>
+            There is no way to determine how many parameters some external C or asm code
+            has pushed onto the stack before invoking a call_back. Should you specify
+            optional parameters on a call_back routine, the compiler will always assume
+            the *maximum* number of parameters have been passed. Admittedly this is
+            somewhat arbitrary, but either way it must make some kind of fixed assumption. 
+
+            The recommendation (which may one day become enforced) is to provide some
+            fixed-number-of-parameters-call-back-wrapper(s) for any routine with optional 
+            parameters, eg:
+
+            function somefunc(object a, object b=0)
+                ...
+            end function
+
+            function CB_somefunc1(object a)
+                return somefunc(a)
+            end function
+
+            function CB_somefunc2(object a, object b)
+                return somefunc(a,b)
+            end function
+
+            and use either routine_id("CB_somefunc1") or routine_id("CB_somefunc2") as
+            the parameter to call_back(), but never call_back(routine_id("somefunc")).
+
+        </aside>
+
+            If any routine has more than one defaulted parameter, is is usually
+            a prime candidate for using named parameters, described next.
+
+
+            Named Parameters
+            ================
+
+            Named Parameters allow values to be passed in any order, as long
+            as all those needing to be present are specified somewhere. They
+            are particularly useful in combination with multiple defaulted
+            parameters.
+
+            In the most verbose form, named parameters operate in a similar
+            manner to namespaces. In the following paragraphs I use the term
+            "paramspace" instead, to minimise any potential confusion.
+            
+                procedure someproc(object a, integer b)
+                    ...
+                end procedure
+            
+                someproc(someproc:b=5, someproc:a="thing")
+
+            However, you may be pleased to learn/before you panic, there can
+            be one and only one valid paramspace, hence we can omit it:
+            
+                someproc(:b=5, :a="thing")
+            
+            A minor syntactic tweak allows the more elegant (and recommended):
+            
+                someproc(b:=5, a:="thing")
+
+            You should read the ":=" operator as "explicit assignment", not
+            that it or the corresponding "==" (explicit test for equality)
+            are widely implemented. Of course the "=" operator can stand for
+            either, depending on context, however someproc(b=5,a="thing") is
+            only ever going to pass two boolean 0/1 values, unless it causes
+            a compilation error because there are no other a and b in scope,
+            or perhaps a type error storing an integer in a sequence, etc.
+
+            Technically, paramspaces are actually the inverse of namespaces; 
+            the latter serve to disambiguate between multiple conflicting 
+            globals already in scope, whereas the former serve to activate  
+            an otherwise unavailable scope where the variable can be found.
+            So namespaces solve the "too many" problem whereas paramspaces
+            solve the "not any" problem.
+
+            There seemed no particular reason to implement fully qualified
+            namespace prefixes on defaulted parameter verbose paramspaces,
+            however namespaces are perfectly valid elsewhere, eg/ie
+            
+                liba:proc(liba:proc:b=libb:func())
+
+            is invalid (you may be relieved to hear!) but
+            
+                liba:proc(proc:b=libb:func())
+                liba:proc(:b=libb:func())
+                liba:proc(b:=libb:func())
+            
+            are fine, and can only be exactly what you meant anyway.
+
+            Likewise there seemed no reason to interfere with the compiler&rsquo;s
+            special treatment of routine_id(<literal string>); hence such as
+            routine_id(:s="blah") and/or routine_id(routine_id:s="blah") is
+            specifically NOT supported; the literal constant string would 
+            not be resolved at compile-time as it would in the otherwise 
+            equivalent routine_id("blah"). The program would work just fine,
+            but the routine_id would be resolved at run-time rather than at
+            compile-time.
+            
+            The use of named parameters on builtins/sources, or when calling 
+            third party library code, is not generally advised anyway, since 
+            names may change between releases. Unless of course the names are
+            expressly part of the published interface.
+
+
+            Remember:
+            =========
+
+            You need the ':' (and the actual parameter name).
+
+            It is, of course, a leading ':' or a ':=' operator which serves
+            to distinguish a paramspace / named parameter from a namespace.
+
+
+            Example:
+            ========
+            
+                function findit(object what, sequence table,
+                                integer fromidx=1, integer toidx=length(table), 
+                                integer direction=1, integer step=1)
+
+            can be called using
+            
+                findit(x,xtable)
+                findit(x,xtable,step:=2)
+                findit(table:=xtable, step:=2, what:=x)
+            
+            In particular, the middle example is, I hope, much better than say 
+            "findit(x,table,,,,2)", which Phix does not support and I have no 
+            intention of ever implementing.
+
+Inline Assembly
+===============
+If you are new to programming you should definitely skip this section.
+Ideally, all the inline assembly you should ever need has already been written.
+For example, when you code a+b or length(s), there is a bit of code, somewhere, that actually
+does the addition, or retrieves the length, and that will often be inline assembly. Obviously 
+some trivial things like those just mentioned can often be converted directly to machine code, 
+but more complicated stuff like s[i][j][k..l]:=t always invokes a standard routine. At times 
+that will be hair-raisingly complicated stuff, and in fact almost always is, to most people. 
+But it is just code, and with a little bit of patience, application, and determination, you 
+too can be a low-level coding god (or godess).
+
+The first thing to accept is that the Phix inline assembler is quite deliberately incomplete.
+There is no point whatsoever trying to implement all of eg http://ref.x86asm.net/index.html
+at least, that is, not without proper detailed testing of each and every new instruction.
+A better idea is to make it as easy as possible to fill in the gaps as and when needed.
+
+The assembler (pilasm.e) is littered with ?9/0 to guide you quickly to the place where more
+code needs to be added. The assembler (pilasm.e) is deliberately completely separate from 
+the disassembler (p2asm.e) because that way they validate each other and the chances of the
+same mistake ocurring in both is greatly diminished. Again there are places the disassembler
+could suffer improvement, most noticeably size qualifiers, and while generally speaking it
+is miles ahead of the assembler, there must still be hundreds of unsupported instructions.
+
+If you are completely new to assembly, then I should point you in the direction of FASM; for 
+your convenience the standard distribution includes docs\fasm.txt as a general reference.
+
+If you already have some assembly experience, you should accept that FASM/OllyDbg/FDBG as 
+well as x86asm.net or similar are almost mandatory requirements to getting anything useful 
+done. There are many thousands of lines of example/working/tested code in builtins\VM\*.*
+and a quite helpful little community on the flatassembler message board.
+
+If you were expecting me to explain what mov/lea/add/fyl2x/lgdt/psllw/stmxcsr/pmulhrsw
+or whatever do, be sadly mistaken. See docs/fasm.txt, or your favourite search engine.
+
+What I will do, however, is give a few quick examples and explain Phix-specific aspects.
+
+    #ilASM{
+        [32]
+            mov eax,[a]
+            add eax,[b]
+            mov [c],eax
+        [64]
+            mov rax,[a]
+            add rax,[b]
+            mov [c],rax
+        []
+          }
+
+That code snippet, albeit with woefully inadequate error checking, adds two integers
+and stores the result. The "[32]" is an assembler directive that introduces code to
+use on 32-bit target architectures, and "[64]" introduces the equivalent for 64-bit
+architectures. Similar directives include PE32, PE64, ELF32, and ELF64. The final
+"[]", in this case optional, is the directive meaning "all".
+
+It should be clear that on a 32-bit architecture we mov eax,[a], whereas on a 64-bit
+architecture we mov rax,[a]. Only one or the other instruction is generated. Labels
+are subject to exactly the same processing, for example:
+
+    #ilASM{
+        [32]
+          ::start
+            mov eax,[a]
+          ::error
+            jmp :start
+            jmp :error
+        [64]
+          ::start
+            mov rax,[a]
+            jmp :start
+--          jmp :error
+        []
+          }
+
+The "start" are different labels and no "already defined" error is generated, which
+would be the case under overlapping guards. Likewise, as far as the 64-bit code is
+concerned, there is simply no label named "error". You can of course declare labels
+under [], which makes then available to everything. For my personal sanity, when I 
+have a label Xxxx in 32-bit code, I make the equivalent in the 64-bit code Xxxx64.
+
+Inline assembly can freely reference/modify normal hll variables ("[a]","[b]", etc)
+however you should be aware that in many cases the hll-part of the compiler may use
+constant propagation, and if you are not careful it will ignore your efforts to set
+"[c]" using inline assembly, but treat it as the only constant it gets in hll code.
+If, for example, you declare "integer c=0" with no other hll code setting the value
+of c, your inline assembly may set the desired value in [c], only for the compiler
+to bluntly not even read [c] but instead just use a literal "0" everywhere. Should
+that be, for example, an "if c then", then the entire conditional branch may well 
+be quietly optimised away. This behaviour can be avoided either by /never/ setting 
+c in hll code or by setting it to a range of dummy values somewhere/how, to force 
+the compiler to load it.
+
+Refer to builtins\VM\pHeap.e for the low-level details about Phix hll variables.
+Also, ::pGetMem in that file contains a summary of the various calling conventions.
+
+labels,
+
+
+At heart, Phix takes the terms "reinvent the wheel" and "not invented here" to a
+whole new level.
+
+
+==================================
+Back to BRyan&rsquo;s topic:
+BRyan said...
+
+I think that there would be more contributions to Euphoria if some knowledgeable person
+
+would document in "complete detailed" how to add a built-in "euphoria coded" function to the
+
+source code.
+
+This is one of the biggest stumbling blocks for the average user to contribute ideas.
+
+The only documentation for adding to the source is still in a 2.x document which was included by Rob years ago.
+
+It&rsquo;s true that the documentation hasn&rsquo;t kept completely up with the code, and that&rsquo;s unfortunate. 
+Largely from memory, here&rsquo;s what&rsquo;s required (maybe we can flesh this out and get it into the docs, or at least on the wiki):
+* Add the new name to reswords.e, opnames.e, opnames.h, keylist.e, redef.e, include\euphoria\keywords.e 
+* shift.e: add it into op_info, with metadata about the opcode for your built-in 
+* Add a new case in emit.e, or add the handling for it to an existing, compatible case (i.e., functions with the same sort of parameters) 
+* be_execute.c:
+    add to appropriate place in code_set_pointers() 
+    add to localjumptab 
+    add case for execution to do_exec(), which may simply be a call to an implementation in be_runtime.c (which translated code could use, as well) 
+* compile.e
+    add handler for translating 
+    put call to handler in init_opcodes() 
+* execute.e
+    add wrapper for execution 
+    put call to wrapper in do_exec() 
+* dis.e: add handler for your new function (it can probably use one of the generic formatters, unary, punary, binary, pbinary, etc) 
+* Add documentation for your new routine in appropriate place (either a related std library file or a separate documentation file) 
+
+Adding a keyword or other new language feature requires changes to parsing and possibly scanning, inlining and forward referencing, 
+potentially in addition to all of the above. This is typically more difficult than adding a built-in routine. Machine procs/funcs are a bit simpler.
+
+Matt
+
+Technical issues using a 32-bit version of Phix to generate 64-bit applications.
+===============================================================================
+Of course it is paramount that a 32-bit version of Phix can create a 64-bit version of Phix (and vice versa),
+so the source code of Phix itself carefully avoids anything that might cause problems. In particular, the 32bit
+version of Phix uses 64bit floats with 53 bits of precision whereas the 64bit version uses 80bit floats, with 
+64 bits of precision. As an example, the 32-bit version of Phix will treat the constant #80000000000000001 as 
+if it were #80000000000000000
+
+
+Consider this: /Is it a bug in the compiler?
+<eucode>
+        ifdef LINUX then
+            extra_paths = getenv("HOME")
+        elsifdef WIN32 then
+            extra_paths = getenv("HOMEDRIVE") & getenv("HOMEPATH")
+        end ifdef       
+            
+        if sequence(extra_paths) then
+            search_list = append(search_list, extra_paths & SLASH)
+        end if              
+</eucode>
+(I am not a fan of ifdef, btw, and only support the basics of it for compatibility with OpenEuphoria. If you 
+ want to see some documentation for ifdef, go chew on the OpenEuphoria manual, sprinked with a pinch of salt.)
+The (windows) compiler spits out probable logic error on the sequence(extra_paths) expression. Technically you
+could argue it is a bug because the statement is valid on linux, but I assume you would get no such error there,
+and in any case it highlights a subtly different problem: quite clearly you should not append any of {-1,"xxx"}, 
+{"xxx",-1}, or {-1,-1} to your search_list.
+
+
+False positives (see also rectools) [DONE]
+The Avast "EVO-GEN" heuristic has and still causes me some quite serious grief. If there is an executable file and it 
+suddenly changes, I dunno, perhaps because you edited the source and recompiled it, then IT&rsquo;S A VIRUS (kinda like that
+bloke who digs face-sized holes in the middle of the park so he can shout at the earthworms). Utterly ridiculous, of
+course, but given the task they face with the state of the internet being what it is, you can&rsquo;t really blame them. All
+you can do is submit yet another false positive report, and (very) slowly but surely things do get (a little) better.
+Please be reasonable in your actions and expectations: do not post duplicates or otherwise harass anyone, and try to
+limit new problems to a maximum of one a week or month. If there is a forum for your AV product, use it.
+
+--DEV doc
+--  Coding gotcha: Should you try something (at the top-level) like
+--
+--      #ilASM{:%Global}
+--      sequence s = {1,2,3}  -- or any other known-at-compile-time-constant
+--          <maul s>
+--      #ilASM{ ret}
+--
+--  The compiler will apply "assignment on declaration" to s and assign it only once at compile-time,
+--  and therefore most likely fail in some way on the second call to :%Global. Instead, separate any
+--  variable declarations and initialisation cleanly, that is when you are effectively using #ilASM 
+--  to interrupt the normal control flow of top-level statements:
+--
+--      sequence s
+--      #ilASM{:%Global}
+--          s = {1,2,3}
+--          <maul s>
+--      #ilASM{ ret}
+--
+--  Of course if you put the "= {1,2,3}" before :%Global, you should not be the least bit surprised
+--  at the results.
+--
+
+A quick search of Phix\test\ (esp t46ltype) reveals dozens of "-- Added dd/mm/yy" 5-20 line snippets.
+Should your code modifications break anything not already covered by the test set, you should add a
+similar entry, even if you fix or back out your changes, especially if it took more than a moment to
+determine precisely what the problem was.
+
+Code Reviews
+============
+To review any of my code, simply open it in an editor of your choice, insert at the top something
+like "CODE REVIEW &lt;name dd/mm/yy&gt;" and precede any notes with --&lt;name [date]&gt;, optionally close
+them with --&lt;/name&gt;, and post the updated file back to me. Ideally place the &lsquo;--&lt;&rsquo;
+in column 1.
+
+
+
+Rules of thumb
+Every good work of software starts by scratching a developers personal itch. 
+Good programmers know what to write. Great ones know what to rewrite (and reuse). 
+Plan to throw one away; you will, anyhow 
+If you have the right attitude, interesting problems will find you. 
+When you lose interest in a program, your last duty of call to it is to hand it off to a competent successor 
+Treating your users as co-developers is your least-hassle route to rapid code improvement and effective debugging 
+Release early. Release often. And listen to your customers. 
+Given a large enough beta-tester and co-developer base, almost every problem will be characterized quickly and the fix obvious to someone. 
+Smart data structures and dumb code works a lot better than the other way round. 
+If you treat your beta-testers as if they’re your most valuable resource, they will respond by becomming your most valuable resource. 
+The next best thing to having good ideas is recognizing good ideas from your users. Sometimes the latter is better. 
+Often, the most striking and innovative solutions come from realizing that your concept of the problem was wrong. 
+Perfection (in design) is achieved not when there is nothing more to add, but rather when there is nothing more to take away. 
+Any tool should be useful in the expected way, but a truly great tool lends itself to uses you never expected. 
+When writing gateway software of any kind, take pains to disturb the data stream as little as possible - and never throw away information unless the recipient forces you to! 
+When your language is nowhere near Turing-complete, syntactic sugar can be your friend. 
+A security system is only as secure as its secret. Beware of pseudo-secrets. 
+To solve an interesting problem, start by finding a problem that is interesting to you. 
+Provided the development coordinator has a medium at least as good as the Internet, and knows how to lead without coercion, many heads are inevitably better than one.
+
+Abstraction is a wonderful thing - but it should be "skip details" not "tie both hands behind their back, chop the legs off at the knees, and make them deaf and blind".
+
+I have added Listdir.bat and Listdir.reg to generate directory listings, originally taken from https://support.microsoft.com/en-us/kb/321379 but adjusted 
+to use the Phix directory instead of %windir%, which hopefully avoids some additional permission denied errors. If you merge the .reg file then a new option
+should be available on the right click drop-down in Explorer. Use Ctrl A to select all and Ctrl C to copy, then paste it somewhere more permanent.
+
+Despite my own fondness for inline assembly, it is used quite sparingly within the sources of Phix:
+p.exw for "SetBatchMode" and "interpret"
+pEmit2.e for a few raw addresses/refs, rebuild_callback, and copying the optable
+psym.e for s5thunk (a type-safe hack for setting/swapping s5)
+Otherwise #ilASM is used extensively in builtins\, especially builtins\VM\, as obviously at some
+point you need a low-level runtime, for things like append(), and a few hundred others.
+There are probably a misrepresentative number of uses of #ilASM in \test and \demo, but
+even so, apart from Arwen32dib and pCom, I can only count 7 demos that use #ilASM, which
+implies there must be 120 demos that do not. In fact I just had a double-take moment there as I 
+quickly looked again at demo\arwendemo\mandel.exw [which admittedly did once use it for a while].
+
+Memory leak checking
+====================
+There is an experimental (ie unfinished) memory leak checker built into the interpreter.
+At the top of p.exw, you should find the constant MCHK = 0|1. This flag directly controls 
+whether, later on in the same file, it creates a new stack/heap, calls :%RunCleanup, then
+restores the original stack/heap and finally invokes check_heap(), which can be found in 
+builtins\VM\pMemChk.e and creates C:\Program Files (x86)\Phix\memchk.txt before blurting
+out a copy of that file on screen if the number of errors detected is not 0.
+
+At the moment this only occurs for interpreted programs, and only if there is no trace or
+profile occurring. Compiled programs would need to do the inverse, ie run the app, cleanup, 
+then create a new stack/heap for check_heap. Since trace/profile are part of p.exe yet get
+invoked from within the running app, ending up with a clean empty stack/heap is unlikely,
+which is why I originally disabled the check when such occur. I may be wrong and it may all
+be perfectly fine anyway, but I simply have not bothered to try it.
+
+Further, builtins\VM\pcfunc.e has to invoke builtins\VM\pStack.e\:%SetCCleanup to stop any
+call_backs etc from being recorded as memory leaks, and there is quite a bit of fiddly code
+in builtins\VM\pStack.e affecting the behaviour of :%opAbort.
+
+Currently, when MCHK=1, interpretive self-hosting is quite broken (eg/ie "p p -test"), and
+I would hazard a guess that is mainly down to the new code in pStack.e - actually, I take
+that back, I now see that "p p -test" is (slightly less, but still) broken when MCHK=0...
+
+As noted in the definition of MCHK, it is not yet possible to skip checks on :%pAlloc items 
+that have not been :%pFree&rsquo;d, ie/eg a constant x = allocate(n) will be reported as a 
+memory leak unless you explicitly free(x) somewhere, and specifically the l_MyAllocate() 
+calls in win32lib\w32support.e, and the whole of win32lib in general have not yet been 
+addressed and are unlikely to be any time soon. However all the demos for arwen and tinewg 
+as included in the package, along with edita and phix itself have been tested, but almost 
+all other legacy code run under MCHK=1 will most likely report errors.
+
+Generally speaking, with the above mentioned exception of l_MyAllocate, most leaks reported
+in memchk.txt are quite trivial to resolve. As an example, arwen.ew now has free(LVI/LV/lf/
+TVI/TVIS) at the end of WinMain(), as fairly obviously the five lines where those items were
+allocated were reported as culprits in said error log.
+
+Enabling/disabling the memory leak checking could hardly be simpler: just change the MCHK
+setting and run "p -cp".
+
+
+Error trapping:
+It is not simply a matter of scouring the (builtins\VM) sources and making sure that all
+possible errors are trapped. In one instance I hit an int3 in pHeap.e/mergeone, caused by
+the pRoot getting clobbered (to 0), and I added mov al,e32hc/jmp :!iDiag - however the
+heap corruption was being detected within an opRetf, so the line number was meaningless
+anyway, and it turned out the int3 was easier (natural in fact) to trap in fdbg.
+
+In that particular case the debugging method was non-trival. Attempts to reduce the 
+offending program to something nice and small failed (it quickly reached the point where
+deleting one more line of a 3344-line program made the problem vanish). Plus, every time
+I ran the program it allocated the heap somewhere new. I not only had to find pGtcb (at
+#00402F18 in my case) and multiply that by 4 to look at the global pool header, but also
+look at pNextcb: only then could I predict where the memory corruption was going to 
+occur (I made several dry runs to figure that one out). Finally I re-ran it, trapping
+earlier and earlier until I found a pre-corruption spot, then single-stepped it to
+find the exact point of corruption, at which point the (length>maxlen) error became 
+all too obvious.
+
+I guess the point I am trying to make is that fancy (human readable) error handling
+should only be attempted when it is a problem that must be fixed in the user code,
+and any bugs in the backend should be left "raw".   --DEV is this e30?
+
+By all means should you find suspect error handling in the backend code, you are more
+than welcome to try and reproduce/trigger the problem you think it will/should cause,
+and of course only if you succeed, and not before, is it time to try a fix. Once done
+you should, if both practical and suitably short, add something to test\terror.
+
+The following is a complete list of the run-time errors. I would very much hope that you 
+would only very rarely feel the need to refer to this page. Two errors in particular,
+e30ume and e32hc, indicate problems that need to be addressed in the backend. Generally
+speaking, errors in hll code (your application or p.exw) should generate human-readable
+messages, whereas errors in the low-level VM/runtime usually end up easier to debug if
+that are left "raw", besides they don&rsquo;t really have a source line number in the 
+same way that hll application code does (and/or it wouldn&rsquo;t help if they did).
+
+
+SUG:
+lambda()
+In Phix, a lambda is simply an un-named and un-typed function. For example:
+ ... ,lambda((integer x, integer y) return factorial(x-y)), ...
+is equivalent to:
+ function tmp895(integer x, integer y) return factorial(x-y) end function
+ ... ,routine_id("tmp895"), ... 
+Now you probably got what I meant when I said un-named. By un-typed I mean that there
+is no official way to determine the number and type of parameters or the result. It 
+is the programmer, not the compiler, who must ensure application to the correct number
+and type of parameters, and the result is stored in an appropriately typed variable,
+that is to avoid run-time errors.
+
+There is (currently) no support for named parameters and the like on lambdas, but
+routine_id (builtins\VM\prtnidN.e) and pmain.e\ParamList()\rest_must_be_named show
+the basics, with the latter probably needing a hybrid symidx/string approach to
+cover both interpretation (before and after trace, ouch) and compilation.
+
+To avoid confusion, it is illegal to declare an identifier named lambdaNNN, where
+NNN is any decimal integer. Of course simply adding an underscore or a trailing letter 
+or whatever will make it perfectly legal. In the above example, the compiler would
+of course internally generate lambda895 rather than tmp895.
+
+The point of a lambda is to ease the declaration, rather than the use. A lambda can 
+be stored in an integer (suggested names: rid, r_id) and applied using call_func().
+Currying and the like would be performed explicitly, eg s = {rid1, 3.5, rid2}, and
+it is entirely up to the programmer to use that appropriately.
+
+--map(lambda x: 2*x , filter( lambda x:x%2==0, range(9) ) )
+map(lambda((x) return 2*x), filter(lambda((x):return remainder(x,2)=0), tagset0(8)))
+
+
+Compiler gotchas
+================
+After modifying the compiler, then if it builds cleanly and p -test runs fine, you
+should be good to go. The following list some mods/areas that have proved tricky.
+    1) Moving builtins between files. Specific example: moving call_func/proc out
+        of pcfunc.e into pcallfunc.e. At all times you need to keep something
+        working, so the solution was to create call_funcN and call_procN in the
+        new file, leaving the old one in place. Once those worked, replace all
+        such calls in the compiler sources and rebuild. Then remove from pcfunc
+        and rebuild. Then add call_func and call_proc to pcallfunc and rebuild.
+        Then replace all call_func/procN with call_func/proc and rebuild. Lastly
+        remove call_func/procN and rebuild. Six rebuilds, but at least each one
+        only takes around ten seconds (after a few minutes editing).
+    2) Messing up the side effects. The E_all/E_other/E_none settings in psym.e/
+        syminit() can cripple things if messed up. When I moved call_func as 
+        above, I left side effects as E_other not E_all, which led to loops of
+        r_ReconstructSequence in pEmit2.e assuming rescan was left 0, which was
+        quite difficult to track down.
+    3) Adding entries to the optable. Generally this is very simple, but does
+        require at least two rebuilds: one to create the larger optable with the
+        correct (final) global label in place, /before any attempts to use it/.
+    4) Localtypes (pltype.e). Hopefully all done and dusted now, but it can be
+        very tricky to debug, because of #edgecases * #varsbeingtracked. As in
+        the comments, you will need to reproduce any problem with the absolute
+        minimal possible program so you only have to spend a few hours studying
+        ltdiag.txt, rather than several months.
+    5) Having AutoAsm("open",.."%opOpen") in psyme.e and "global function open" 
+        in pfileioN.e led to some very difficult to diagnose problems. Renaming 
+        the routine in pfileioN with (local) "function fopen" solved the issue. 
+        Make of that what you will. (Phix has big issues with overrides.)
+
+
+opCallOnce and opCallOnceYeNot
+==============================
+When compiling "include inc1.e", there may be top-level code that ought to be 
+executed at that point, therefore the compiler emits an opCallOnce instruction.
+The compiler will also emit opCallOnce instructions when invoking a routine in
+a file that has not already been included. In turn such out-of-order execution
+means that files included more than once need an opCallOnce for each include.
+As the name suggests, opCallOnce checks that the code has not already been run.
+
+Fairly obviously, if it was easy or even at all possible for the compiler, with
+several forward calls to as yet unknown files outstanding, to determine the one
+and only place where some top-level code needs invoking, then I would have just
+used opCall, and opCallOnce would not even exist. But trust me, it ain&rsquo;t.
+
+Since builtins\VM contains at least 45 absolutely necessary files, and builtins\
+another 36, almost all of which have no top-level code of any note, that would 
+be 80 or more pointless calls/tests, hence opCallOnceYeNot was specifically 
+engineered to allow explicit suppression of the call to such top-level routines 
+that contain no code or just an opRetf. There is also a mechanism to trigger a
+fatal run-time error if you accidentally add top-level code to any of those 80
+odd files, and if there really is no other way then you must also replace the
+opCallOnceYeNot with jmp opRetf/:fin.
+
+There is also a lower-level :>init label handler, for example :>initStack in
+builtins\VM\pStack.e needs to be invoked before :%opCallOnce, which is also
+defined in pStack.e, can be invoked.
+
+
+DEV: all of these need finishing:
+Searching for: function(
+ Files scanned 721, Directories scanned 3, Lines 96795
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1557             int function(Ihandle *ih, int col)<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1573             int function(Ihandle *ih, int lin, int col, char *status)<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1592             int function(Ihandle *ih, int width, int height)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1608             int function(Ihandle *ih, int lin, int col, int status)<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1624             int function(Ihandle *ih)<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1638             int function(Ihandle *ih, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1655             int function(Ihandle *ih, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1671             int function(Ihandle *ih, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1691             int function(Ihandle *ih, int lin, int col)<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1714             int function(Ihandle *ih, int lin, int col, int *red, int *green, int *blue)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1734             int function(Ihandle *ih, int lin, int col, int *red, int *green, int *blue)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1755             char* function(Ihandle* ih, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1774             char* function(Ihandle* ih, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1795             int function(Ihandle *ih, int lin, int col, int x1, int x2, int y1, int y2, cdCanvas* cnv)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1817             int function(Ihandle *ih, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1836             char* function(Ihandle* ih, int lin, int col, char* value)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1870             int function(Ihandle *ih, Ihandle *drop, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1896             int function(Ihandle *ih, Ihandle *drop, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1917             int function(Ihandle *ih, int lin, int col, Ihandle *drop, char *t, int i, int v)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1936             int function(Ihandle *ih, int lin, int col, int mode, int update)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:1993             function(Ihandle ih, integer lin, integer col)  -- returns an atom (aka char*)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:2016             int function(Ihandle *ih, int lin, int col, char* newval)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:2035             int function(Ihandle* ih, int lin, int col)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrix.htm:2054             int function(Ihandle *ih, int lin, int col, int marked)
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrixEx.htm:810             int function(Ihandle* ih, int status, int count, char* name);<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrixEx.htm:831             double function(Ihandle* ih, int lin, int col)<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrixEx.htm:849             int function(Ihandle* ih, int lin, int col, double value)<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrixEx.htm:864             int function(Ihandle* ih, Ihandle* menu, int lin, int col);<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrixEx.htm:890             int function(Ihandle* ih, int num_lin, int num_col);<br>
+C:\Program Files (x86)\Phix\docs\phix\src\IupMatrixEx.htm:910             int function(Ihandle* ih, int col, int lin1, int lin2);<br>
+
+C:\Program Files (x86)\Phix\demo\EuGTK4.11.10\demos\resources\filetypes.lua:49 
+function_other=
+add -> gtkadd
+connect 
+create 
+destroy 
+disconnect 
+Error 
+Quit 
+get -> gtkget
+hide 
+hide_all 
+idle 
+Info 
+key_pressed 
+main  
+pack 
+Question 
+run 
+set 
+show 
+show_all 
+timeout 
+Warn 
+UNIX 
+ADD 
+ADDRESS_LENGTH 
+ADDR_ADDRESS 
+ADDR_FAMILY 
+ADDR_FLAGS 
+ADDR_PROTOCOL 
+ADDR_TYPE 
+ADD_APPEND 
+ADD_PREPEND 
+ADD_SORT_DOWN 
+ADD_SORT_UP 
+ADLER32 
+AF_APPLETALK 
+AF_BTH 
+AF_INET 
+AF_INET6 
+AF_UNIX 
+AF_UNSPEC 
+ANCHORED 
+APPEND 
+ASCENDING 
+AS_IS 
+AT_EXPANSION 
+AUTO_CALLOUT 
+AVERAGE_BUCKET 
+Accessing 
+Accessor 
+Accumulation 
+Adding 
+Allocating 
+Answer 
+Automatic 
+BAD_FILE 
+BAD_RECNO 
+BAD_SEEK 
+BGSET 
+BINARY_MODE 
+BK_LEN 
+BK_PIECES 
+BLACK 
+BLINKING 
+BLOCK_CURSOR 
+BLUE 
+BMP_INVALID_MODE 
+BMP_OPEN_FAILED 
+BMP_SUCCESS 
+BMP_UNEXPECTED_EOF 
+BMP_UNSUPPORTED_FORMAT 
+BRIGHT_BLUE 
+BRIGHT_CYAN 
+BRIGHT_GREEN 
+BRIGHT_MAGENTA 
+BRIGHT_RED 
+BRIGHT_WHITE 
+BROWN 
+BSR_ANYCRLF 
+BSR_UNICODE 
+BYTES_PER_CHAR 
+BYTES_PER_SECTOR 
+Background 
+BadSig 
+Base 
+Basic 
+Bitmap 
+Bitwise 
+Building 
+C 
+CASELESS 
+CHILD 
+CMD_SWITCHES 
+COMBINE_SORTED 
+COMBINE_UNSORTED 
+CONCAT 
+CONNECTION 
+CONNECT_FREE 
+CONNECT_LOCK 
+CONNECT_TABLES 
+CORRECT 
+COUNT_DIRS 
+COUNT_FILES 
+COUNT_SIZE 
+COUNT_TYPES 
+CS_ASCII 
+CS_Alphabetic 
+CS_Alphanumeric 
+CS_Boolean 
+CS_Bytes 
+CS_Consonant 
+CS_Control 
+CS_Digit 
+CS_Displayable 
+CS_FIRST 
+CS_Graphic 
+CS_Hexadecimal 
+CS_Identifier 
+CS_LAST 
+CS_Lowercase 
+CS_Printable 
+CS_Punctuation 
+CS_SpecWord 
+CS_Uppercase 
+CS_Vowel 
+CS_Whitespace 
+CYAN 
+C_BOOL 
+C_BYTE 
+C_CHAR 
+C_DOUBLE 
+C_DWORD 
+C_DWORDLONG 
+C_FLOAT 
+C_HANDLE 
+C_HRESULT 
+C_HWND 
+C_INT 
+C_LONG 
+C_LONGLONG 
+C_LPARAM 
+C_POINTER 
+C_SHORT 
+C_SIZE_T 
+C_UBYTE 
+C_UCHAR 
+C_UINT 
+C_ULONG 
+C_USHORT 
+C_WORD 
+C_WPARAM 
+Calling 
+Changing 
+Client 
+Colors 
+Command 
+Common 
+Compile 
+Configuration 
+Console 
+Constants 
+Core 
+Create 
+Cross 
+Cursor 
+DATE 
+DAY 
+DAYS 
+DB_BAD_NAME 
+DB_EXISTS_ALREADY 
+DB_FATAL_FAIL 
+DB_LOCK_EXCLUSIVE 
+DB_LOCK_FAIL 
+DB_LOCK_NO 
+DB_LOCK_READ_ONLY 
+DB_LOCK_SHARED 
+DB_OK 
+DB_OPEN_FAIL 
+DEFAULT 
+DEGREES_TO_RADIANS 
+DESCENDING 
+DFA_RESTART 
+DFA_SHORTEST 
+DISCONNECT 
+DISPLAY_ASCII 
+DIVIDE 
+DNS 
+DNS_QUERY_ACCEPT_TRUNCATED_RESPONSE 
+DNS_QUERY_BYPASS_CACHE 
+DNS_QUERY_DONT_RESET_TTL_VALUES 
+DNS_QUERY_NO_HOSTS_FILE 
+DNS_QUERY_NO_LOCAL_NAME 
+DNS_QUERY_NO_NETBT 
+DNS_QUERY_NO_RECURSION 
+DNS_QUERY_NO_WIRE_QUERY 
+DNS_QUERY_RESERVED 
+DNS_QUERY_RETURN_MESSAGE 
+DNS_QUERY_STANDARD 
+DNS_QUERY_TREAT_AS_FQDN 
+DNS_QUERY_USE_TCP_ONLY 
+DNS_QUERY_WIRE_ONLY 
+DOLLAR_ENDONLY 
+DOS_TEXT 
+DOTALL 
+DUPNAMES 
+DUP_TABLE 
+D_ALTNAME 
+D_ATTRIBUTES 
+D_DAY 
+D_HOUR 
+D_MILLISECOND 
+D_MINUTE 
+D_MONTH 
+D_NAME 
+D_SECOND 
+D_SIZE 
+D_YEAR 
+Data 
+Database 
+Date 
+Directory 
+Dynamic 
+E 
+EAF_APPLETALK 
+EAF_BTH 
+EAF_INET 
+EAF_INET6 
+EAF_UNIX 
+EAF_UNSPEC 
+ENCODE_BASE64 
+ENCODE_NONE 
+EOF 
+EOL 
+EOLSEP 
+ERROR_BADCOUNT 
+ERROR_BADMAGIC 
+ERROR_BADNEWLINE 
+ERROR_BADOPTION 
+ERROR_BADPARTIAL 
+ERROR_BADUTF8 
+ERROR_BADUTF8_OFFSET 
+ERROR_CALLOUT 
+ERROR_DFA_RECURSE 
+ERROR_DFA_UCOND 
+ERROR_DFA_UITEM 
+ERROR_DFA_UMLIMIT 
+ERROR_DFA_WSSIZE 
+ERROR_INTERNAL 
+ERROR_MATCHLIMIT 
+ERROR_NOMATCH 
+ERROR_NOMEMORY 
+ERROR_NOSUBSTRING 
+ERROR_NULL 
+ERROR_NULLWSLIMIT 
+ERROR_PARTIAL 
+ERROR_RECURSIONLIMIT 
+ERROR_UNKNOWN_NODE 
+ERROR_UNKNOWN_OPCODE 
+ERR_ACCESS 
+ERR_ADDRINUSE 
+ERR_ADDRNOTAVAIL 
+ERR_AFNOSUPPORT 
+ERR_AGAIN 
+ERR_ALREADY 
+ERR_CONNABORTED 
+ERR_CONNECT_FAILED 
+ERR_CONNREFUSED 
+ERR_CONNRESET 
+ERR_DESTADDRREQ 
+ERR_FAULT 
+ERR_HOSTUNREACH 
+ERR_HOST_LOOKUP_FAILED 
+ERR_INPROGRESS 
+ERR_INTR 
+ERR_INVAL 
+ERR_INVALID_DATA 
+ERR_INVALID_DATA_ENCODING 
+ERR_INVALID_PROTOCOL 
+ERR_IO 
+ERR_ISCONN 
+ERR_ISDIR 
+ERR_LOOP 
+ERR_MALFORMED_URL 
+ERR_MFILE 
+ERR_MSGSIZE 
+ERR_NAMETOOLONG 
+ERR_NETDOWN 
+ERR_NETRESET 
+ERR_NETUNREACH 
+ERR_NFILE 
+ERR_NOBUFS 
+ERR_NOENT 
+ERR_NOTCONN 
+ERR_NOTDIR 
+ERR_NOTINITIALISED 
+ERR_NOTSOCK 
+ERR_OPNOTSUPP 
+ERR_PROTONOSUPPORT 
+ERR_PROTOTYPE 
+ERR_RECEIVE_FAILED 
+ERR_ROFS 
+ERR_SEND_FAILED 
+ERR_SHUTDOWN 
+ERR_SOCKTNOSUPPORT 
+ERR_TIMEDOUT 
+ERR_WOULDBLOCK 
+ESOCK_DGRAM 
+ESOCK_RAW 
+ESOCK_RDM 
+ESOCK_SEQPACKET 
+ESOCK_STREAM 
+ESOCK_TYPE_AF 
+ESOCK_TYPE_OPTION 
+ESOCK_TYPE_TYPE 
+ESOCK_UNDEFINED_VALUE 
+ESOCK_UNKNOWN_FLAG 
+EULER_GAMMA 
+EXTENDED 
+EXTRA 
+EXTRAS 
+EXT_COUNT 
+EXT_NAME 
+EXT_SIZE 
+E_ATOM 
+E_INTEGER 
+E_OBJECT 
+E_SEQUENCE 
+Environment 
+Equality 
+Errors 
+EuDist 
+Euphoria 
+Executable 
+External 
+Extracting, 
+FALSE 
+FGSET 
+FIFO 
+FILETYPE_DIRECTORY 
+FILETYPE_FILE 
+FILETYPE_NOT_FOUND 
+FILETYPE_UNDEFINED 
+FILO 
+FIRSTLINE 
+FLETCHER32 
+FORM_URLENCODED 
+FP_FORMAT 
+FREEBSD 
+FREE_BYTES 
+File 
+Finding 
+Flags 
+Floating 
+GET_EOF 
+GET_FAIL 
+GET_LONG_ANSWER 
+GET_NOTHING 
+GET_SHORT_ANSWER 
+GET_SUCCESS 
+GRAY 
+GREEN 
+General 
+Get/
+Post 
+Graphics 
+HALFPI 
+HALFSQRT2 
+HALF_BLOCK_CURSOR 
+HAS_CASE 
+HAS_PARAMETER 
+HEADER 
+HELP 
+HELP_RID 
+HOST_ALIASES 
+HOST_IPS 
+HOST_OFFICIAL_NAME 
+HOST_TYPE 
+HOUR 
+HOURS 
+HSIEH30 
+HSIEH32 
+HTTP 
+Hashing 
+Hyperbolic 
+I/
+O 
+IDABORT 
+IDCANCEL 
+IDIGNORE 
+IDNO 
+IDOK 
+IDRETRY 
+IDYES 
+INDENT 
+INIT_FREE 
+INIT_TABLES 
+INSERT_FAILED 
+INT_FORMAT 
+INVALID_ROUTINE_ID 
+INVLN10 
+INVLN2 
+INVSQ2PI 
+IP 
+Indexes 
+Indirect 
+Information 
+Input 
+Interacting 
+Intervals 
+Introduction 
+KC_LBUTTON 
+Key 
+Keyboard 
+LARGEMAP 
+LARGEST_BUCKET 
+LAST_ERROR_CODE 
+LEAVE 
+LINE_BREAKS 
+LINUX 
+LN10 
+LN2 
+LOCK_EXCLUSIVE 
+LOCK_METHOD 
+LOCK_SHARED 
+Locale 
+Localized 
+Lock 
+Logarithms 
+Low 
+MAGENTA 
+MANDATORY 
+MAP_ANONYMOUS 
+MAP_FAILED 
+MAX_ASCII 
+MAX_LINES 
+MB_ABORTRETRYIGNORE 
+MB_APPLMODAL 
+MB_DEFAULT_DESKTOP_ONLY 
+MD5 
+MINF 
+MINUTE 
+MINUTES 
+MIN_ASCII 
+MISSING_END 
+MONTH 
+MONTHS 
+MSG_CONFIRM 
+MSG_CTRUNC 
+MSG_DONTROUTE 
+MSG_DONTWAIT 
+MSG_EOR 
+MSG_ERRQUEUE 
+MSG_FIN 
+MSG_MORE 
+MSG_NOSIGNAL 
+MSG_OOB 
+MSG_PEEK 
+MSG_PROXY 
+MSG_RST 
+MSG_SYN 
+MSG_TRUNC 
+MSG_TRYHARD 
+MSG_WAITALL 
+MULTILINE 
+MULTIPART_FORM_DATA 
+MULTIPLE 
+MULTIPLY 
+Machine 
+Managing 
+Map 
+Marchine 
+Match 
+Matching 
+Math 
+Memory 
+Message 
+Microsoft 
+Miscellaneous 
+Multi-
+Tasking 
+NESTED_ALL 
+NESTED_ANY 
+NESTED_BACKWARD 
+NESTED_INDEX 
+NETBSD 
+NEWLINE_ANY 
+NEWLINE_ANYCRLF 
+NEWLINE_CR 
+NEWLINE_CRLF 
+NEWLINE_LF 
+NORMAL_ORDER 
+NOTBOL 
+NOTEMPTY 
+NOTEOL 
+NO_AT_EXPANSION 
+NO_AUTO_CAPTURE 
+NO_CASE 
+NO_CURSOR 
+NO_DATABASE 
+NO_HELP 
+NO_HELP_ON_ERROR 
+NO_PARAMETER 
+NO_ROUTINE_ID 
+NO_TABLE 
+NO_UTF8_CHECK 
+NO_VALIDATION 
+NO_VALIDATION_AFTER_FIRST_EXTRA 
+NS_C_ANY 
+NS_C_IN 
+NS_KT_DH 
+NS_KT_DSA 
+NS_KT_PRIVATE 
+NS_KT_RSA 
+NS_T_A 
+NS_T_A6 
+NS_T_AAAA 
+NS_T_ANY 
+NS_T_MX 
+NS_T_NS 
+NS_T_PTR 
+NULL 
+NULLDEVICE 
+NUMBER_OF_FREE_CLUSTERS 
+NUM_BUCKETS 
+NUM_ENTRIES 
+NUM_IN_USE 
+Notes 
+OBJ_ATOM 
+OBJ_INTEGER 
+OBJ_SEQUENCE 
+OBJ_UNASSIGNED 
+OK 
+ONCE 
+OPENBSD 
+OPTIONAL 
+OPT_CNT 
+OPT_IDX 
+OPT_REV 
+OPT_VAL 
+OSX 
+Opening 
+Operating 
+Operation 
+Option 
+PAGE_EXECUTE 
+PAGE_EXECUTE_READ 
+PAGE_EXECUTE_READWRITE 
+PAGE_EXECUTE_WRITECOPY 
+PAGE_NOACCESS 
+PAGE_NONE 
+PAGE_READ 
+PAGE_READONLY 
+PAGE_READWRITE 
+PAGE_READ_EXECUTE 
+PAGE_READ_WRITE 
+PAGE_READ_WRITE_EXECUTE 
+PAGE_SIZE 
+PAGE_WRITECOPY 
+PAGE_WRITE_COPY 
+PAGE_WRITE_EXECUTE_COPY 
+PARENT 
+PARTIAL 
+PATHSEP 
+PATH_BASENAME 
+PATH_DIR 
+PATH_DRIVEID 
+PATH_FILEEXT 
+PATH_FILENAME 
+PAUSE_MSG 
+PHI 
+PI 
+PID 
+PINF 
+PISQR 
+PRETTY_DEFAULT 
+PUT 
+Parsing 
+Pipe 
+Predefined 
+Pretty 
+Prime 
+Pseudo 
+QUARTPI 
+RADIANS_TO_DEGREES 
+RD_INPLACE 
+RD_PRESORTED 
+RD_SORT 
+RED 
+REVERSE_ORDER 
+ROTATE_LEFT 
+ROTATE_RIGHT 
+Random 
+Read 
+Reading 
+Regular 
+Replacement 
+Reporting 
+Return 
+Roundings 
+Routines 
+SCM_TIMESTAMP 
+SCM_TIMESTAMPING 
+SCM_TIMESTAMPNS 
+SCREEN 
+SD_BOTH 
+SD_RECEIVE 
+SD_SEND 
+SECOND 
+SECONDS 
+SECTORS_PER_CLUSTER 
+SELECT_IS_ERROR 
+SELECT_IS_READABLE 
+SELECT_IS_WRITABLE 
+SELECT_SOCKET 
+SEQ_NOALT 
+SHA256 
+SHARED_LIB_EXT 
+SHOW_ONLY_OPTIONS 
+SLASH 
+SLASHES 
+SMALLEST_BUCKET 
+SMALLMAP 
+SM_RAW 
+SM_TEXT 
+SND_ASTERISK 
+SND_DEFAULT 
+SND_EXCLAMATION 
+SND_QUESTION 
+SND_STOP 
+SOCKET_SOCKADDR_IN 
+SOCKET_SOCKET 
+SOCK_DGRAM 
+SOCK_RAW 
+SOCK_RDM 
+SOCK_SEQPACKET 
+SOCK_STREAM 
+SOL_SOCKET 
+SO_ACCEPTCONN 
+SO_ATTACH_FILTER 
+SO_BINDTODEVICE 
+SO_BROADCAST 
+SO_BSDCOMPAT 
+SO_CONNDATA 
+SO_CONNDATALEN 
+SO_CONNOPT 
+SO_CONNOPTLEN 
+SO_DEBUG 
+SO_DETACH_FILTER 
+SO_DISCDATA 
+SO_DISCDATALEN 
+SO_DISCOPT 
+SO_DISCOPTLEN 
+SO_DOMAIN 
+SO_DONTLINGER 
+SO_DONTROUTE 
+SO_ERROR 
+SO_KEEPALIVE 
+SO_LINGER 
+SO_MARK 
+SO_MAXDG 
+SO_MAXPATHDG 
+SO_NO_CHECK 
+SO_OOBINLINE 
+SO_OPENTYPE 
+SO_PASSCRED 
+SO_PASSSEC 
+SO_PEERCRED 
+SO_PEERNAME 
+SO_PEERSEC 
+SO_PRIORITY 
+SO_PROTOCOL 
+SO_RCVBUF 
+SO_RCVBUFFORCE 
+SO_RCVLOWAT 
+SO_RCVTIMEO 
+SO_REUSEADDR 
+SO_REUSEPORT 
+SO_RXQ_OVFL 
+SO_SECURITY_AUTHENTICATION 
+SO_SECURITY_ENCRYPTION_NETWORK 
+SO_SECURITY_ENCRYPTION_TRANSPORT 
+SO_SNDBUF 
+SO_SNDBUFFORCE 
+SO_SNDLOWAT 
+SO_SNDTIMEO 
+SO_SYNCHRONOUS_ALTERT 
+SO_SYNCHRONOUS_NONALERT 
+SO_TIMESTAMP 
+SO_TIMESTAMPING 
+SO_TIMESTAMPNS 
+SO_TYPE 
+SO_USELOOPBACK 
+SQRT2 
+SQRT3 
+SQRT5 
+SQRTE 
+START_COLUMN 
+STDERR 
+STDEV_BUCKET 
+STDFLTR_ALPHA 
+STDIN 
+STDOUT 
+STRING_OFFSETS 
+ST_ALLNUM 
+ST_FULLPOP 
+ST_IGNSTR 
+ST_SAMPLE 
+ST_ZEROSTR 
+SUBTRACT 
+Safe 
+Scientific 
+Searching 
+Select 
+Send 
+Sequence 
+Serialization 
+Server 
+Setup 
+Shutdown 
+Sign 
+Socket 
+Sorting 
+Splitting 
+Stack 
+Standard 
+Statistics 
+Style 
+Support 
+TEST_QUIET 
+TEST_SHOW_ALL 
+TEST_SHOW_FAILED_ONLY 
+TEXT_MODE 
+THICK_UNDERLINE_CURSOR 
+TOTAL_BYTES 
+TOTAL_NUMBER_OF_CLUSTERS 
+TO_LOWER 
+TO_SHORT 
+TRUE 
+TWOPI 
+Tests 
+Text 
+Time 
+Trigonometry 
+Type 
+Types 
+UDP 
+UNDERLINE_CURSOR 
+UNGREEDY 
+UNIX_TEXT 
+URL 
+URL_ENTIRE 
+URL_HOSTNAME 
+URL_HTTP_DOMAIN 
+URL_HTTP_PATH 
+URL_HTTP_QUERY 
+URL_MAIL_ADDRESS 
+URL_MAIL_DOMAIN 
+URL_MAIL_QUERY 
+URL_MAIL_USER 
+URL_PASSWORD 
+URL_PATH 
+URL_PORT 
+URL_PROTOCOL 
+URL_QUERY_STRING 
+URL_USER 
+USED_BYTES 
+UTF8 
+Unit 
+Using 
+Utilities 
+Utility 
+VALIDATE_ALL 
+VC_COLOR 
+VC_COLUMNS 
+VC_LINES 
+VC_MODE 
+VC_NCOLORS 
+VC_PAGES 
+VC_SCRNCOLS 
+VC_SCRNLINES 
+VC_XPIXELS 
+VC_YPIXELS 
+VERSIONING 
+Variables 
+WEEKS 
+WHITE 
+WIN32 
+WINDOWS 
+WRAP 
+Warning 
+Wildcard 
+Windows 
+Writing 
+YEAR 
+YEARS 
+YELLOW 
+abbreviate_path 
+abort 
+abs 
+absolute_path 
+accept 
+add_item 
+all_matches 
+allocate 
+allocate_code 
+allocate_data 
+allocate_pointer_array 
+allocate_protect 
+allocate_string 
+allocate_string_pointer_array 
+allocate_wstring 
+allow_break 
+ampm 
+and_bits 
+any_key 
+append 
+append_lines 
+apply 
+approx 
+arccos 
+arccosh 
+arcsin 
+arcsinh 
+arctan 
+arctanh 
+ascii_string 
+assert 
+at 
+atan2 
+atom 
+atom_to_float32 
+atom_to_float64 
+atom_to_float80 
+attr_to_colors 
+avedev 
+average 
+begins 
+binary_search 
+bind 
+binop_ok 
+bits_to_bytes 
+bits_to_int 
+bk_color 
+boolean 
+breakup 
+build_commandline 
+build_list 
+byte_range 
+bytes_to_bits 
+bytes_to_int 
+c_func 
+c_proc 
+calc_hash 
+calc_primes 
+call 
+call_back 
+call_func 
+call_proc 
+canon2win 
+canonical 
+canonical_path 
+case_flagset_type 
+ceil 
+central_moment 
+chance 
+char_test 
+chdir 
+check_all_blocks 
+check_break 
+check_calls 
+check_free_list 
+checksum 
+clear 
+clear_directory 
+clear_screen 
+close 
+cmd_parse 
+color 
+colors_to_attr 
+columnize 
+combine 
+command_line 
+compare 
+console_colors 
+copy 
+copy_file 
+cos 
+cosh 
+count 
+crash 
+crash_file 
+crash_message 
+crash_routine 
+create_directory 
+create_file 
+cstring 
+curdir 
+current_dir 
+cursor 
+custom_sort 
+date 
+datetime 
+day_abbrs 
+day_names 
+days_in_month 
+days_in_year 
+db_cache_clear 
+db_clear_table 
+db_close 
+db_compress 
+db_connect 
+db_create 
+db_create_table 
+db_current 
+db_current_table 
+db_delete_record 
+db_delete_table 
+db_dump 
+db_fatal_id 
+db_fetch_record 
+db_find_key 
+db_get_errors 
+db_get_recid 
+db_insert 
+db_open 
+db_record_data 
+db_record_key 
+db_record_recid 
+db_rename_table 
+db_replace_data 
+db_replace_recid 
+db_select 
+db_select_table 
+db_set_caching 
+db_table_list 
+db_table_size 
+decanonical 
+decode 
+defaulted_value 
+defaultext 
+define_c_func 
+define_c_proc 
+define_c_var 
+deg2rad 
+delete 
+delete_file 
+delete_routine 
+dequote 
+deserialize 
+diff 
+dir 
+dir_size 
+dirname 
+disk_metrics 
+disk_size 
+display 
+display_text_image 
+driveid 
+dump 
+dup 
+edges_only 
+emovavg 
+encode 
+ends 
+ensure_in_list 
+ensure_in_range 
+error_code 
+error_message 
+error_names 
+error_no 
+error_to_string 
+escape 
+exec 
+exp 
+extract 
+fetch 
+fib 
+file_exists 
+file_length 
+file_number 
+file_position 
+file_timestamp 
+file_type 
+filebase 
+fileext 
+filename 
+filter 
+find 
+find_all 
+find_all_but 
+find_any 
+find_each 
+find_from 
+find_nested 
+find_replace 
+find_replace_callback 
+find_replace_limit 
+flags_to_string 
+flatten 
+float32_to_atom 
+float64_to_atom 
+float80_to_atom 
+floor 
+flush 
+for_each 
+format 
+frac 
+free 
+free_code 
+free_console 
+free_pointer_array 
+from_date 
+from_unix 
+gcd 
+geomean 
+get_bytes 
+get_charsets 
+get_def_lang 
+get_dstring 
+get_encoding_properties 
+get_integer16 
+get_integer32 
+get_key 
+get_lang_path 
+get_option 
+get_ovector_size 
+get_pid 
+get_position 
+get_rand 
+get_screen_char 
+get_text 
+getc 
+getenv 
+gets 
+graphics_mode 
+graphics_point 
+harmean 
+has 
+has_console 
+has_match 
+hash 
+head 
+hex_text 
+host_by_addr 
+host_by_name 
+http_get 
+http_post 
+iif 
+info 
+init_curdir 
+insertion_sort 
+instance 
+int_to_bits 
+int_to_bytes 
+intdiv 
+integer 
+integer_array 
+is_empty 
+is_even 
+is_even_obj 
+is_in_list 
+is_in_range 
+is_inetaddr 
+is_leap_year 
+is_match 
+is_win_nt 
+join 
+join_path 
+key_codes 
+keys 
+keyvalues 
+kill 
+kurtosis 
+lang_load 
+larger_of 
+--largest 
+last 
+--length 
+listen 
+load 
+load_map 
+locale_canonical 
+locate_file 
+lock_file 
+lock_type 
+log 
+log10 
+lookup 
+lower 
+machine_addr 
+machine_func 
+machine_proc 
+malloc 
+map 
+mapping 
+match 
+match_all 
+match_any 
+match_from 
+match_replace 
+matches 
+max 
+maybe_any_key 
+median 
+mem_copy 
+mem_set 
+merge 
+message_box 
+mid 
+min 
+minsize 
+mixture 
+mod 
+mode 
+money 
+month_abbrs 
+month_names 
+movavg 
+move_file 
+my_dir 
+nested_get 
+nested_put 
+new 
+new_extra 
+new_from_kvpairs 
+new_from_string 
+new_time 
+next_prime 
+not_bits 
+now 
+now_gmt 
+number 
+number_array 
+object 
+open 
+open_dll 
+optimize 
+option_spec 
+option_spec_to_string 
+option_switches 
+or_all 
+or_bits 
+pad_head 
+pad_tail 
+pairs 
+parse 
+parse_commandline 
+parse_ip_address 
+parse_querystring 
+parse_url 
+patch 
+pathinfo 
+pathname 
+peek 
+peek2s 
+peek2u 
+peek4s 
+peek4u 
+peek8s 
+peek8u 
+peek_end 
+peek_longs 
+peek_longu 
+peek_string 
+peek_top 
+peek_wstring 
+peeks 
+pivot 
+platform 
+platform_locale 
+poke 
+poke2 
+poke4 
+poke8 
+poke_long 
+poke_string 
+poke_wstring 
+pop 
+position 
+positive_int 
+posix_names 
+power 
+powof2 
+prepend 
+pretty_print 
+pretty_sprint 
+prime_list 
+print 
+printf 
+process 
+process_lines 
+product 
+project 
+prompt_number 
+prompt_string 
+proper 
+push 
+put 
+put_integer16 
+put_integer32 
+put_screen_char 
+puts 
+quote 
+rad2deg 
+ram_space 
+rand 
+rand_range 
+range 
+raw_frequency 
+read 
+read_bitmap 
+read_file 
+read_lines 
+receive 
+receive_from 
+regex 
+register_block 
+rehash 
+remainder 
+remove 
+remove_all 
+remove_directory 
+remove_dups 
+remove_item 
+remove_subseq 
+rename_file 
+repeat 
+repeat_pattern 
+replace 
+retain_all 
+reverse 
+rmatch 
+rnd 
+rnd_1 
+roll 
+rotate 
+rotate_bits 
+round 
+routine_id 
+safe_address 
+sample 
+save_bitmap 
+save_map 
+save_text_image 
+scientific_to_atom 
+scientific_to_float 
+scroll 
+seek 
+select 
+send 
+send_to 
+sequence 
+sequence_array 
+serialize 
+series 
+service_by_name 
+service_by_port 
+set 
+set_accumulate_summary 
+set_charsets 
+set_decimal_mark 
+set_def_lang 
+set_default_charsets 
+set_encoding_properties 
+set_keycodes 
+set_lang_path 
+set_option 
+set_proxy_server 
+set_rand 
+set_test_abort 
+set_test_verbosity 
+set_wait_on_summary 
+setenv 
+shift_bits 
+show_help 
+shuffle 
+shutdown 
+sign 
+sim_index 
+sin 
+sinh 
+size 
+skewness 
+sleep 
+slice 
+small 
+smaller_of 
+smallest 
+socket 
+sort 
+sort_columns 
+sound 
+splice 
+split_limit 
+split_path 
+sprint 
+sprintf 
+sqrt 
+stack 
+statistics 
+std_library_address 
+stdev 
+store 
+string 
+subtract 
+sum 
+sum_central_moments 
+swap 
+system 
+system_exec 
+t_alnum 
+t_alpha 
+t_ascii 
+t_boolean 
+t_bytearray 
+t_cntrl 
+t_consonant 
+t_digit 
+t_display 
+t_graph 
+t_identifier 
+t_integer32 
+t_lower 
+t_print 
+t_punct 
+t_space 
+t_specword 
+t_text 
+t_upper 
+t_vowel 
+t_xdigit 
+tail 
+tan 
+tanh 
+task_clock_start 
+task_clock_stop 
+task_create 
+task_delay 
+task_list 
+task_schedule 
+task_self 
+task_status 
+task_suspend 
+task_yield 
+temp_file 
+test_equal 
+test_fail 
+test_false 
+test_not_equal 
+test_pass 
+test_report 
+test_true 
+text_color 
+text_rows 
+threshold 
+time 
+to_integer 
+to_number 
+to_string 
+to_unix 
+top 
+transform 
+translate 
+transmute 
+trim 
+trim_head 
+trim_tail 
+trsprintf 
+true_bgcolor 
+true_fgcolor 
+trunc 
+type 
+type_of 
+uname 
+unlock_file 
+unregister_block 
+unsetenv 
+upper 
+using 
+valid 
+valid_index 
+valid_memory_protection_constant 
+value 
+values 
+video_config 
+vlookup 
+w32_name_canonical 
+w32_names 
+wait_key 
+walk_dir 
+warning 
+warning_file 
+weeks_day 
+where 
+which_bit 
+wrap 
+write 
+write_file 
+write_lines 
+writef 
+writefln 
+xor_bits 
+years_day 
+gslist_to_sequence 
+unpack 
+register 
+pack_start 
+pack_end 
+NonModalDialog
+function_basic=? 
+abort 
+and_bits 
+append 
+arctan 
+atom 
+c_func 
+c_proc 
+call 
+call_func 
+call_proc 
+clear_screen 
+close 
+command_line 
+compare 
+cos 
+date 
+delete 
+delete_routine 
+find 
+floor 
+get_key 
+getc 
+getenv 
+gets 
+hash 
+head 
+include_paths 
+integer 
+length 
+log 
+machine_func 
+machine_proc 
+match 
+mem_copy 
+mem_set 
+not_bits 
+object 
+open 
+option_switches 
+or_bits 
+peek 
+peek2s 
+peek2u 
+peek4s 
+peek4u 
+peek_string 
+peeks 
+pixel 
+platform 
+position 
+power 
+prepend 
+print 
+printf 
+puts 
+rand 
+remainder 
+remove 
+repeat 
+replace 
+sequence 
+sin 
+splice 
+sprintf 
+sqrt 
+system 
+system_exec 
+tail 
+tan 
+task_clock_start 
+task_clock_stop 
+task_create 
+task_list 
+task_schedule 
+task_self 
+task_status 
+task_suspend 
+task_yield 
+time 
+trace 
+xor_bits 
+Widget 
+Container 
+Button 
+Label 
+Adjustment 
+Printer 
+PrintContext 
+PaperSize 
+PrintSetup 
+KeyMap 
+StyleContext 
+Signal 
+FontFamily 
+FontFace 
+FontDescr 
+Settings 
+Combo 
+TreeModel 
+TreeSelection 
+TreePath 
+TreeRowReference 
+SelectionData 
+SourceLanguage 
+PixBuf 
+IconSet 
+TreeView 
+TreeStore 
+ListStore 
+Object 
+Window 
+Dialog 
+AboutDialog 
+Assistant 
+Box 
+Grid 
+Revealer 
+ListBox 
+FlowBox 
+Stack 
+StackSwitcher 
+Sidebar 
+ActionBar 
+HeaderBar 
+Overlay 
+ButtonBox 
+Paned 
+Layout 
+Notebook 
+Expander 
+AspectFrame 
+Image 
+Spinner 
+InfoBar 
+ProgressBar 
+LevelBar 
+Statusbar 
+AccelLabel 
+CheckButton 
+ToggleButton 
+RadioButton 
+LinkButton 
+MenuButton 
+Switch 
+ScaleButton 
+VolumeButton 
+LockButton 
+Entry 
+EntryBuffer 
+EntryCompletion 
+Scale 
+SpinButton 
+SearchEntry 
+SearchBar 
+Editable 
+TextMark 
+TextTag 
+TextTagTable 
+TextView 
+TextBuffer 
+TreeViewColumn 
+IconView 
+CellRendererText 
+CellRendererPixbuf 
+CellRendererProgress 
+CellRendererAccel 
+CellRendererCombo 
+CellRendererToggle 
+CellRendererSpin 
+CellRendererSpinner 
+ComboBox 
+ComboBoxText 
+Menu 
+MenuBar 
+MenuItem 
+RadioMenuItem 
+CheckMenuItem 
+SeparatorMenuItem 
+Toolbar 
+ToolItem 
+ToolPalette 
+ToolButton 
+MenuToolButton 
+ToggleToolButton 
+RadioToolButton 
+Popover 
+PopoverMenu 
+ColorChooser 
+ColorButton 
+ColorChooserWidget 
+ColorChooserDialog 
+FileFilter 
+FileChooser 
+FileChooserButton 
+FileChooserDialog 
+FileChooserWidget 
+PlacesSidebar 
+Frame 
+Scrollbar 
+ScrolledWindow 
+Calendar 
+GLArea 
+Tooltip 
+Viewport 
+FontChooser 
+FontButton 
+FontChooserWidget 
+FontChooserDialog 
+Bin 
+Range 
+ListBoxRow 
+FontDescription 
+AppChooser  
+AppChooserDialog 
+TreeModelSort 
+RecentChooser 
+RecentChooserWidget 
+RecentChooserDialog 
+RecentChooserMenu 
+RecentFilter 
+DrawingArea 
+ImageMenuItem 
+EventBox 
+TreeModelFilter 
+Application 
+ApplicationWindow 
+Pixbuf 
+IconTheme
+

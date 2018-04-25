@@ -1,0 +1,127 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">Library Routines</h1>
+      <div id="mainSection">
+         A large number of library routines are provided. Some are written in low-level inline assembly,
+         and some are written hll. Most are automatically included as and when needed, but some require
+         an explicit include statement before they can be used. In the latter case, the appropriate 
+         include file is noted in the "Definition" part of the description. Of course an include file need 
+         only be included once in your program. The editor displays in magenta those routines that are 
+         built into the interpreter, and require no include file. You can override the definition
+         of these built-in routines by defining your own routine with the same name.
+         You will get a suppressible warning if you do this.
+       <br>
+       <br>
+<!--
+         [OLD] To indicate what kind of
+       <b><a href="object.htm">object</a></b> may be passed in and returned, the following prefixes are used:
+       <br>
+       <br>
+        <table>
+         <col style="width: 5%"/>
+         <tr>
+          <td valign=top>
+           <b>x</b>
+          </td>
+          <td width=10 valign=top>-</td>
+          <td>a general
+           <a href="language.htm">object</a> (atom or sequence)
+          </td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <b>s</b>
+          </td>
+          <td width=10 valign=top>-</td>
+          <td>a
+           <a href="Sequences.htm">sequence</a>
+          </td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <b>s</b>
+          </td>
+          <td width=10 valign=top>-</td>
+          <td>a
+           <a href="Strings.htm">string</a>
+          </td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <b>a</b>
+          </td>
+          <td width=10 valign=top>-</td>
+          <td>an
+           <a href="Atoms.htm">atom</a>
+          </td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <b>i</b>
+          </td>
+          <td width=10 valign=top>-</td>
+          <td>an
+           <a href="integer.htm">integer</a>
+          </td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <b>fn</b>
+          </td>
+          <td width=10 valign=top>-</td>
+          <td>an
+           <a href="integer.htm">integer</a> used as a file number
+          </td>
+         </tr>
+         <tr>
+          <td valign=top>
+           <b>st</b>
+          </td>
+          <td width=10 valign=top>-</td>
+          <td>a
+           <a href="Strings.htm">string sequence</a>, or
+           <a href="Strings.htm#char">single-character atom</a>
+          </td>
+         </tr>
+        </table>
+       <br>
+        &nbsp;
+       <br>
+        [NEW] I have replaced the above with 
+-->
+        Routines are documented using an explicit type declaration style syntax. For example where you see a definition such as
+<!--eucode>
+integer i = length(sequence s)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">integer</font><font color="#000000"> i</font><font color="#0000FF"> =</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#004080">sequence</font><font color="#000000"> s</font><font color="#0000FF">)</font>
+</pre>
+        You should understand that denotes actual statements which look more like:
+<!--eucode>
+i = length(s)
+</eucode-->
+<pre>
+<font color="#000000">i</font><font color="#0000FF"> =</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#000000">s</font><font color="#0000FF">)</font>
+</pre>
+        The examples, when provided, often give a clearer illustration of the required syntax than the formal definition at the start.
+       <br>
+       <br>
+        Some routines are not available on all platforms (specifically <a href="message_box.htm">message_box</a> and <a href="text_rows.htm">text_rows</a> only, 
+        though <a href="instance.htm">instance</a> and <a href="cursor.htm">cursor</a> do nothing useful on Linux). 
+        This is noted with "Platform: WINDOWS" or "Platform: Linux" in the description of the routine, and with (WINDOWS) or (Linux) in some other places.
+       <br>
+       <br>
+        A run-time error message will usually result if an illegal argument value is passed to any of these routines.
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

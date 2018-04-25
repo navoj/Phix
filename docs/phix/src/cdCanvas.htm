@@ -1,0 +1,81 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">cdCanvas</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            cdCanvas <i>identifier</i>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Type. An <a href="integer.htm">integer</a> > 0.
+            <br>
+            <br>
+            Use this to define CD canvas variables. It is probably <a href="usingtypes.htm#can">unwise</a> to use this to determine whether an object is a cdCanvas,
+            as many things which are clearly not (eg 1, 5000, 'X') will pass.
+            <br>
+            <br>
+            The type cdCanvan is the same but also allows null.
+            <br>
+                <a name=imImage></a>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The type <b>imImage</b> is defined in a near-identical fashion, but obviously used for different purposes. It allows null (there is no imImagn type).
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include pGUI.e
+
+cdCanvas hCdCanvas = cdCreateCanvas(CD_IUP, IupCanvas())
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> pGUI.e
+
+</font><font color="#5E005E">cdCanvas</font><font color="#000000"> hCdCanvas</font><font color="#0000FF"> =</font><font color="#5E005E"> cdCreateCanvas</font><font color="#0000FF">(</font><font color="#004600">CD_IUP</font><font color="#0000FF">,</font><font color="#5E005E"> IupCanvas</font><font color="#800000">()</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupCanvas.htm">IupCanvas</a>,
+          <a href="cdCreateCanvas.htm">cdCreateCanvas</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

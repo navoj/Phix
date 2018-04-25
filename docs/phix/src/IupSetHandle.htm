@@ -1,0 +1,92 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupSetHandle</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            IupSetHandle(<a href="string.htm">string</a> name, <a href="atom.htm">atom</a> ih)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Associates a name with an interface element.
+            <br>
+            <br>
+            name: name of the interface element.<br>
+            ih: identifier of the interface element. Use NULL to remove the association.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            This function is used so it is possible to set attributes values that are in fact other elements that were created in C. For example:
+<!--eucode>
+IupSetHandle("test_image", image);
+IupSetAttribute(button, "IMAGE", "test_image");
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#5E005E">IupSetHandle</font><font color="#0000FF">(</font><font color="#008000">"test_image"</font><font color="#0000FF">,</font><font color="#000000"> image</font><font color="#0000FF">);
+</font><font color="#5E005E">IupSetAttribute</font><font color="#0000FF">(</font><font color="#000000">button</font><font color="#0000FF">,</font><font color="#008000"> "IMAGE"</font><font color="#0000FF">,</font><font color="#008000"> "test_image"</font><font color="#0000FF">);</font>
+</pre>
+            <br>
+            Note this code can (sometimes) be replaced by a more convenient function call:
+<!--eucode>
+IupSetAttributeHandle(button, "IMAGE", image);
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#5E005E">IupSetAttributeHandle</font><font color="#0000FF">(</font><font color="#000000">button</font><font color="#0000FF">,</font><font color="#008000"> "IMAGE"</font><font color="#0000FF">,</font><font color="#000000"> image</font><font color="#0000FF">);</font>
+</pre>
+            <br>
+            However the SetHandle approach may still be more appropriate, for example when putting the same image on both a menu item and a button, especially if <i>image</i> 
+            is created/loaded deep inside a routine that creates the menu item and therefore it (<i>image</i>) is not immediately to hand for placing on the button.
+            <br>
+            <br>
+            In fact, any pointer can be stored and retrieved with IupSetHandle and IupGetHandle.
+            <br>
+            <br>
+            Also IupSetHandle can be called several times with the same pointer and different names. <br>
+            There is no restriction for the number of names a pointer can have, but <a href="IupGetName.htm">IupGetName</a>() will return only the first name found.
+            <br>
+            <br>
+            The C function of the same name returns the previous association. In Phix, should that functionality actually be required, a preceding IupGetHandle must be used.
+            <br>
+            <br>
+            Especially when working on a large project, it should be pointed out that IupSetHandle has the same semantics and risks as the use of global variables.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupGetHandle.htm">IupGetHandle</a>,
+          <a href="IupSetAttributeHandle.htm">IupSetAttributeHandle</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,72 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">shuffle</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="sequence.htm">sequence</a> res = shuffle(<a href="sequence.htm">sequence</a> s)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Randomise the order of the top-level elements of <a href="sequence.htm">sequence</a> s.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            shuffle(tagset(n)) is a quick way to generate a random permutation of 1..n.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+?shuffle(tagset(10))        -- displays eg {9,2,10,6,5,7,1,8,3,4}
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#0000FF">?</font><font color="#5E005E">shuffle</font><font color="#0000FF">(</font><font color="#5E005E">tagset</font><font color="#800000">(</font><font color="#000000">10</font><font color="#800000">)</font><font color="#0000FF">)       </font><font color="#000080"><i> -- displays eg {9,2,10,6,5,7,1,8,3,4}</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\shuffle.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="rand.htm">rand</a>,
+          <a href="tagset.htm">tagset</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

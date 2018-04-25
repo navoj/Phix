@@ -1,0 +1,53 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">where</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="atom.htm">atom</a> a = where(<a href="integer.htm">integer</a> fn)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>This function returns the current byte position in the file fn.
+             This position is updated by reads, writes and seeks on the file.
+             It is the place in the file where the next byte will be read
+             from, or written to.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+              via :%opWhere / fwhere() in builtins\VM\pfileioN.e (an autoinclude) - be warned however it is low-level complicated stuff that you do not need to know.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="seek.htm">seek</a>,
+          <a href="open.htm">open</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

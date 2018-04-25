@@ -1,0 +1,138 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">integer</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          integer <i>identifier</i>
+          <br>
+          <i>-- or --</i>
+          <br>
+          bool res = integer(<a href="object.htm">object</a> x)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            This serves to define the integer type. <br>
+            You can also call it like an ordinary function to determine whether an object is an integer.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            When invoked as a function, returns 1 (true) if x is an integer, otherwise returns 0 (false).
+          <br>
+            On 32-bit, integers are whole numbers in the range -1,073,741,824 to +1,073,741,823 (-#40000000 to #3FFFFFFF, technically 31-bit)
+          <br>
+            On 64-bit, integers are whole numbers in the range -4,611,686,018,427,387,904 to +4,611,686,018,427,387,903 (-#4000000000000000 to #3FFFFFFFFFFFFFFF, technically 63-bit)
+          <br>
+          <a name=bool></a>
+          <br>
+            In phix, <b>bool</b> is a simple alias of integer. It does not validate that the value is 0 or 1 only - instead, 0 is false, any other value is deemed true.
+            The builtin constants <b>true</b> and <b>false</b> can and should be used for variables and parameters declared as type bool, or, if you prefer, TRUE, True, 
+            FALSE, and False, are identical/aliases - mainly for compatibility with legacy code, but ultimately also one less thing (upper/lower case) that you have to 
+            remember, or fix.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 1:</b>
+         </td>
+         <td>
+<!--eucode>
+integer z 
+    z = -1
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">integer</font><font color="#000000"> z 
+    z</font><font color="#0000FF"> = -</font><font color="#000000">1</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example 2:</b>
+         </td>
+         <td>
+<!--eucode>
+if integer(y/x) then
+    puts(1, "y is an exact multiple of x")
+end if
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">if</font><font color="#004080"> integer</font><font color="#0000FF">(</font><font color="#000000">y</font><font color="#0000FF">/</font><font color="#000000">x</font><font color="#0000FF">)</font><font color="#008080"> then
+</font><font color="#7060A8">    puts</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#008000"> "y is an exact multiple of x"</font><font color="#0000FF">)
+</font><font color="#008080">end if</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            There are generic versions of the integer function implemented as :%opInt in builtins\VM\pType.e and :%opInt0 in builtins\VM\pJcc.e that 
+            the compiler only invokes as a last resort, preferring instead to inline that functionality if the argument is known to be assigned or the
+            result variable, if any, is known to be an integer, ie does not require decref/dealloc. The compiler may also completely omit the test 
+            and/or any related code, if type inference/propagation determines that the result will always be true or always false.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="atom.htm">atom</a>,
+          <a href="sequence.htm">sequence</a>,
+          <a href="string.htm">string</a>,
+          <a href="object.htm">object</a>,
+          <a href="floor.htm">floor</a>,
+          <a href="puts.htm">puts</a>,
+          <a href="language.htm">Core Language</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+          A value such as '123456.0000000001' could appear as '123456' in trace, ex.err, and other diagnostic output, 
+          because the standard default is to display a maximum of six decimal places. A trailing ".0" is now added by 
+          print() and sprint() [see builtins\VM\psprintN.e] when a non-integer atom value is rounded in such a manner 
+          by sprintf(), to avoid that potential source of confusion. (To reiterate what I just said: sprintf() may chop
+          off a trailing ".0"; sprint() [without the f] may stick it back on.)
+          <br>
+          <br>
+          Phix does not have an unsigned integer type - since the downsides (unexpected and ludicrous math results) far outweigh any possible benefits.<br>
+          The most significant loss here would be that a C-style <code>(unsigned)idx &lt; s.len</code> must be replaced with 
+          <code>idx&gt;=1 and idx&lt;=length(s)</code>, plus a couple of <a href="abs.htm">abs</a>() calls if you also want to allow 
+          <a href="subscripts.htm#negative">negative subscripts</a>.
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,20 @@
+--
+-- download.exw
+--
+constant url = "http://example.com",
+         out = "example.html"
+    
+printf(1, "\nattempting to download remote file %s to local file %s\n\n", {url,out})
+
+include libcurl.e
+
+CURLcode res = curl_easy_get_file(url,"",out)
+if res!=CURLE_OK then
+   printf(1, "Error %d downloading file\n", res)
+else
+   printf(1, "file %s saved\n", {out})
+end if
+
+puts(1, "Press any key to continue.\n")
+{} = wait_key()
+

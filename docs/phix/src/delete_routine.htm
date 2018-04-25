@@ -1,0 +1,193 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">delete_routine</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         <a href="object.htm">object</a> o = delete_routine(<a href="object.htm">object</a> o, <a href="integer.htm">integer</a> rid)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Associate a cleanup routine with some data, to be invoked when it gets destroyed.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            When the reference count on a data object drops to zero it is automatically garbage collected. This routine allows additional processing
+            to occur at the point when that happens, which may include freeing some allocated memory, closing a file, releasing some other resource, 
+            or removing indexes that point to an item. It is also possible to explicitly invoke <a href="delete.htm">delete</a>() on remaining objects
+            ahead of their eventual destruction, to force any such additional processing to occur immediately, or in a specific order.
+          <br>
+          <br>
+            The routine specified by rid should be a procedure that takes a single parameter, being the object to be cleaned up.
+          <br>
+          <br>
+            It is usually the case that you would apply delete_routine() to individual table elements rather than a whole table.
+          <br>
+          <br>
+            The data passed to delete_routine should whenever possible be "final". Appending, prepending, or replacing elements of data <i>after</i>
+            delete_routine has been applied may or may not invoke the cleanup routine as you might hope (invocation depends mainly on the triggering 
+            of an internal clone operation, perhaps because of insufficient space or multiple reference counts).
+          <br>
+          <br>
+            An error occurs if a delete_routine has already been set. This is inconsistent with OpenEuphoria, which allows daisy-chains of cleanup
+            routines, however my argument is that it is better to prevent routines such as unlink (below) from being invoked twice, than it is to 
+            permit the added but questionable extra flexibility. Besides there is nothing to prevent the data from containing a list of routine_ids 
+            that the one associated cleanup routine can invoke in turn, and if you put unlink in that list twice it is your problem not mine, but at 
+            least it is trivial to scan such a list, something you would struggle to do with multiple hidden internal associations.
+          <br>
+          <br>
+            An error also occurs when an attempt is made to apply a routine_id to a constant (with the exception of integer constants, because the 
+            run-time simply cannot determine whether an integer value such as 4 is originally from open() or MB_YESNO - however I reserve the right 
+            (albeit with no actual intention or schedule) to add compile-time errors for the latter at some future date). Obviously invoking, say,
+            routine_id("test",rXXX) is utterly pointless - the constant "test" is never going to be destroyed, and hence rXXX would never be invoked. 
+            This is also inconsistent with OpenEuphoria.
+          <br>
+          <br>
+            Should an integer be passed as the first parameter, it is promoted to atom. This is required for memory allocations, as some may fall
+            below the magic #3FFFFFFF boundary. Note this may affect some comparison operations, as internally the run-time (eg builtins\VM\pJcc.e) 
+            assumes that integers and floats are never equal.
+          <br>
+          <br>
+            It is legal to invoke delete_routine(<i>&lt;object&gt;</i>,0). This has the effect of removing any association without invoking it. It
+            has the further effect of resetting the pHeap link, see technicalia. The routine_id is validated to ensure it is not -1, but only when 
+            the first parameter is non-integer.
+          <br>
+          <br>
+            Some memory allocation routines offer default delete_routines as part of automatic memory management.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+sequence list = {}
+intlisthead = 0
+
+procedure unlink(sequence item)
+    if item[PREV]=0 then
+        listhead = item[NEXT]
+    else
+        list[item[PREV]][NEXT] = item[NEXT]
+    end if
+    if item[NEXT]!=0 then
+        list[item[NEXT]][PREV] = item[PREV]
+    end if
+    close(item[FILEHANDLE])
+    free(item[MEMPTR])
+end procedure
+
+procedure add(sequence item)
+    item[PREV] = 0
+    item[NEXT] = listhead
+    list = append(list,delete_routine(item,routine_id("unlink")))
+    if listhead!=0 then
+        item[listhead][PREV] = length(list)
+    end if
+    listhead = length(list)
+end procedure
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">sequence</font><font color="#000000"> list</font><font color="#0000FF"> = {}
+</font><font color="#000000">intlisthead</font><font color="#0000FF"> =</font><font color="#000000"> 0
+
+</font><font color="#008080">procedure</font><font color="#000000"> unlink</font><font color="#0000FF">(</font><font color="#004080">sequence</font><font color="#000000"> item</font><font color="#0000FF">)
+</font><font color="#008080">    if</font><font color="#000000"> item</font><font color="#0000FF">[</font><font color="#000000">PREV</font><font color="#0000FF">]=</font><font color="#000000">0</font><font color="#008080"> then
+</font><font color="#000000">        listhead</font><font color="#0000FF"> =</font><font color="#000000"> item</font><font color="#0000FF">[</font><font color="#000000">NEXT</font><font color="#0000FF">]
+</font><font color="#008080">    else
+</font><font color="#000000">        list</font><font color="#0000FF">[</font><font color="#000000">item</font><font color="#800000">[</font><font color="#000000">PREV</font><font color="#800000">]</font><font color="#0000FF">][</font><font color="#000000">NEXT</font><font color="#0000FF">] =</font><font color="#000000"> item</font><font color="#0000FF">[</font><font color="#000000">NEXT</font><font color="#0000FF">]
+</font><font color="#008080">    end if
+    if</font><font color="#000000"> item</font><font color="#0000FF">[</font><font color="#000000">NEXT</font><font color="#0000FF">]!=</font><font color="#000000">0</font><font color="#008080"> then
+</font><font color="#000000">        list</font><font color="#0000FF">[</font><font color="#000000">item</font><font color="#800000">[</font><font color="#000000">NEXT</font><font color="#800000">]</font><font color="#0000FF">][</font><font color="#000000">PREV</font><font color="#0000FF">] =</font><font color="#000000"> item</font><font color="#0000FF">[</font><font color="#000000">PREV</font><font color="#0000FF">]
+</font><font color="#008080">    end if
+</font><font color="#7060A8">    close</font><font color="#0000FF">(</font><font color="#000000">item</font><font color="#800000">[</font><font color="#000000">FILEHANDLE</font><font color="#800000">]</font><font color="#0000FF">)
+</font><font color="#7060A8">    free</font><font color="#0000FF">(</font><font color="#000000">item</font><font color="#800000">[</font><font color="#000000">MEMPTR</font><font color="#800000">]</font><font color="#0000FF">)
+</font><font color="#008080">end procedure
+
+procedure</font><font color="#000000"> add</font><font color="#0000FF">(</font><font color="#004080">sequence</font><font color="#000000"> item</font><font color="#0000FF">)
+</font><font color="#000000">    item</font><font color="#0000FF">[</font><font color="#000000">PREV</font><font color="#0000FF">] =</font><font color="#000000"> 0
+    item</font><font color="#0000FF">[</font><font color="#000000">NEXT</font><font color="#0000FF">] =</font><font color="#000000"> listhead
+    list</font><font color="#0000FF"> =</font><font color="#7060A8"> append</font><font color="#0000FF">(</font><font color="#000000">list</font><font color="#0000FF">,</font><font color="#5E005E">delete_routine</font><font color="#800000">(</font><font color="#000000">item</font><font color="#0000FF">,</font><font color="#5E005E">routine_id</font><font color="#800080">(</font><font color="#008000">"unlink"</font><font color="#800080">)</font><font color="#800000">)</font><font color="#0000FF">)
+</font><font color="#008080">    if</font><font color="#000000"> listhead</font><font color="#0000FF">!=</font><font color="#000000">0</font><font color="#008080"> then
+</font><font color="#000000">        item</font><font color="#0000FF">[</font><font color="#000000">listhead</font><font color="#0000FF">][</font><font color="#000000">PREV</font><font color="#0000FF">] =</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#000000">list</font><font color="#0000FF">)
+</font><font color="#008080">    end if
+</font><font color="#000000">    listhead</font><font color="#0000FF"> =</font><font color="#7060A8"> length</font><font color="#0000FF">(</font><font color="#000000">list</font><font color="#0000FF">)
+</font><font color="#008080">end procedure</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="delete.htm">delete</a>,
+          <a href="allocate.htm">allocate</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+          
+          This mechanism is not guaranteed to play nice with automatic memeory leak checking. In the above example, the list items also hold chain links,
+          but if separate tables were used it might be the case that shutdown would destroy the link table before invoking unlink on some item in another
+          table. It may prove necessary for automatic memory leak checking to trigger errors when any outstanding delete_routine calls are detected.
+          <br>
+          <br>
+          Tip: When testing, especially in top-level code, it can be helpful to always store the result of delete_routine in a named variable. Code such 
+          as <code>myproc(delete_routine(..))</code> or even <code>table = append(table,delete_routine(..))</code> will store the result in an unnamed 
+          temporary variable, and it may prove difficult if not impossible to eradicate such hidden reference counts, thus invalidating the test. For
+          instance you might need something like this:
+<!--eucode>
+    object tmp = delete_routine(thing,routine_id(xxx))
+    table = append(table,tmp)
+--  table = table[1..$-1]   -- probably not, but...
+    tmp = 0                 -- now we can expect cleanup routines to trigger
+    table = table[1..$-1]   -- ...that should do it
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">    object</font><font color="#000000"> tmp</font><font color="#0000FF"> =</font><font color="#5E005E"> delete_routine</font><font color="#0000FF">(</font><font color="#000000">thing</font><font color="#0000FF">,</font><font color="#5E005E">routine_id</font><font color="#800000">(</font><font color="#000000">xxx</font><font color="#800000">)</font><font color="#0000FF">)
+</font><font color="#000000">    table</font><font color="#0000FF"> =</font><font color="#7060A8"> append</font><font color="#0000FF">(</font><font color="#000000">table</font><font color="#0000FF">,</font><font color="#000000">tmp</font><font color="#0000FF">)
+</font><font color="#000080"><i>--  table = table[1..$-1]   -- probably not, but...
+</i></font><font color="#000000">    tmp</font><font color="#0000FF"> =</font><font color="#000000"> 0                </font><font color="#000080"><i> -- now we can expect cleanup routines to trigger
+</i></font><font color="#000000">    table</font><font color="#0000FF"> =</font><font color="#000000"> table</font><font color="#0000FF">[</font><font color="#000000">1</font><font color="#0000FF">..</font><font color="#000000">$</font><font color="#0000FF">-</font><font color="#000000">1</font><font color="#0000FF">]  </font><font color="#000080"><i> -- ...that should do it</i></font>
+</pre>
+            <br>
+            Of course in non-top-level code, if you invoke a routine, say <code>add()</code>, then by the time <code>add()</code> returns, any such
+            hidden temporaries will have been destroyed, and any associated reference counts appropriately decremented.
+            <br>
+            <br>
+            Also, routines associated/invoked via delete_routine must <b><i>not</i></b> invoke <a href="task_yield.htm">task_yield</a>().
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

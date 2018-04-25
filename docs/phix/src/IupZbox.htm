@@ -1,0 +1,190 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">IupZbox</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="Ihandle.htm">Ihandle</a> ih = IupZbox(<a href="Ihandle.htm">Ihandles</a> children={},
+            <a href="string.htm">string</a> attributes="", <a href="sequence.htm">sequence</a> data={})
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Creates a void container for composing elements in hidden layers with only one layer visible. It is a box that piles up the children it contains, only the one child is visible.
+            <br>
+            <br>
+            children: list of the elements that will be placed in the box. It can be empty.<br>
+            For more information on the attributes and data parameters see <a href="IupSetAttributes.htm">IupSetAttributes</a>.
+            <br>
+            <br>
+            It does not have a native representation.
+            <br>
+            <br>
+            Returns: the identifier of the created element.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Notes:</b>
+         </td>
+         <td>
+            Zbox works by changing the <a href="common.htm#VISIBLE">VISIBLE</a> attribute of its children, 
+            so if any of the grand children has its VISIBLE attribute directly defined then Zbox will NOT change its state.
+            <br>
+            <br>
+            The box can be created with no elements and filled dynamically using <a href="IupAppend.htm">IupAppend</a>() or <a href="IupInsert.htm">IupInsert</a>().
+            <br>
+            <br>
+            IMPORTANT: each element must have a name defined by <a href="IupSetHandle.htm">IupSetHandle</a>.
+            <br>
+            <br>
+            Its children automatically receives a name when the child is appended or inserted into the tabs. (since 3.16) 
+            <br>
+            <br>
+            The ZBOX relies on the <a href="common.htm#VISIBLE">VISIBLE</a> attribute. 
+            If a child that is hidden by the zbox has its VISIBLE attribute changed then it can be made visible regardless of the zbox configuration. 
+            For the zbox behave as a <a href="IupTabs.htm">IupTabs</a> use native containers as immediate children of the zbox, 
+            like <a href="IupScrollBox.htm">IupScrollBox</a>, <a href="IupTabs.htm">IupTabs</a>, <a href="IupFrame.htm">IupFrame</a> or 
+            <a href="IupBackgroundBox.htm">IupBackgroundBox</a>.
+            <br>
+            <br>
+            When translating C code, note that internally Phix only uses the C function IupZboxv, which accepts a single null-terminated list, 
+            and does not use the variable-parameter C IupZbox function. It is perfectly legal (in Phix) to specify an empty list ({}) for the 
+            children parameter, but not NULL.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          ALIGNMENT
+         </td>
+         <td>
+            (non inheritable) Defines the alignment of the visible child. Possible values:
+            "NORTH", <wbr>"SOUTH", <wbr>"WEST", <wbr>"EAST", <wbr>"NE", <wbr>"SE", <wbr>"NW", <wbr>"SW", <wbr>"ACENTER". Default: "NW".
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#EXPAND">EXPAND</a>
+         </td>
+         <td>
+            (non inheritable) The default value is "YES".
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VALUE
+         </td>
+         <td>
+            (non inheritable) The visible child accessed by its name. The value passed must be the name of one of the children contained in the zbox. 
+            Use <a href="IupSetHandle.htm">IupSetHandle</a> or <a href="IupSetAttributeHandle.htm">IupSetAttributeHandle</a> to associate a child to a name. 
+            When the value is changed the selected child is made visible and all other children are made invisible, regardless their previous visible state.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VALUE_HANDLE
+         </td>
+         <td>
+            (non inheritable) The visible child accessed by its handle. The value passed must be the handle of a child contained in the zbox. 
+            When the zbox is created, the first element inserted is set as the visible child. (since 3.0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          VALUEPOS
+         </td>
+         <td>
+            (non inheritable) The visible child accessed by its position. The value passed must be the index of a child contained in the zbox, starting at 0. 
+            When the zbox is created, the first element inserted is set as the visible child. (since 3.0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#SIZE">SIZE</a> / <a href="common.htm#RASTERSIZE">RASTERSIZE</a>
+         </td>
+         <td>
+            (non inheritable) The default size is the smallest size that fits its largest child. All child elements are considered even invisible ones, 
+            except when <a href="common.htm#FLOATING">FLOATING</a>=YES in a child.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#WID">WID</a>
+         </td>
+         <td>
+            (read-only) returns -1 if mapped.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          also
+         </td>
+         <td>
+            <a href="common.htm#FONT">FONT</a>, 
+            <a href="common.htm#POSITION">POSITION</a>, 
+            <a href="common.htm#CLIENTSIZE">CLIENTSIZE</a>, 
+            <a href="common.htm#CLIENTOFFSET">CLIENTOFFSET</a>, 
+            <a href="common.htm#MINSIZE">MINSIZE</a>, 
+            <a href="common.htm#MAXSIZE">MAXSIZE</a>: also accepted.
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>Attributes:</b>
+         </td>
+         <td>
+            (at Children)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <a href="common.htm#FLOATING">FLOATING</a>
+         </td>
+         <td>
+            (non inheritable) (at children only) If a child has FLOATING=YES then its size and position will be ignored by the layout processing. Default: "NO". (since 3.0)
+         </td>
+        </tr>
+
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="IupHbox.htm">IupHbox</a>,
+          <a href="IupVbox.htm">IupVbox</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

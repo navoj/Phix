@@ -1,0 +1,89 @@
+--
+-- Poly.exw
+-- ========
+--
+-- Just a simple thing I found on the intenet while investigating graphics,
+--  at the very start of my first ever foray into such things.
+--
+
+constant PointNumMax = 14
+
+--with trace
+include arwen.ew
+include axtra.ew    -- GetNamedColour
+
+constant main = create(Window,"Poly",0,0,50,50,600,400,0),
+--       mainHwnd = getWindowHwnd(main),
+         mainDC = getPrivateDC(main)
+
+constant rainbow = {"red","orange","yellow","green","blue","indigo","violet"}
+                    -- (see axtra.ew for other named colours you can use)
+
+sequence pens, brushes, polypoints
+         polypoints = {}  -- (indicates not initialised yet)
+
+procedure setShapes()
+integer b, g, r
+integer width, colour
+integer X, Y
+
+    pens = repeat(0,length(rainbow))
+    brushes = repeat(0,length(rainbow))
+    for i=1 to length(rainbow) do
+        {b,g,r} = GetNamedColour(rainbow[i])
+        colour = rgb(r,g,b)
+        width = 1
+        pens[i] = c_func(xCreatePen,{PS_SOLID,width,colour})
+        brushes[i] = c_func(xCreateSolidBrush,{colour})
+    end for
+    polypoints = repeat(0,PointNumMax) -- (1 and 2 not used)
+    for p=3 to PointNumMax do
+        polypoints[p] = {}
+        for i=1 to p do
+            X = floor(cos(2*PI*i/p)*50+50.5+110*(p-3))
+            Y = floor(sin(2*PI*i/p)*50+55.5)
+            polypoints[p] &= {X,Y}
+        end for
+    end for
+end procedure
+
+function mHandler(integer id, integer msg, atom wParam, object lParam)
+atom pPoints
+integer pidx
+
+--  if msg=WM_SIZE then
+--      void = c_func(xInvalidateRect,{mainHwnd,NULL,0})    -- w/o erase...
+--      void = c_func(xSendMessage,{mainHwnd,WM_PAINT,0,0})
+--      repaintWindow(main,0)
+    if msg=WM_PAINT then
+        if length(polypoints)=0 then        -- (first time in)
+            setShapes()
+            setBackColour(main, BrightWhite)
+        end if
+        pPoints = allocate(PointNumMax*8)   -- (2 dwords per point)
+        pidx = 1
+        for i=3 to PointNumMax do
+            void = c_func(xSelectObject,{mainDC,pens[pidx]})
+            void = c_func(xSelectObject,{mainDC,brushes[pidx]})
+            poke4(pPoints,polypoints[i])
+            void = c_func(xPolygon, {mainDC,pPoints,i})
+            pidx += 1
+            if pidx>length(rainbow) then
+                pidx = 1
+            end if
+        end for
+        free(pPoints)
+    elsif msg=WM_CHAR then
+        if wParam=VK_ESCAPE then
+            closeWindow(main)
+        end if
+    elsif msg=WM_CLOSE then
+        releaseDC(id,mainDC)
+        if lParam then end if   -- suppress warnings
+    end if
+    return 0
+end function
+setHandler(main, routine_id("mHandler"))
+
+WinMain(main,SW_NORMAL)
+

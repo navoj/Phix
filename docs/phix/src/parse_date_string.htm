@@ -1,0 +1,102 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">parse_date_string</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include builtins\timedate.e
+            <br>
+            <br>
+            <a href="timedatetype.htm">timedate</a> td = parse_date_string(<a href="string.htm">string</a> s, <a href="sequence.htm">sequence</a> fmts=default_parse_fmts, 
+                                                                           <a href="integer.htm">integer</a> partial=allow_partial)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Convert the string s into a <a href="timedatetype.htm">timedate</a>.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The fmts and partial parameters can be defaulted using the <a href="set_timedate_formats.htm">set_timedate_formats</a>() routine, 
+            the former being a list of <a href="tdformats.htm">format strings</a>, each of which is attempted in turn. Note that a fatal error
+            occurs if the fmts parameter is omitted and <a href="set_timedate_formats.htm">set_timedate_formats</a>() has not been invoked.
+            <br>
+            <br>
+            The partial flag controls whether to ignore excess text when parsing, and if set, then fmts should be ordered 
+            most detailed first - in the example below you would not want it to completely ignore the trailing "EST", but if
+            no timezone is present you would simply assume it is a local time. 
+            Another example might be "03/09/15 6pm Customer was not happy", you might want try "DD/MM/YY ham tz" and fail before 
+            trying "DD/MM/YY ham" and pass.
+            <br>
+            <br>
+            Note that parsing say "Monday 1/01/2000" returns a <a href="date.htm">DT_DOW</a> element set to 2, even though it was a Saturday, and any 
+            non-explicitly mentioned elements get left as zero. It is in fact perfectly legal to invoke parse_date_string("?","?"), 
+            which checks the input for that exact literal and returns {0,0,0,0,0,0,0,0,0}, however it is illegal to specify an 
+            empty string ("") as a format.
+            <br>
+            <br>
+            The day of year field (td[<a href="date.htm">DT_DOY</a>]) is usually left zero, but can easily be obtained using 
+            <a href="day_of_year.htm">day_of_year</a>(y,m,d).<br>
+            Also note that routines such as <a href="format_timedate.htm">format_timedate</a>() do not generally trust the contents of 
+            td[<a href="date.htm">DT_DOY</a>], since it may contain milliseconds.
+            <br>
+            <br>
+            To quietly catch errors from parse_date_string(), store the result in a <a href="sequence.htm">sequence</a> variable and either use 
+            <a href="timedatetype.htm">the timedate type</a> function to test it, or check that the 
+            <a href="length.htm">length</a>() is not 3, before attempting to use it as a timedate.
+            If an error occurs the result has a length of 3, which consists of a numeric error code, a description of that code, and 0 or
+            an extended description of the actual problem encountered. Said messages are intended for a developer/typecheck, not an end user.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+include builtins\timedate.e
+td = parse_date_string("March 7 2009 7:30pm EST",{"Mmmm d yyyy h:mmpm tz","Mmmm d yyyy h:mmpm"})
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#008080">include</font><font color="#000000"> builtins\timedate.e
+td</font><font color="#0000FF"> =</font><font color="#5E005E"> parse_date_string</font><font color="#0000FF">(</font><font color="#008000">"March 7 2009 7:30pm EST"</font><font color="#0000FF">,</font><font color="#800000">{</font><font color="#008000">"Mmmm d yyyy h:mmpm tz"</font><font color="#0000FF">,</font><font color="#008000">"Mmmm d yyyy h:mmpm"</font><font color="#800000">}</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="timedate.htm">timedate</a>,
+          <a href="timedatetype.htm">the timedate type</a>,
+          <a href="tdformats.htm">format strings</a>,
+          <a href="set_timedate_formats.htm">set_timedate_formats</a>,
+          <a href="format_timedate.htm">format_timedate</a>,
+          <a href="day_of_year.htm">day_of_year</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,108 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">peek_string</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="string.htm">string</a> s = peek_string(<a href="atom.htm">atom</a> addr)
+          <br>
+          <i>-- or --</i>
+          <br>
+          <a href="sequence.htm">sequence</a> s = peek_wstring(<a href="atom.htm">atom</a> addr)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Retrieve a string or widestring that starts at the supplied memory address.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            Reads characters until a terminating null is found.
+            <br>
+            <br>
+            In some cases a fixed size is used to hold a string, for example the Names in the Section Table of a PE format file
+            (such as .text, .data) are x8 and may not always have a terminating zero. Either use <a href="peek.htm">peek</a>({addr,8}) 
+            and trim the result if it contains any null characters, or, slightly less safe, use peek_string but crop the result if it 
+            is more than 8 characters.
+            <br>
+            <br>
+            It may be useful to pass the result of peek_wstring() through <a href="utf16_to_utf32.htm#utf16_to_utf8">utf16_to_utf8</a>().
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+atom title
+title = allocate_string("The Wizard of Oz")
+?peek_string(title)
+...
+free(title)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#004080">atom</font><font color="#000000"> title
+title</font><font color="#0000FF"> =</font><font color="#5E005E"> allocate_string</font><font color="#0000FF">(</font><font color="#008000">"The Wizard of Oz"</font><font color="#0000FF">)
+?</font><font color="#5E005E">peek_string</font><font color="#0000FF">(</font><font color="#000000">title</font><font color="#0000FF">)
+...
+</font><font color="#7060A8">free</font><font color="#0000FF">(</font><font color="#000000">title</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example Program:</b>
+         </td>
+         <td>
+          <font color="#5500FF">
+           <b>demo\arwendemo\demo_treeview.exw</b>
+          </font>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="allocate_string.htm">allocate_string</a>,
+          <a href="allocate.htm">allocate</a>,
+          <a href="free.htm">free</a>,
+          <a href="utf16_to_utf32.htm#utf16_to_utf8">utf16_to_utf8</a>
+         </td>
+        </tr>
+        <tr id="Technicalia" style="display:none;">
+         <td valign=top>
+          <a href="glossary.htm#technicalia">
+           <b>Technicalia</b>
+          </a>
+         </td>
+         <td>
+            The implementation of these routines can be found in builtins\peekstr.e (an autoinclude)
+         </td>
+        </tr>
+       </table>
+       <img src="images/sprites/tech.open.png" title="Expand/Shrink" style="display:block;clear:both;" onload="setStartT(this);" onclick="changeImageT(this);" />
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

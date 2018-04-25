@@ -1,0 +1,76 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">to_integer</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            <a href="integer.htm">integer</a> res = to_integer(<a href="string.htm">string</a> s, <a href="integer.htm">integer</a> def_value = 0)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Converts a string representation of an unsigned decimal integer into an integer.
+            <br>
+            <br>
+            s: A string such as "42".<br>
+            def_value: The value to return on failure.
+            <br>
+            <br>
+            Returns the integer equivalent of s, or def_value.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            This is, quite deliberately, the simplest possible implementation of such a function.
+            <br>
+            <br>
+            To deal with values outside 0..1,073,741,823 as well as signs, fractions, exponents, embedded underscores, 
+            or other number bases, use <a href="to_number.htm">to_number</a>().
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+?to_integer("12")                           -- 12
+?to_integer("-12")                          -- 0 (the default def_value)
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#0000FF">?</font><font color="#5E005E">to_integer</font><font color="#0000FF">(</font><font color="#008000">"12"</font><font color="#0000FF">)                          </font><font color="#000080"><i> -- 12
+</i></font><font color="#0000FF">?</font><font color="#5E005E">to_integer</font><font color="#0000FF">(</font><font color="#008000">"-12"</font><font color="#0000FF">)                         </font><font color="#000080"><i> -- 0 (the default def_value)</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            See builtins\to_int.e (an autoinclude) for details of the actual implementation.
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

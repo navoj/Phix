@@ -1,0 +1,83 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">floor</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          <a href="atom.htm">atom</a> x2 = floor(<a href="atom.htm">atom</a> x1)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Return the greatest integer less than or equal to x1. (Round down to an integer, towards -infinity.)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            This function may be applied to an <a href="atom.htm">atom</a> or sq_floor() to all elements of a 
+            <a href="sequence.htm">sequence</a>. The rules for <a href="seqops.htm">sequence operations</a> apply.
+            <br>
+            <br>
+            floor(a/b) is treated specially for performance reasons, as there is no point storing a floating point 
+            intermediate/parameter when the fractional part gets discarded immediately. There is a corresponding 
+            sq_floor_div() sequence operation to match that performance enhancement, which yields exactly the same 
+            results as sq_floor(sq_div()), only faster.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+y = sq_floor({0.5, -1.6, 9.99, 100})
+-- y is {0, -2, 9, 100}
+</eucode-->
+<pre>
+<font color="#000000">y</font><font color="#0000FF"> =</font><font color="#5E005E"> sq_floor</font><font color="#0000FF">(</font><font color="#800000">{</font><font color="#000000">0.5</font><font color="#0000FF">, -</font><font color="#000000">1.6</font><font color="#0000FF">,</font><font color="#000000"> 9.99</font><font color="#0000FF">,</font><font color="#000000"> 100</font><font color="#800000">}</font><font color="#0000FF">)
+</font><font color="#000080"><i>-- y is {0, -2, 9, 100}</i></font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Implementation:</b>
+         </td>
+         <td>
+            via :%opFloor in builtins\VM\pUnary.e (an autoinclude)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="remainder.htm">remainder</a>,
+          <a href="ceil.htm">ceil</a>,
+          <a href="trunc.htm">trunc</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

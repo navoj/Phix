@@ -1,0 +1,45 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">cdCanvasBox</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            cdCanvasBox(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> xmin, xmax, ymin, ymax)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         <td>
+<!-- DEV (cdf/wd)
+void cdCanvasBox(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax); [in C]
+void cdfCanvasBox(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax); [in C]
+void wdCanvasBox(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax); (WC) [in C]
+-->
+            Fills a rectangle according to the current interior style. <br>
+            All points in the interval xmin&lt;=x&lt;=xmax, ymin&lt;=y&lt;=ymax will be painted. <br>
+            When the interior style CD_HOLLOW is defined, the function behaves like its equivalent cdRect.
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

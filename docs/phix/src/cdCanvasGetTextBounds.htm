@@ -1,0 +1,55 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">cdCanvasGetTextBounds</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+            include pGUI.e
+            <br>
+            <br>
+            <a href="sequence.htm">sequence</a> bounds = cdCanvasGetTextBounds(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> x, y, <a href="string.htm">string</a> text)<br>
+            <i>-- or --</i><br>
+            <a href="sequence.htm">sequence</a> bounds = wdCanvasGetTextBounds(<a href="cdCanvas.htm">cdCanvas</a> hCdCanvas, <a href="atom.htm">atom</a> x, y, <a href="string.htm">string</a> text)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         <td>
+            Returns the oriented bounding rectangle occupied by a text at a given position. 
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The rectangle has the same dimensions returned by cdCanvasGetTextSize. <br>
+            The rectangle corners are returned in counter-clock wise order starting with the bottom left corner, arranged (x0,y0,x1,y1,x2,y2,x3,y3).
+            <br>
+            <br>
+            Since the pGUI wrapper functions can accept integers and floats in the parameters, and return atoms or integers,
+            there is no need for a separate cdfCanvasGetTextBounds wrapper. <br>
+            Internally cdCanvasGetTextBounds uses the cdfCanvasGetTextBounds C function.<br>
+            [CORRECTION: well, that was the plan, but (the C) cdfCanvasGetTextBounds gave me jip while cdCanvasGetTextBounds did not.]
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,90 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">crash_file</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         crash_file(<a href="object.htm">object</a> filename)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Specify a file name for holding error diagnostics if phix must stop your program due to a compile-time or run-time error. <br>
+            Specify 0 to restore default handling, "NULL" (or "NUL" or "/dev/null") to disable the creation of a disk file, or "" to disable 
+            diagnostics completely.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>Normally phix prints a diagnostic message such as
+             "syntax error" or "divide by zero" on the screen, as well as
+             dumping debugging information into
+          <font color="#030303">
+           <b>ex.err</b>
+          </font> in the current directory. While the latter is quite predictable at
+            program startup, it can be changed explicitly by <a href="chdir.htm">chdir</a>() or implicitly via
+            a standard file open dialogue. By calling crash_file() you can control the 
+            directory and file name where the debugging information will be written.
+            You could easily write a routine which checks for the presence of any error
+            files at startup and either rename things or generate a new unique name, so
+            that a complete history of any run-time errors is maintained.
+          <br>
+          <br>
+            filename may be empty, i.e. "". In this case no diagnostics or debugging 
+            information will be written to either a file or the screen. 
+            It might also be "NULL", "NUL" or "/dev/null", in which case diagnostics will 
+            be written to the screen, but the ex.err information will be discarded.
+          <br>
+          <br>
+            You can call crash_file() as many times as you like from
+            different parts of your program. The file specified by the
+            last call will be the one used.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+crash_file("\\tmp\\mybug")
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#5E005E">crash_file</font><font color="#0000FF">(</font><font color="#008000">"\\tmp\\mybug"</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="abort.htm">abort</a>,
+          <a href="crash_message.htm">crash_message</a>,
+          <a href="debugging.htm">debugging and profiling</a>
+         </td>
+        </tr>
+       </table>
+       <br>
+       <br>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

@@ -1,0 +1,87 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">sleep</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+          sleep(<a href="atom.htm">atom</a> a)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>Suspend execution for a seconds.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            The operating system will suspend your process and schedule other processes.
+            <br>
+            <br>
+            Fractions are allowed, like OpenEuphoria, but unlike the RDS Eu version of this procedure which only accepts whole seconds.
+            <br>
+            <br>
+            Negative values trigger a fatal exception. Attempts to sleep longer than about 24 days (ie 2,147,483 seconds), are expected 
+            to suffer an internal overflow and quietly malfunction, perhaps by sleeping for only 24 days even when you asked for 27.
+            <br>
+            <br>
+            There is no guarantee that control will not return prematurely, perhaps due to a particular keystroke or some system
+            broadcast message, and equally there is no official way to deliberately interrupt a sleep operation - anything of that ilk
+            would require a loop of several shorter sleeps with appropriate tests on each iteration.
+            <br>
+            <br>
+            With multiple tasks, the whole program sleeps, not just the current task. To avoid this, when multitasking is in use you 
+            should instead call <a href="task_delay.htm">task_delay</a>(a).<br>
+            With multiple threads, other running threads continue uninterrupted and only the calling thread sleeps. Ironically perhaps,
+            you should note that task_delay is decidedly <i>not</i> thread-safe and <i>will</i> crash if invoked from multiple threads.
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Example:</b>
+         </td>
+         <td>
+<!--eucode>
+puts(1, "Waiting 15 seconds...\n")
+sleep(15)
+puts(1, "Done.\n")
+</eucode-->
+<pre>
+<font color="#000000"></font><font color="#7060A8">puts</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#008000"> "Waiting 15 seconds...\n"</font><font color="#0000FF">)
+</font><font color="#7060A8">sleep</font><font color="#0000FF">(</font><font color="#000000">15</font><font color="#0000FF">)
+</font><font color="#7060A8">puts</font><font color="#0000FF">(</font><font color="#000000">1</font><font color="#0000FF">,</font><font color="#008000"> "Done.\n"</font><font color="#0000FF">)</font>
+</pre>
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>See Also:</b>
+         </td>
+         <td>
+          <a href="lock_file.htm">lock_file</a>,
+          <a href="abort.htm">abort</a>,
+          <a href="time.htm">time</a>,
+          <a href="task_delay.htm">task_delay</a>
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

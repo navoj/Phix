@@ -1,0 +1,90 @@
+--
+-- progress.exw
+--
+-- shows progress while downloading a file
+--
+-- Note: It's not a "pretty" display, it just scrolls down the screen.
+--       It's just an example!
+--
+-- Ray Smith 29/08/2002, reworked PL 1/1/18
+
+constant url = "http://example.com"
+
+include libcurl.e
+
+curl_global_init()
+
+atom curl = curl_easy_init()
+
+--SUG?: (it may be the same on 32/64 bit...)
+--function curl_progress_callback32(atom clientp,
+function curl_progress_callback(atom clientp,
+                                atom dltotal1, atom dltotal2,
+                                atom dlnow1, atom dlnow2,
+                                atom ultotal1, atom ultotal2, 
+                                atom ulnow1, atom ulnow2)
+    atom f64 = allocate(8), dltotal, dlnow, ultotal, ulnow
+
+    -- convert to float64
+    poke4(f64,{dltotal1, dltotal2})     dltotal = float64_to_atom(peek({f64,8}))
+    poke4(f64,{dlnow1,   dlnow2})       dlnow   = float64_to_atom(peek({f64,8}))
+    poke4(f64,{ultotal1, ultotal2})     ultotal = float64_to_atom(peek({f64,8}))
+    poke4(f64,{ulnow1,   ulnow2})       ulnow   = float64_to_atom(peek({f64,8}))
+    free(f64)
+
+    atom pcnt = iff(dltotal=0?0:dlnow*100/dltotal)
+    printf(1, "Current=%d kb  Total=%d kb (%d%%)\n  ", {dlnow/1024, dltotal/1024, pcnt})
+
+    return 0 -- signify success
+end function
+constant progress_cb = call_back({'+', routine_id("curl_progress_callback")})
+
+--/* testme: (may need a simpler 64-bit version...)
+function curl_xferinfo_callback(atom clientp,
+                                atom dltotal1, atom dltotal2,
+                                atom dlnow1, atom dlnow2,
+                                atom ultotal1, atom ultotal2, 
+                                atom ulnow1, atom ulnow2)
+    atom int64 = allocate(8), dltotal, dlnow, ultotal, ulnow
+
+    -- convert to int64
+    poke4(int64,{dltotal1, dltotal2})   dltotal = peek8(int64)
+    poke4(int64,{dlnow1,     dlnow2})   dlnow   = peek8(int64)
+    poke4(int64,{ultotal1, ultotal2})   ultotal = peek8(int64)
+    poke4(int64,{ulnow1,     ulnow2})   ulnow   = peek8(int64)
+    free(int64)
+
+    atom pcnt = iff(dltotal=0?0:dlnow*100/dltotal)
+    printf(1, "Current=%d kb  Total=%d kb (%d%%)\n  ", {dlnow/1024, dltotal/1024, pcnt})
+
+    return 0 -- signify success
+end function
+constant xferinfo_cb = call_back({'+', routine_id("curl_xferinfo_callback")})
+--*/
+
+printf(1, "Downloading remote file %s\n", {url})
+
+atom pErrorBuffer = allocate(CURL_ERROR_SIZE)
+curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, pErrorBuffer)
+curl_easy_setopt(curl, CURLOPT_URL, url)
+-- set progress callback
+curl_easy_setopt(curl, CURLOPT_NOPROGRESS,0)
+curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, progress_cb)
+--curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, xferinfo_cb)
+
+--curl_easy_setopt(curl, CURLOPT_FAILONERROR, true)
+--curl_easy_setopt(curl, CURLOPT_VERBOSE, true)
+
+object ret = curl_easy_perform_ex(curl)
+if atom(ret) then
+   printf(1, "Error %d(%s) downloading file\n", {ret,peek_string(pErrorBuffer)})
+else
+    ?{"bytes received",length(ret)}
+end if
+
+curl_easy_cleanup(curl)
+free(pErrorBuffer)
+
+puts(1, "Press any key to continue.\n")
+{} = wait_key()
+

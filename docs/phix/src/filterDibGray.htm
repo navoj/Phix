@@ -1,0 +1,45 @@
+<head>
+ <body>
+  <toc>
+   <these>
+    <get>
+     <stripped>
+      <h1 class="title">filterDibGray</h1>
+      <div id="mainSection">
+       <table>
+        <col style="width: 5%"/>
+        <tr>
+         <td valign=top>
+          <b>Definition:</b>
+         </td>
+         <td>
+         filterDibGray(a32Dib dib, sequence matrix, integer div, integer bias)
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Description:</b>
+         </td>
+         <td>
+            Applies a matrix-filter to the bitmap:<br>
+            matrix is a 7x7 sequence with the multiplication-values<br>
+            div is the number to divide the result by<br>
+            bias is the number to add to the result
+         </td>
+        </tr>
+        <tr>
+         <td valign=top>
+          <b>Comments:</b>
+         </td>
+         <td>
+            new_pixel[y][x] = sum_of(matrix[i][j] * old_pixel[y-4+i][x-4+j]) / div + bias
+         </td>
+        </tr>
+       </table>
+      </div>
+     </stripped>
+    </get>
+   </these>
+  </toc>
+ </body>
+</head>

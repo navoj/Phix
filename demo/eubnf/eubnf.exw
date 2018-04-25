@@ -1,0 +1,1217 @@
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- !!! This program reads its own source file to load the following: !!!
+-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-- !! EUBNF (extremely unusual backus-naur formalism;-) for Phix
+-- !! EUBNF comment lines begin with "-- !!" (*must* be in column one)
+-- !!   code comments and whitespace are stripped by the tokeniser.
+-- !!   ::= defines a production rule
+-- !!   "" indicate terminal symbols
+-- !!   {} (non empty) indicates zero, one, or many
+-- !!   [] (non empty) indicates zero or one
+-- !!   |  indicates alternates (note that productions can only span lines if the
+-- !!      continuation line begins with a |)
+-- !!   () limit the alternate operator range, which otherwise extends to the 
+-- !!      enclosing parenthesis, next | symbol, or start/end of line. For example
+-- !!      the rule 'a b|c d|e' is equivalent to '(a b)|(c d)|e' rather than the
+-- !!      rule 'a (b|c) (d|e)' which might have been what was originally intended.
+-- !!   {} (empty, & last element) indicates auto-extending production definition
+-- !!      (Mostly for human readers; not entirely but effectively ignored)
+-- !!   $  indicates auto-extending production use - note that auto-extending 
+-- !!       productions can be used in both extend and read-only mode.
+-- !!   $+ lifts scope, $- drops scope
+-- !!   $# matches any token and saves it...
+-- !!   #  ... applies the named list in reference mode, if matched it auto-extends it
+-- !!          with the $# saved token. Really only for type definitions
+-- !!   !  indicates substitution of subsequent production references.
+-- !!      For details see comment before the pad() function below.
+-- !!   *  is a marker, for the human reader/development. It is discarded.
+-- !!
+-- !!   The following definitions also distinguish between atomic and subscriptable 
+-- !!   types, variables, and type definitions. New type definitions are supported
+-- !!   within the syntax, along with validation that a variable is defined at the
+-- !!   current scope. Suceeding in parsing is the intention; giving a reasonable 
+-- !!   error message and/or speed are the very least concerns.
+-- !!
+--      program     ::= { toplevel }
+--      toplevel    ::=("with"|"without") woption
+--                   |  "include" filename [as]
+--                   | ["global"] (var | constdef | routine)
+--                   | statement
+--      as          ::= "as" $ns
+--      woption     ::= "profile"|"profile_time"|"trace"
+--                   |  "warning"|"type_check"|"debug"|literal
+--      var         ::= adef avarl | sdef svarl
+--      adef        ::= "atom"|"integer"|{}
+--      sdef        ::= "object"|"sequence"|"string"|{}
+--      avarl       ::= $avar ["," ("$"|avarl)]
+--      svarl       ::= $svar ["," ("$"|svarl)]
+--      constdef    ::= "constant" conlist
+--      conlist     ::= $const "=" expr ["," ("$"|conlist)]
+--      routine     ::= "procedure" $pname pdef "end" "procedure"
+--                   |  "function" $fname fdef "end" "function"
+--                   |  "type" tdef "end" "type"
+--      pname       ::= {}
+--      fname       ::= {}
+--      avar        ::= {}
+--      svar        ::= {}
+--      const       ::= {}
+--      ns          ::= {}
+--      pdef        ::= $+ "(" [formalparm] ")" {var} {rstmt} $-
+--      fdef        ::= $+ "(" [formalparm] ")" {var} {restmt} $-
+--      tdef        ::= $# "(" [ns] (#adef $+ $avar | #sdef $+ $svar) ")" {var} {restmt} $-
+--      formalparm  ::= [ns] (adef $avar | sdef $svar) ["=" expr] ["," formalparm]
+--      restmt      ::= "return" expr | !statement
+--      rstmt       ::= "return" | !statement
+--      forstmt     ::= "for" $+ $avar"="expr "to" expr ["by" expr] "do" {xstatement} "end" "for" $-
+--      whilestmt   ::= "while" expr "do" {xstatement} "end" "while"
+--      xstatement  ::= "exit" | !statement
+--      ifstmt      ::= "if" expr "then" {statement} {elsifs} [elsebit] "end" "if"
+--      elsifs      ::= "elsif" expr "then" {statement}
+--      elsebit     ::= "else" {statement}
+--      statement   ::= [ns] nstatement
+--                   |  forstmt
+--                   |  whilestmt
+--                   |  ifstmt
+--                   |  "?" expr
+--                   |  "#ilASM" "{" asm "}"
+-- !! namespace-able statements (separate so namespace ":" only parsed once)
+--      nstatement  ::= avar aop expr
+--                   |  svar [subscripts] aop expr
+--                   |  pname "(" [exprl] ")"
+--      aop         ::= "=" | "+=" | "-=" | "*=" | "/=" | "&="
+--      exprl       ::= expr {"," expr}
+-- !! Warning: these are all separate otherwise scope checking would be a whole lot messier
+-- !! than it already is. Eg avar | (svar|const) [subscripts] | (fname|adef|sdef) "("... is
+-- !! not "flat" enough for scope checking to target the right one (of six in this case).
+--      eitem       ::= [ns] nseitem
+--                   |  literal
+--                   |  "{" [exprl] "}"
+--                   |  "(" expr ")"
+--                   |  ("+" | "-" | "not") eitem
+-- !! namespace-able eitems (separate so namespace ":" only parsed once)
+--      nseitem     ::= avar
+--                   |  svar [subscripts]
+--                   |  const [subscripts]
+--                   |  fname "(" [exprl] ")"
+--                   |  adef "(" [exprl] ")"
+--                   |  sdef "(" [exprl] ")"
+--      subscripts  ::= "[" expr ("]" [subscripts] | [".." expr] "]" )
+--      compop      ::= "or" | "and" | "xor"
+--      expr        ::= comparison {compop comparison}
+--      comparison  ::= concat {relop concat}
+--      relop       ::= "=" | "<" | ">" | "!=" | "<=" | ">="
+--      concat      ::= sum {"&" sum}
+--      sum         ::= term { ("-" | "+") term }
+--      term        ::= eitem { ("*" | "/") eitem }
+--      asml        ::= {}
+--      asm         ::= { $asml|"["|"]"|","|":"|"%"|"!"|">"|"@" }
+-- !!   asm         ::= "}" | ( ident | "[" ident "]" | "," ) asm
+-- !! note these are hard-coded; it is much easier and much faster that way:
+-- !!   literal     ::= "\"" {ascii} "\""
+-- !!                |  "\'" ascii "\'"
+-- !!                |  "#" hexdigit hexdigit {hexdigit hexdigit}
+-- !!                |  mantissa
+-- !!                |  number [mantissa]
+-- !!   mantissa    ::= "." number [("e"|"E") ["+"|"-"]number]
+-- !!   number      ::= digit {digit}
+-- !!   ascii       ::= " ".."~" | "\\" ("\""|"\'"|"\"|"n"|"r"|"t")
+-- !!   az          ::= "A".."Z"|"a".."z"
+-- !!   digit       ::= "0".."9"
+-- !!   hexdigit    ::= "0".."9"|"A".."F"
+-- !!   ident       ::= az {az|digit|"_"}
+--$-    !! ends the eubnf definition
+
+--... and BNF in BNF is:
+----syntax     ::=  { rule }
+----rule       ::=  identifier  "::="  expression
+----expression ::=  term { "|" term }
+----term       ::=  factor { factor }
+----factor     ::=  identifier |
+----                quoted_symbol |
+----                "("  expression  ")" |
+----                "["  expression  "]" |
+----                "{"  expression  "}"
+----identifier ::=  letter { letter | digit }
+----quoted_symbol ::= """ { any_character } """
+--
+--   extend parameter type checking to parameters? The above syntax does not permit type
+--   checking against sequence formal parameters being passed an integer, since they live
+--   in the same table as objects, which would be OK. (Std Eu does not do this).
+--   likewise the above does not check for attempts to subscript an atomic constant, and 
+--   neither does std eu, it leaves it until runtime.
+
+-- There is no checking for duplicate definitions
+-- It does not resolve duplicate globals, and there is no checking that the scope
+-- handling correctly targets the right duplicate definition.
+-- This is no speed demon; this will never be for live use, it is for experimentation.
+-- For example it takes my machine 55 seconds to parse win32lib & its bits.
+-- 
+-- Some good points:
+--  It knows the difference between atom/integer and sequence/object; it only allows the
+--  latter to be subscripted.
+--  It knows all about defining new types and later defining new variables of those types.
+--  It knows all about globals and scope levels.
+--  It copes with include files in the current directory, EUINC, and EUDIR/include.
+--  Within a function or type it allows return expr, within a procedure just return, and 
+--  outside it rejects the return keyword.
+--  Likewise exit is only valid within for and while loops.
+--  As an example, the following would allow nested slices, eg x[3..4][5..6]
+--      subscripts  ::= "[" expr [".." expr] "]" [subscripts]
+--    The rule currently in use (reproduced on the next line) does not permit this.
+--      subscripts  ::= "[" expr ("]" [subscripts] | [".." expr] "]" )
+--    Both versions allow eg x[3][4] and x[3][4][5..6]
+--
+--
+include ppp.e
+ppOpt({pp_Pause,0})
+
+with trace
+--
+-- load the EUBNF definition
+--
+sequence aelists,       -- auto extend lists, aka local scope/symbol table.
+         aelens         -- used parts of aelists, at each scope level
+                        -- (note that aelists is never cleared)
+sequence aglists,       -- globals live in their own table, unaffected by scope.
+         aglens,        -- used part of aglists
+--       agscope,       -- scope of global declaration; the current file takes
+                        -- precedence over any previously defined or defined in
+                        -- interveneing includes. See test.exw & testb.e for an example
+$
+
+sequence aelstack       -- save the current (local) scope before opening an 
+         aelstack = {}  -- include file, and restore it later.
+--integer aelsi         -- index to aelstack
+--      aelsi = 0
+sequence donei          -- include files already processed (**DEV directory???)
+         donei = {}
+integer doneiidx        -- index to donei
+        doneiidx = 0
+
+sequence ruleset
+         ruleset = repeat(0,16)
+sequence production
+--DEV ident is no londer used.
+sequence known,kni
+         known = {"literal","ident","filename"}
+         kni = {1,2,3}  -- there'll be gaps by the time eubnf loaded
+integer rsi, scope
+        rsi = 3 scope = 1
+
+procedure push(sequence p)
+    rsi += 1
+    if rsi>length(ruleset) then
+        ruleset &= repeat(0,16)
+    end if
+    ruleset[rsi] = p
+end procedure
+
+procedure process(sequence production)
+--
+-- Extracts inner parenthesised blocks in the production rule
+-- and shunts them off to secondary entries in the ruleset table.
+-- It also marks {..} with #100, and [..] with #200
+--
+sequence bstack
+integer bsi,bki,obki
+integer mid
+integer pi
+    --
+    -- deparenth():
+    --
+    bstack = repeat(0,16)
+    bsi = 0
+    pi = 1
+    while pi<=length(production) do
+        bki = 0
+        if sequence(production[pi]) then
+            bki = find(production[pi][1],"({[)}]")
+        end if
+        if bki then
+            if bki<4 then
+                bsi += 1
+                if bsi>length(bstack) then
+                    bstack &= repeat(0,16)
+                end if
+                bstack[bsi] = pi
+            else
+                if bsi=0 then ?9/0 end if   -- ? closing bracket not opened?
+                obki = find(production[bstack[bsi]][1],"   ({[")
+                if bki!=obki then ?9/0 end if   -- mismatch
+                if pi=bstack[bsi]+2 then    --{<single item>}
+                    production[bstack[bsi]] = power(2,bki+3)    --#100,#200
+                    production = production[1..pi-1]&production[pi+1..length(production)]
+                    pi -= 1
+                elsif pi=bstack[bsi]+1 then --{}
+                    if pi!=length(production) then ?9/0 end if  -- must be at end
+                    if pi>2 then
+                        if not equal(production[pi-2],"|") then ?9/0 end if -- "|{}"
+                        production = production[1..pi-3]
+                        -- (no need to mark as auto-extending, $application is enough)
+                        if not length(production) then
+                            production = {0}
+                        end if
+                    else
+                        production = {0}
+                    end if
+                else
+                    process(production[bstack[bsi]+1..pi-1])
+                    mid = rsi
+                    if bki>4 then
+                        mid += power(2,bki+3) --#100,#200
+                    end if
+                    production = production[1..bstack[bsi]-1]&mid&production[pi+1..length(production)]
+                    pi = bstack[bsi]
+                end if
+                bsi -= 1
+            end if
+        end if
+        pi += 1
+    end while
+    push(production)
+end procedure
+
+
+include token.e
+
+function tokenise()
+sequence result
+integer ri
+integer prodrule
+    col = 4
+    c = line[3]
+    result = repeat(0,16)
+    ri = 0
+    prodrule = 0
+    while gettoken() do
+        if toktype=EOL then exit end if
+        if prodrule then
+            if toktype!=SYMBOL or toklen!=1 or token[1]!='=' then
+                error("= expected after ::")
+            else
+                result[ri] = "::="
+            end if
+            prodrule = 0
+        else
+            if toktype!=SPACE then
+                if toklen=1 and find(token[1],"+-#")
+                and ri>0 and sequence(result[ri]) and equal(result[ri],"$") then
+                    result[ri] = "$"&token[1]
+                else
+                    if toklen=1 and equal(token[1],'*') then    -- null; skip
+                    else
+                        ri += 1
+                        if ri>length(result) then
+                            result &= repeat(0,16)
+                        end if
+                        result[ri] = token[1..toklen]
+                        if equal(result[ri],"::") then
+                            prodrule = 1
+                        end if
+                    end if
+                end if
+            end if
+        end if
+    end while
+    return result[1..ri]
+end function
+
+integer sf
+sequence next
+
+    next = command_line()
+    if match(".ex", next[2])=0 then
+        next[2] &= ".ex"
+    end if
+    sf = open(next[2],"r")
+    if sf=-1 then
+        printf(1,"error opening %s\n",{next[2]})
+        if getc(0) then end if
+        abort(0)
+    end if
+    production = {}
+    charset['$'] = SYMBOL
+    charset['|'] = SYMBOL
+    charset['#'] = SYMBOL
+--  charset[':']=SYMBOL
+    charset[':'] = LETTER -- Yuk, tokenise got coded the way it is when token.e
+                        -- was like that, but clearly ":" is SYMBOL (aka LETEND!)
+                        -- (I should really mod tokenise to deal with "::=" better).
+    charset['%'] = SYMBOL   -- for ilASM
+    while 1 do
+        line = gets(sf)
+        if atom(line) then exit end if
+        if equal(line[1..2],"--") then
+            if equal(line[3..4],"$-") then exit end if  -- end of eubnf definition
+            if not equal(line[3..5]," !!") then -- skip comments
+                next = tokenise()
+                if equal(next[1],"|") then
+                    production &= next
+                else
+                    if length(production) then
+                        known &= 0
+                        known[length(known)] = production[1]
+                        process(production[3..length(production)])
+                        kni &= rsi
+                    end if
+                    production = next
+                end if
+            end if
+        end if
+    end while
+    if length(production) then
+        known &= 0
+        known[length(known)] = production[1]
+        process(production[3..length(production)])
+        kni &= rsi
+    end if
+--  charset['$'] = ILLEGAL
+    charset['|'] = ILLEGAL
+    charset['#'] = HEXDEC
+--  charset[':']=SYMBOL -- namespaces
+    charset[':'] = LETEND -- namespaces
+
+    if rsi>99 then
+        puts(1,"error: more than 96 (sub-) productions")
+        if getc(0) then end if
+        abort(0)
+    end if
+    printf(1,"%d production rules loaded\n",{rsi-3})
+
+sequence terminals
+integer globalno    -- number used for "global"
+
+function pack(sequence rule)
+--
+-- munge any applicable {}, [], $, !, directives with the following reference.
+--
+object r
+    for k=length(rule) to 1 by -1 do
+        if sequence(rule[k]) then
+            r = pack(rule[k])
+            if length(r)=1 then r = r[1] end if
+            rule[k] = r
+        elsif find(rule[k],{#100,#200,#400,#800,#1000}) then
+            rule = rule[1..k-1]&rule[k+1]+rule[k]&rule[k+2..length(rule)]
+        end if
+    end for
+    return rule
+end function
+
+
+constant markencodings = {255,254,253,#400,#800,#1000}
+
+procedure resolve()
+--
+-- store all the terminal symbols in a separate table,
+-- link up the production definitions, replacing eg toplevel with 7 (if 7 be the
+-- table entry holding the definition or toplevel, of course).
+-- Also a few substitutions, eg $+ becomes 255, and
+-- prefix-forming and subsequencing alternates, eg a b|c d|e --> or {a,b},{c,d},e
+--
+sequence orset,newrule,thisrule,unquoted
+integer prev
+integer ik
+    terminals = {}
+    for i=4 to rsi do
+        orset = {}
+        thisrule = ruleset[i]
+        for j=1 to length(thisrule) do
+            if sequence(thisrule[j]) and thisrule[j][1]='\"' then
+                unquoted = thisrule[j][2..length(thisrule[j])-1]
+                ik = find(unquoted,terminals)
+                if not ik then
+                    terminals &= 0
+                    ik = length(terminals)
+                    terminals[ik] = unquoted
+                end if
+                thisrule[j] = 100+ik    -- +100 puts in into terminal space (NOT #100!!)
+            end if
+            ik = find(thisrule[j],known)
+            if ik then thisrule[j] = kni[ik] end if
+            if equal(thisrule[j],"|") then
+                orset &= j
+            end if
+            ik = find(thisrule[j],{"$+","$-","$#","$", "!", "#"})
+            if ik then      --   255  254  253  #400 #800 #1000
+                thisrule[j] = markencodings[ik]
+            end if
+            if sequence(thisrule[j]) and not find(thisrule[j],{"|"}) then
+                printf(1,"Grammar error: %s unresolved\n",{thisrule[j]})
+                if getc(0) then
+                end if
+                abort(0)
+            end if
+        end for
+        if length(orset) then
+            orset &= length(thisrule)+1
+            newrule = {0}   -- start with an "or" operator
+            prev = 0
+            for ori=1 to length(orset) do
+                if orset[ori]-prev=2 then   -- atomic
+                    newrule &= thisrule[prev+1]
+                else
+                    newrule &= {thisrule[prev+1..orset[ori]-1]} -- subsequence them
+                end if
+                prev = orset[ori]
+            end for
+            thisrule = newrule
+        end if
+        ruleset[i] = pack(thisrule)
+    end for
+
+    aelists = repeat({},rsi)
+    aglists = repeat({},rsi)
+    aelens = repeat(repeat(0,rsi),16)
+    aglens = repeat(0,rsi)  -- globals canna go in and out of scope...
+    globalno = find("global",terminals)+100
+end procedure
+
+
+resolve()
+    if length(terminals)>153 then
+        puts(1,"error: more than 153 terminal symbols")
+        if getc(0) then end if
+        abort(0)
+    end if
+    printf(1,"%d terminal symbols loaded\n",{length(terminals)})
+
+
+without trace
+constant ordlr = {"or ","$# ","$- ","$+ "}
+include misc.e
+
+function spingle(integer opcode)
+-- sprint a single item
+integer ik
+sequence trail
+sequence result
+    result = ""
+    trail = ""
+    if find(opcode,{0,253,254,255}) then
+        result &= ordlr[find(opcode,{0,253,254,255})]
+    else
+        if and_bits(opcode,#1000) then
+            result &= '#'
+            opcode -= #1000
+        end if
+        if and_bits(opcode,#800) then
+            result &= '!'
+            opcode -= #800
+        end if
+        if and_bits(opcode,#400) then
+            result &= '$'
+            opcode -= #400
+        end if
+        if and_bits(opcode,#200) then
+            result &= '['
+            opcode -= #200
+            trail = "]"
+        end if
+        if and_bits(opcode,#100) then
+            result &= '{'
+            opcode -= #100
+            trail = "}"
+        end if
+        if opcode=0 then    -- Major error if this ever happens...
+            printf(1,"Error: not packed",{})
+            ?9/0
+        elsif opcode<99 then
+            ik = find(opcode,kni)
+            if ik then
+                result &= sprintf("%s ",{known[ik]})
+            else
+                result &= sprintf("%d ",{opcode})
+            end if
+        else
+            result &= '\"'&terminals[opcode-100]&"\" "
+        end if
+        if length(trail) then
+            result = result[1..length(result)-1]&trail&' '
+            trail = ""
+        end if
+    end if
+    return result
+end function
+
+function sprnt(object rule)
+--
+-- returns a text representaion of the rule, close as possible to the eubnf.
+--
+sequence result
+    if atom(rule) then
+        result = spingle(rule)
+    else
+        result = ""
+        for j=1 to length(rule) do
+            if sequence(rule[j]) then
+                result &= '('&sprnt(rule[j])&' '
+                result[length(result)-1] = ')'
+            else
+                result &= spingle(rule[j])
+            end if
+        end for
+    end if
+    if length(result) and result[length(result)]=' ' then
+        result = result[1..length(result)-1]
+    end if
+    return result
+end function
+with trace
+
+
+include ppp.e
+
+procedure dump()
+integer ik
+    ik = 4
+    for i=4 to rsi do
+        printf(1,"%d: ",{i})
+        if i=kni[ik] then
+            printf(1,"%s ",{known[ik]})
+            ik += 1
+        end if
+        -- human readable:
+        puts(1,sprnt(ruleset[i]))
+        puts(1,"\n")
+        -- decimal representation:
+--      ppEx(1,ruleset[i],0,0,1,0)
+-- usage(3): Initialise the defaults by directly setting the globals:
+--                       ppp_File - an open file handle, 1 displays to Screen (the 
+--                                              default), 0 leaves result in ppp_result.
+--                       ppp_Maxlen - split long lines at this column, default 78.
+--                       ppp_Pause - pause every n lines, default 23, 0=no pause.
+--                       ppp_StrFmt - 0: print strings as is eg "abc"
+--                                                1: as number only, eg {97, 98, 99}
+--                                                3: as number&text, eg {97a, 98b, 99c}
+--                       ppp_Nest -- nesting level, see examples below.
+--
+-- usage(4): ppEx(file,object,maxlen,pause,format,nest)
+
+        ppEx(ruleset[i],{pp_File,1,pp_Maxlen,0,pp_Pause,0,pp_StrFmt,1,pp_Nest,0})
+        if getc(0) then end if
+    end for
+    pp(terminals)
+    if getc(0) then end if
+end procedure
+
+
+
+--
+-- OK, so we now have the EUBNF definition loaded.
+-- For a quick check to see how everything is held, uncomment this:
+--
+if 0 then
+    dump()
+end if
+
+-- rulset[4] defines program
+-- 0 (as first item of a production rule) is "or". Elsewhere it is a corruption.
+--      or: if processing ok, production finished,
+--          if not ok, skip to next
+--          if no more, production failed.
+--          each element following "or" may be atomic or sequence, eg
+--              woption::= "profile"|"profile_time"|"trace"|"warning"|"type_check"
+--                --> {0,105,106,107,108,109}
+--              var ::= adef avarl | sdef svarl
+--                --> {0,{10, 13},{11, 15}}
+--       Not surprisingly, applying this is the real workhorse of the parser.
+-- 1..99 says refer to ruleset[n]
+--  (specials: 1=literal, 2=ident, 3=filename)
+-- 101.199 says terminals[n-100], eg 101="with"
+-- 255 says increase scope
+-- 254 says decrease scope
+-- 253 is a $# marker (as used in type definitions)
+-- #100+n (aka 257..355) says refer to ruleset[n-256] as {} (ie zero or more times)
+-- #200+n (aka 513..611) says refer to ruleset[n-512] as [] (ie optional)
+-- #400+n (aka 1025..1123) says refer to ruleset[n-1024] as $ (ie auto extending)
+-- #800+n (aka 2049..2147) indicates ! use (see comment before pad() routine)
+-- #1000+n (aka 4097..4195) indicates # use (if match auto-extend with $# marker)
+--
+
+-- Next steps:
+--  1) production rules should generate nodes in the AST...
+--
+
+--DEV temporary:
+integer squon       squon = 0
+sequence squishtext, squishlist
+         squishtext = "" squishlist = ""
+procedure squish(sequence text, sequence item)
+    if squon then
+        if equal(text,squishtext) then
+            if length(squishlist) then
+                squishlist &= ", "&item
+            else
+                squishlist = item
+            end if
+        else
+            if length(squishlist) then
+                printf(1,"%s: %s\n",{squishtext,squishlist})
+            end if
+            squishtext = text
+            squishlist = item
+        end if
+    end if
+end procedure
+
+integer r4 r4 = 0
+
+integer includestackx
+        includestackx = 0
+sequence includestack
+         includestack = {}
+
+--sequence idone    -- include files already processed
+--  idone = {}
+--integer idonex
+
+
+integer tokno
+        tokno = 0
+
+integer nogets
+        nogets = 0
+
+procedure nexttoken()
+    while 1 do
+        if toktype=EOL then
+            if nogets then return end if
+            line = gets(sf)
+            if atom(line) then exit end if
+            col = 2
+            c = line[1]
+        end if
+        if not gettoken() then exit end if
+        if find(toktype,{EOL,SPACE,COMMENT})=0 then
+--if squon then
+--squish("",token[1..toklen])
+------squish("","")
+----if getc(0)='d' then trace(1) end if
+--end if
+            if tokno=-1 then ?9/0 end if    -- should have been caught already
+            tokno += 1
+            return
+        end if
+    end while
+    toklen = 0
+    --
+    -- if we have stacked an include file, resume here...
+    --
+    if includestackx then
+        close(sf)
+        sf = includestack[includestackx]
+        aelists = aelstack[includestackx][1]
+        aelens = aelstack[includestackx][2]
+        scope = aelstack[includestackx][3]
+        includestackx -= 1
+        toktype = EOL
+        nexttoken()
+    end if
+end procedure
+
+
+--
+-- The sublist parameter of apply deserves some detailed explanation:
+-- =================================================================
+--
+-- Suppose we are applying rstmt::="return"|!stmt, then subsequent (nested) invocations
+-- of apply should substitute references to stmt (in productions defined *after* rstmt)
+-- with a reference to rstmt. Hence, for example, |"if" expr "then" {stmt} ...| works
+-- as is when called at the toplevel but as |"if" expr "then" {rstmt} ...| when called
+-- from inside a procedure.
+--
+-- While only one of rstmt and restmt can ever apply at a particular moment (namely if 
+-- we are parsing code in a procedure or in a function/type), xstmt (::= "exit|!stmt) 
+-- applies independently (namely when we are parsing code inside a loop statement).
+--
+-- When both are in force, it is rather critical that substitutions are applied in the 
+-- right order, to prevent creating an infinite loop. Hence we maintain a (minimal) 
+-- *sorted* list and process it last to first.
+--
+-- Elements from sublist are automatically cleared simply by returning from the call to
+-- apply which appended them.
+--
+function pad(sequence list, sequence item)
+    if find(item,list) then return list end if
+    list &= 0
+    list[length(list)] = item
+    for i=length(list)-1 to 1 by -1 do  -- prolly only length(2)
+        if compare(list[i],list[i+1])=-1 then exit end if
+        list[i+1] = list[i]
+        list[i] = item
+    end for
+    return list
+end function
+
+
+integer tmp
+sequence wseq
+object w2
+
+sequence marker
+integer marklen
+
+integer globalite       -- set to 1 if "global" keyword in force
+        globalite = 0
+
+-- DEREK start
+-- This splits a sequence up into one or or subsequences based on
+-- a supplied delimiter character.
+-- pFlags is a set of bit flags.
+-- and_bits(pFlag,1)  ==> a string of delimiter characters is treated
+-- as a single delimiter.
+-- and_bits(pFlag,2)  ==> Leading delimiters ignored.
+-- and_bits(pFlag,4)  ==> Trailing delimiters ignored.
+function split(sequence pSrc, integer pDelim, integer pFlags)
+integer lPos
+sequence lResult
+
+    lResult = {}
+    -- Check leading delims
+    if and_bits(pFlags, 2) then
+        lPos = 1
+        while lPos<=length(pSrc) and pSrc[lPos]=pDelim do
+            lPos += 1
+        end while
+        if lPos!=1 then
+            pSrc = pSrc[lPos..length(pSrc)]
+        end if
+    end if
+
+    -- check trailing delims
+    if and_bits(pFlags, 4) then
+        lPos = length(pSrc)
+        while lPos>=1 and pSrc[lPos]=pDelim do
+            lPos -= 1
+        end while
+        if lPos!=length(pSrc) then
+            pSrc = pSrc[1..lPos]
+        end if
+    end if
+
+    lPos = find(pDelim, pSrc)
+    while lPos>0 do
+        lResult = append(lResult, pSrc[1..lPos-1])
+        pSrc = pSrc[lPos+1..length(pSrc)]
+        if and_bits(pFlags,1) then
+            if length(pSrc)>0 then
+                lPos = 1
+                while lPos<=length(pSrc) and pSrc[lPos]=pDelim do
+                    lPos += 1
+                end while
+                if lPos!=1 then
+                    pSrc = pSrc[lPos..length(pSrc)]
+                end if
+            end if
+        end if
+        lPos = find(pDelim, pSrc)
+    end while
+
+    -- Include any trailing string.
+    if length(pSrc)>0 then
+        lResult = append(lResult, pSrc)
+    end if
+
+    return lResult
+
+end function
+-- DEREK end
+
+include wildcard.e
+include builtins\pincpathN.e
+
+function apply(object rule, sequence sublist)
+object rr, path
+integer lr
+integer starttok
+sequence paths -- DEREK
+
+--sequence debug
+--  debug=sprnt(rule)
+
+    starttok = tokno
+    if atom(rule) then
+        if and_bits(rule,#100) then --{}
+            while apply(rule-#100,sublist) do
+                if tokno=-1 then return False end if
+            end while
+            return True
+        elsif and_bits(rule,#200) then  --[]
+            if apply(rule-#200,sublist) then
+            end if
+            if tokno=-1 then return False end if
+            return True
+        elsif and_bits(rule,#400) then --$
+--DEV must not be a reserved word, and must not already exist at this scope.
+--return False in those cases...
+            r4 = rule-#400
+            if nogets then  -- a namespace then
+                toklen += 1
+                token[toklen] = ':'
+            end if
+            if globalite then
+                if length(aglists[r4])=aglens[r4] then
+                    aglists[r4] &= repeat(0,16)
+                end if
+                aglens[r4] += 1
+                if find(token[1..toklen],aglists[r4]) then
+                    printf(1,"duplicate global %s ???\n",{token[1..toklen]})
+                --  if getc(0) then
+                --  end if
+                end if
+                aglists[r4][aglens[r4]] = token[1..toklen]
+            else
+                if length(aelists[r4])=aelens[scope][r4] then
+                    aelists[r4] &= repeat(0,16)
+                end if
+                aelens[scope][r4] += 1
+                aelists[r4][aelens[scope][r4]] = token[1..toklen]
+            end if
+--wseq=sprintf("%d",{r4})
+--if find(r4,kni) then
+--  wseq=known[find(r4,kni)]
+--end if
+--if not find(wseq,{"avar","svar","const"}) then
+----if not find(wseq,{"namespace"}) then
+--squish(sprintf("Added[%s]",{wseq}),token[1..toklen])
+----squish("","")
+----if getc(0) then end if
+----end if
+--end if
+            nexttoken()
+            return True
+        elsif and_bits(rule,#1000) then --#
+            if apply(rule-#1000,sublist) then
+                r4 = rule-#1000
+                if globalite then
+                    if length(aglists[r4])=aglens[r4] then
+                        aglists[r4] &= repeat(0,16)
+                    end if
+                    aglens[r4] += 1
+                    aglists[r4][aglens[r4]] = marker[1..marklen]
+                else
+                    if length(aelists[r4])=aelens[scope][r4] then
+                        aelists[r4] &= repeat(0,16)
+                    end if
+                    aelens[scope][r4] += 1
+                    aelists[r4][aelens[scope][r4]] = marker[1..marklen]
+                end if
+                return True
+            end if
+            return False
+        elsif rule<4 then
+            if rule=1                                                   -- literal
+            and find(toktype,{HEXDEC,DIGIT,FLOAT,DQUOTE,SQUOTE}) then
+                nexttoken()
+                return True
+            elsif rule=3 then       -- filename
+                charset['\\'] = LETTER
+                charset[':'] = LETTER
+                rr = token[1..toklen]
+                while gettoken() and toktype!=EOL do
+                    if toklen=2 and equal(token[1..toklen],"as") then
+                        nogets = 1
+                        if apply(kni[find("as",known)],sublist) then end if
+                        nogets = 0
+                        exit
+                    end if
+                    if find(toktype,{COMMENT,SPACE})=0 then
+                        rr &= token[1..toklen]
+                    end if
+                end while
+                charset['\\'] = ILLEGAL
+                charset[':'] = LETEND
+
+                toktype = EOL -- just in case EOF
+                rr = lower(rr)  -- don't include win32lib.ew and Win32Lib.ew(!)
+                if find(rr,donei)=0 then    -- already dealt with?
+--squish("include",rr)
+                    doneiidx += 1
+                    if doneiidx>length(donei) then
+                        donei &= repeat(0,16)
+                    end if
+                    donei[doneiidx] = rr
+                    includestackx += 1
+                    if includestackx>length(includestack) then
+                        includestack &= repeat(0,10)
+                    end if
+                    includestack[includestackx] = sf
+                    if includestackx>length(aelstack) then
+                        aelstack &= repeat(0,10)
+                    end if
+                    aelstack[includestackx] = {aelists,aelens,scope}
+                    aelists = repeat({},rsi)
+                    aelens = repeat(repeat(0,rsi),16)
+                    sf = open(rr,"r")
+                    if sf=-1 then
+--trace(1)
+if 0 then
+                        path = getenv("EUINC")
+                        if not atom(path) then
+
+                            -- DEREK start
+                            paths = split(path, ';', 7)
+                            for k=1 to length(paths) do
+                                path = paths[k]
+                                if path[length(path)]!='\\' then
+                                    path &= '\\'
+                                end if
+                                sf = open(path&rr,"r")
+                                if sf!= -1 then
+                                    exit
+                                end if
+                            end for
+                            -- DEREK end
+
+                        end if
+                        if sf=-1 then
+                            path = getenv("EUDIR")
+--                          if atom(path) then ?9/0 end if
+                            if not atom(path) then
+                                sf = open(path&"\\include\\"&rr,"r")
+                            end if
+                        end if
+else --DEV
+                    paths = include_paths()
+                    for i=length(paths) to 1 by -1 do
+                        path = paths[i]
+                        sf = open(path&rr,"r")
+                        if sf!=-1 then exit end if
+                    end for
+end if
+                    end if
+                    if sf=-1 then
+--include_paths
+                        trace(1)
+                        puts(1,"cannot find include file "&rr)
+                        if getc(0) then end if
+                        abort(0)
+                    end if
+                    scope = 1
+--              else
+--                  squish("reinclude",rr)
+--squish("","")
+                end if -- already dealt with
+                nexttoken()
+                return True
+            end if
+            return False
+        elsif rule<99 then
+            if equal(ruleset[rule][1],0) and (length(aelists[rule]) or length(aglists[rule])) then
+                if length(ruleset[rule])>1 then -- adef & sdef
+                    if apply(ruleset[rule],sublist) then return True end if
+                end if
+                tmp = find(token[1..toklen],aelists[rule])
+                if (tmp and tmp<=aelens[scope][rule])
+                or find(token[1..toklen],aglists[rule]) then
+                    nexttoken()
+                    return True
+                end if
+                return False
+            end if
+            rr = ruleset[rule]
+            lr = length(rr)
+            if atom(rr[lr]) and and_bits(rr[lr],#800) then
+                rr[lr] = rr[lr]-#800
+                sublist = pad(sublist,{rule,rr[lr]})
+            end if
+            for s=length(sublist) to 1 by -1 do
+                for i=1 to lr do
+                    if atom(rr[i])
+                    and and_bits(rr[i],#FF)=sublist[s][2]
+                    and rule>sublist[s][1] then
+                        rr[i] = sublist[s][1]+and_bits(rr[i],#F00)
+                    end if
+                end for
+            end for
+            return apply(rr,sublist)
+        elsif rule=253 then -- $# marker
+            marker = token
+            marklen = toklen
+            nexttoken()
+            return True
+        elsif rule=254 then -- decrease scope
+            scope -= 1
+            return True
+        elsif rule=255 then -- increase scope
+            scope += 1
+            globalite = 0
+            if scope>length(aelens) then
+                aelens &= repeat(repeat(0,rsi),16)
+            end if
+            aelens[scope] = aelens[scope-1]
+            return True
+        else
+            if equal(token[1..toklen],terminals[rule-100]) then
+                if rule=globalno then globalite = 1 end if
+                nexttoken()
+                return True
+            end if
+        end if
+        return False
+    end if -- atom(rule)
+
+--
+-- The main "or" workhorse ;-)
+--
+    if
+--      1=0 and     --DEV this no longer *seems* to be required...
+        length(rule) and equal(rule[1],0) then
+        --
+        -- firstly some seriously scary scope handling...
+        --
+        for i=length(rule) to 3 by -1 do
+            if sequence(rule[i]) then
+                tmp = and_bits(rule[i][1],#FF)
+            else
+                tmp = and_bits(rule[i],#FF)
+            end if
+            if tmp>3 and tmp<99
+            and (length(aelists[tmp]) or length(aglists[tmp]) ) then
+                wseq = {tmp,i}
+                for j=i-1 to 2 by -1 do
+                    if sequence(rule[j]) then
+                        tmp = and_bits(rule[j][1],#FF)
+                    else
+                        tmp = and_bits(rule[j],#FF)
+                    end if
+                    if tmp>3 and tmp<99
+                    and (aelens[scope][tmp] or length(aglists[tmp]) or length(ruleset[tmp]) ) then
+                        wseq &= {tmp,j}
+                    end if
+                end for
+                for j=scope to 1 by -1 do
+                    for k=1 to length(wseq)by 2 do
+                        tmp = wseq[k]
+                        if j=1 then
+                            w2 = aelists[tmp][1..aelens[1][tmp]]
+                        else
+                            w2 = aelists[tmp][aelens[j-1][tmp]+1..aelens[j][tmp]]
+                        end if
+                        if find(token[1..toklen],w2) then
+                            rule = rule[wseq[k+1]]
+                            tmp = -1
+                            exit
+                        end if
+                    end for
+                    if tmp=-1 then exit end if
+                end for
+                if tmp!=-1 then
+                    for k=1 to length(wseq) by 2 do
+                        if find(token[1..toklen],aglists[wseq[k]]) then
+                            rule = rule[wseq[k+1]]
+                            tmp = -1
+                            exit
+                        end if
+                        for l=2 to length(ruleset[wseq[k]]) do
+                            w2 = sq_and_bits(ruleset[wseq[k]][l]-100,#FF)
+                            if atom(w2) and w2>1 and w2<99
+                            and equal(token[1..toklen],terminals[w2]) then
+                                rule = rule[wseq[k+1]]
+                                tmp = -1
+                                exit
+                            end if
+                        end for
+                        if tmp=-1 then exit end if
+                    end for
+                end if
+                if tmp!=-1 then
+                    rule = rule[i..length(rule)]
+                    rule[1] = 0
+                end if
+                exit
+            end if
+        end for
+        if atom(rule) then return apply(rule,sublist) end if
+    end if
+    if length(rule) and equal(rule[1],0) then
+        for i=2 to length(rule) do
+            if apply(rule[i],sublist) then
+                if and_bits(rule[1],#FF)=globalno then globalite = 0 end if
+                return True
+            end if
+            if starttok!=tokno then tokno = -1 return False end if -- fatal error
+        end for
+        if and_bits(rule[1],#FF)=globalno then globalite = 0 end if
+        return False
+    end if
+    for i=1 to length(rule) do
+        if not apply(rule[i],sublist) then
+            if starttok!=tokno then tokno = -1 return False end if -- fatal error
+            return False
+        end if
+    end for
+    return True
+end function
+
+
+
+integer temp
+    temp = sf
+    sf = open("builtin.exh","r")
+    toktype = EOL
+    nexttoken()
+    if toklen=0 then ?9/0 end if
+    if apply(ruleset[4],{}) then end if
+
+    if toklen=0 then
+        puts(1,"builtins loaded\n")
+    else
+        puts(1,"some error occured\n")
+    end if
+    puts(1, "Press 'd' to force tracing now.\n")
+    if getc(0)='d' then trace(1) end if
+
+    --
+    -- for testing, may as well carry on reading this file
+    --
+
+    sf = temp
+
+    -- or try something else:
+
+--  close(temp)
+
+--include file.e
+--if not chdir("C:\\Editor\\") then ?9/0 end if
+--sf=open("editor.exw","r")
+
+--if not chdir("C:\\IDE\\") then ?9/0 end if
+--sf=open("IDE.exw","r")
+
+--
+--sf=open("pptest.exw","r")
+
+--sf=open("test.exw","r")
+
+--sf=open("C:\\Editor\\PrintPreview\\namespace\\Igor\\z.ex","r")
+
+
+
+    squon = 1
+    toktype = EOL
+    nexttoken()
+    if toklen=0 then ?9/0 end if
+    if apply(ruleset[4],{}) then end if
+
+    if toklen=0 then
+        puts(1,"parsing complete\n")
+    else
+        squish("?","?")
+        for i=1 to length(line) do
+            if line[i]='\t' then
+                line[i] = ' '
+            end if
+        end for
+        puts(1,line)
+        puts(1,repeat(' ',col-toklen-2)&"^ error\n")
+        if getc(0)='d' then trace(1) end if
+        puts(1,"some error occured\n")
+    end if
+    if getc(0) then end if
+
+without warning
+    abort(0)
+with warning
+--include win32lib.ew   -- timing test
